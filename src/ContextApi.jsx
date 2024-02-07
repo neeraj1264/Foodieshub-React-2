@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const CartContext = createContext();
 
@@ -9,21 +9,31 @@ export function useCart() {
 export function CartProvider({ children }) {
   const [cartItemsCount, setCartItemsCount] = useState(0);
 
-  const addToCart = () => {
+  useEffect(() => {
+    // Retrieve cartItemsCount from local storage on component mount
+    const storedCartItemsCount = localStorage.getItem('cartItemsCount');
+    if (storedCartItemsCount) {
+      setCartItemsCount(parseInt(storedCartItemsCount, 10));
+    }
+  }, []);
+
+  const incrementCart = () => {
     if (cartItemsCount >= 0) {
       setCartItemsCount((prevCount) => prevCount + 1);
+      localStorage.setItem('cartItemsCount', cartItemsCount + 1);
     }
   };
 
   const decrementCart = () => {
     if (cartItemsCount > 0) {
       setCartItemsCount((prevCount) => prevCount - 1);
+      localStorage.setItem('cartItemsCount', cartItemsCount - 1);
     }
   };
 
   const value = {
     cartItemsCount,
-    addToCart,
+    incrementCart,
     decrementCart,
   };
 
