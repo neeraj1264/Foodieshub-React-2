@@ -8,6 +8,7 @@ export function useCart() {
 
 export function CartProvider({ children }) {
   const [cartItemsCount, setCartItemsCount] = useState(0);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     // Retrieve cartItemsCount from local storage on component mount
@@ -31,10 +32,29 @@ export function CartProvider({ children }) {
     }
   };
 
+  const AddToCart = (product) => {
+    const updatedProduct = { ...product, quantity: quantity };
+    setCartItems((prevItems) => [...prevItems, updatedProduct]);
+    setShowButtons(true);
+    incrementCart(quantity);
+  };
+
+  
+  const updateCartItemQuantity = (productId, newQuantity) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.productId === productId ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
   const value = {
     cartItemsCount,
     incrementCart,
     decrementCart,
+    cartItems,
+    AddToCart,
+    updateCartItemQuantity,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

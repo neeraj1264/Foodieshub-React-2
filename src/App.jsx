@@ -4,6 +4,7 @@ import Layout from './Layout';import Banner from './components/banner/Banner';
 import Pasta from './components/Pages/Pasta/Pasta';
 import Pizza from './components/Pages/Pizza/Pizza';
 import Burger from './components/Pages/Burger/Burger';
+import Cart from './components/shoppingCart/Cart';
 function App() {
 
   return (
@@ -14,6 +15,7 @@ function App() {
       <Route path="Pasta" element={<Pasta />} />
       <Route path="Pizza" element={<Pizza />} />
       <Route path="Burger" element={<Burger />} />
+      <Route path="cart" element={<Cart />} />
 
     </Route>
   </Routes>   </>
