@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 const CartContext = createContext();
 
@@ -9,10 +9,11 @@ export function useCart() {
 export function CartProvider({ children }) {
   const [cartItemsCount, setCartItemsCount] = useState(0);
   const [cartItems, setCartItems] = useState([]);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     // Retrieve cartItemsCount from local storage on component mount
-    const storedCartItemsCount = localStorage.getItem('cartItemsCount');
+    const storedCartItemsCount = localStorage.getItem("cartItemsCount");
     if (storedCartItemsCount) {
       setCartItemsCount(parseInt(storedCartItemsCount, 10));
     }
@@ -21,25 +22,24 @@ export function CartProvider({ children }) {
   const incrementCart = () => {
     if (cartItemsCount >= 0) {
       setCartItemsCount((prevCount) => prevCount + 1);
-      localStorage.setItem('cartItemsCount', cartItemsCount + 1);
+      localStorage.setItem("cartItemsCount", cartItemsCount + 1);
     }
   };
 
   const decrementCart = () => {
     if (cartItemsCount > 0) {
       setCartItemsCount((prevCount) => prevCount - 1);
-      localStorage.setItem('cartItemsCount', cartItemsCount - 1);
+      localStorage.setItem("cartItemsCount", cartItemsCount - 1);
     }
   };
 
   const AddToCart = (product) => {
-    const updatedProduct = { ...product, quantity: quantity };
-    setCartItems((prevItems) => [...prevItems, updatedProduct]);
-    setShowButtons(true);
-    incrementCart(quantity);
+    // const updatedProduct = { ...product, quantity: quantity };
+    setCartItems((prevItems) => [...prevItems, product]);
+    // setShowButtons(true);
+    // incrementCart(quantity);
   };
 
-  
   const updateCartItemQuantity = (productId, newQuantity) => {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
@@ -47,7 +47,9 @@ export function CartProvider({ children }) {
       )
     );
   };
-
+  const updateQuantity = (newQuantity) => {
+    setQuantity(newQuantity);
+  };
   const value = {
     cartItemsCount,
     incrementCart,
@@ -55,6 +57,8 @@ export function CartProvider({ children }) {
     cartItems,
     AddToCart,
     updateCartItemQuantity,
+    quantity,
+    updateQuantity,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

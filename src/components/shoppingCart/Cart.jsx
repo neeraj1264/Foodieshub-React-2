@@ -1,16 +1,15 @@
 // CartPage.js
 
-import React from 'react';
-import { useCart } from '../../ContextApi';
-import './Cart.css';
-import QuantityButton from '../QuantityButton';
+import React from "react";
+import { useCart } from "../../ContextApi";
+import "./Cart.css";
 
 const Cart = () => {
-  const { cartItems, updateCartItemQuantity } = useCart();
+  const { cartItems, quantity } = useCart();
 
   return (
     <>
-      <hr style={{ marginTop: '5rem' }} />
+      <hr style={{ marginTop: "5rem" }} />
       <div className="cart-page">
         <h2>Your Cart</h2>
         {cartItems ? (
@@ -33,14 +32,7 @@ const Cart = () => {
                       </td>
                       <td>{item.name}</td>
                       <td>₹{item.price}</td>
-                      <td>
-                        <QuantityButton
-                          handleDecrement={() => updateCartItemQuantity(item.productId, item.quantity - 1)}
-                          quantity={item.quantity}
-                          handleIncrement={() => updateCartItemQuantity(item.productId, item.quantity + 1)}
-                          productId={item.productId}
-                        />
-                      </td>
+                      <td>{quantity}</td>
                     </tr>
                   ))
                 ) : (
