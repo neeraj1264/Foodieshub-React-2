@@ -4,14 +4,28 @@ footer {
     margin: 5rem 0 0 0;
     text-align: center;
     padding: 0.5rem 0;
-    position: relative;
+    position: fixed;
     bottom: 0;
     width: 100%;
+    height: 10vh;
     border-radius: 0.5rem 0.5rem 0 0;
 }
-footer span {
-    color: var(--skyblue);
+.badge{
+    position: absolute;
+    top: 0.2rem;
 }
-footer p{
-    margin-bottom: 0;
-}
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    margin: 0 0.5rem;
+  }
+  .footer-content a{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+  }

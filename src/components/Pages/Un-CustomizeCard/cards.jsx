@@ -6,32 +6,36 @@ const Cards = ({ name, description, price, image, mrp }) => {
     decrementCart,
     incrementCart,
     AddToCart,
-    quantity,
-    updateCartItemQuantity,
-    updateQuantity,
-  } = useCart();
+    // quantity,
+    // updateQuantity,
+    cartItems,
+    setCartItems,
+    updateCartItemQuantity
+    } = useCart();
 
   const [showButtons, setShowButtons] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     // Retrieve quantity from local storage on component mount
     const storedQuantity = localStorage.getItem(`${name}_quantity`);
     if (storedQuantity) {
-      updateQuantity(parseInt(storedQuantity, 10));
+      setQuantity(parseInt(storedQuantity, 10));
       setShowButtons(true);
     }
   }, [name]);
 
   const handleIncrement = () => {
-    updateQuantity((prevQuantity) => prevQuantity + 1);
+    setQuantity((prevQuantity) => prevQuantity + 1);
     // Update local storage on quantity change
     localStorage.setItem(`${name}_quantity`, quantity + 1);
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
     updateCartItemQuantity(name, quantity + 1);
   };
 
   const handleDecrement = () => {
     if (quantity > 1) {
-      updateQuantity((prevQuantity) => prevQuantity - 1);
+      setQuantity((prevQuantity) => prevQuantity - 1);
       // Update local storage on quantity change
       localStorage.setItem(`${name}_quantity`, quantity - 1);
       updateCartItemQuantity(name, quantity - 1);
@@ -39,7 +43,7 @@ const Cards = ({ name, description, price, image, mrp }) => {
       // If quantity is 1, block add button and hide increment/decrement buttons
       setShowButtons(false);
       decrementCart();
-      // Remove quantity from local storage
+      setCartItems((prevItems) => prevItems.filter(item => item.name !== name));
       localStorage.removeItem(`${name}_quantity`);
       updateCartItemQuantity(name, 0);
     }
@@ -55,7 +59,8 @@ const Cards = ({ name, description, price, image, mrp }) => {
     AddToCart(product);
     setShowButtons(true);
     incrementCart();
-    localStorage.setItem(`${name}_quantity`, quantity);
+    setQuantity(quantity);
+    localStorage.setItem(`${name}_quantity`, quantity); // Update local storage after adding to cart
   };
 
   return (

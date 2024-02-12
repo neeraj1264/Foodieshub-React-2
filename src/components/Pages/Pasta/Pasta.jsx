@@ -3,7 +3,7 @@ import Cards from "../Un-CustomizeCard/cards";
 
 const pastaData = [
   {
-    id: 1,
+    id: 6,
     name: "Red Sauce Pasta",
     image: "/img/pasta.png",
     description: "Classic pasta with meat sauce.",
@@ -11,7 +11,7 @@ const pastaData = [
     mrp: "150",
   },
   {
-    id: 2,
+    id: 7,
     name: "White Sauce Pasta",
     image: "/img/pasta.png",
     description: "Classic pasta with meat sauce.",
@@ -19,7 +19,7 @@ const pastaData = [
     mrp: "150",
   },
   {
-    id: 3,
+    id: 8,
     name: "Mix Sauce Pasta",
     image: "/img/pasta.png",
     description: "Classic pasta with meat sauce.",
@@ -27,7 +27,7 @@ const pastaData = [
     mrp: "150",
   },
   {
-    id: 4,
+    id: 9,
     name: "Tandoori Sauce Pasta",
     image: "/img/pasta.png",
     description: "Classic pasta with meat sauce.",
@@ -35,7 +35,7 @@ const pastaData = [
     mrp: "150",
   },
   {
-    id: 5,
+    id: 10,
     name: "Makhni Sauce Pasta",
     image: "/img/pasta.png",
     description: "Classic pasta with meat sauce.",

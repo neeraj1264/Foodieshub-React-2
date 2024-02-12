@@ -1,7 +1,9 @@
 a{
     text-decoration: none !important;
 }
-/* styles.css */
+.main-content{
+  margin-bottom: 4rem;
+}
 .product-card {
     display: flex;
     justify-content: space-between;

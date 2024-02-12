@@ -12,17 +12,29 @@ export function CartProvider({ children }) {
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
-    // Retrieve cartItemsCount from local storage on component mount
-    const storedCartItemsCount = localStorage.getItem("cartItemsCount");
-    if (storedCartItemsCount) {
-      setCartItemsCount(parseInt(storedCartItemsCount, 10));
-    }
-  }, []);
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
+
+
+useEffect(()=>{
+  const storedCartItemsCount = localStorage.getItem("cartItemsCount");
+  if (storedCartItemsCount) {
+    setCartItemsCount(parseInt(storedCartItemsCount, 10));
+  }
+},[])
+  
+// useEffect(()=>{
+//   const storedCartItems = localStorage.getItem("cartItems");
+//   if (storedCartItems) {
+//     setCartItems(parseInt(storedCartItems));
+//   }
+// },[])
 
   const incrementCart = () => {
     if (cartItemsCount >= 0) {
       setCartItemsCount((prevCount) => prevCount + 1);
       localStorage.setItem("cartItemsCount", cartItemsCount + 1);
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }
   };
 
@@ -30,33 +42,34 @@ export function CartProvider({ children }) {
     if (cartItemsCount > 0) {
       setCartItemsCount((prevCount) => prevCount - 1);
       localStorage.setItem("cartItemsCount", cartItemsCount - 1);
+
     }
   };
 
   const AddToCart = (product) => {
     // const updatedProduct = { ...product, quantity: quantity };
     setCartItems((prevItems) => [...prevItems, product]);
-    // setShowButtons(true);
-    // incrementCart(quantity);
-  };
-
-  const updateCartItemQuantity = (productId, newQuantity) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.productId === productId ? { ...item, quantity: newQuantity } : item
-      )
-    );
+    localStorage.setItem("cartItems" , cartItems);
   };
   const updateQuantity = (newQuantity) => {
     setQuantity(newQuantity);
   };
+  const updateCartItemQuantity = (productId, newQuantity) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.name === productId ? { ...item, quantity: newQuantity } : item
+      )
+    );
+    localStorage.getItem("cartItems" , cartItems);
+  };
   const value = {
+    updateCartItemQuantity,
     cartItemsCount,
     incrementCart,
     decrementCart,
     cartItems,
+    setCartItems,
     AddToCart,
-    updateCartItemQuantity,
     quantity,
     updateQuantity,
   };
