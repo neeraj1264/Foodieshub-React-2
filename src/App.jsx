@@ -5,6 +5,8 @@ import Pasta from './components/Pages/Pasta/Pasta';
 import Pizza from './components/Pages/Pizza/Pizza';
 import Burger from './components/Pages/Burger/Burger';
 import Cart from './components/shoppingCart/Cart';
+import FoodGallery from './components/Gallery/FoodGallery';
+import MyCarousel from './components/Temp';
 function App() {
 
   return (
@@ -16,10 +18,9 @@ function App() {
       <Route path="Pizza" element={<Pizza />} />
       <Route path="Burger" element={<Burger />} />
       <Route path="cart" element={<Cart />} />
-
+      <Route path="MyCarousel" element={<MyCarousel />} />
     </Route>
   </Routes>   </>
   )
 }
-
 export default App

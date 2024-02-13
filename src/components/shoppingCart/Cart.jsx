@@ -25,7 +25,6 @@ const Cart = () => {
   };
   return (
     <>
-      <hr style={{ marginTop: "5rem" }} />
       <div className="cart-page">
         <h2 style={{ textAlign: "center" }}>Your Cart</h2>
         {cartItems ? (
