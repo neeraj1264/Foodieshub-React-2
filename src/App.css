@@ -22,7 +22,7 @@ a{
     opacity: .25;
   }
   .product-details {
-    flex: 2;
+    flex: 1.1;
     margin-right: 20px;
   }
   
@@ -46,6 +46,7 @@ a{
     margin: auto;
     padding: 0rem 1rem;
     border-radius: .5rem;
+    display: inline-block;
    }
    .add-btn button{
     color: red;

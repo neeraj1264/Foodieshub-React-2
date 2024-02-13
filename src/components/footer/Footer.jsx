@@ -29,7 +29,7 @@ function Footer() {
         <div className="cart">
           <FaShoppingBasket />
           {cartItemsCount > 0 && (
-            <Badge bg="danger" className="ms-1 ">
+            <Badge bg="success" className="ms-1 ">
               {cartItemsCount}
             </Badge>
           )}
