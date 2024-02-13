@@ -4,7 +4,7 @@ import Header from './header/Header';
 import AboutUs from './about/AboutUs';
 import './Temp.css'
 const items = [
-  { id: 1, imageUrl: '/img/burger2.png', title: 'Delicious Burger', description: 'Hot Pattie, fresh veggies, and savory sauces in a perfect bun.' },
+  { id: 1, imageUrl: '/img/burger.jpg', title: 'Delicious Burger', description: 'Hot Pattie, fresh veggies, and savory sauces in a perfect bun.' },
   { id: 2, imageUrl: '/img/pizza.jpg', title: 'Hot Pizzas', description: 'Crispy crusts and gooey cheese meet a medley of mouth-watering toppings in every slice.' },
   { id: 3, imageUrl: '/img/cheesepan.jpg', title: 'Spicy Chinese', description: 'Zesty and aromatic Chinese dishes infused with bold spices.' },
   { id: 4, imageUrl: '/img/cornsand.jpg', title: 'Sweet Sandwiches', description: 'A delightful fusion of sweet and savory in every bite.' },
@@ -30,7 +30,7 @@ const MyCarousel = () => {
     const intervalId = setInterval(() => {
       // Increment the index to move to the next slide
       setIndex((prevIndex) => (prevIndex + 1) % items.length);
-    }, 300000);
+    }, 3000);
 
     return () => {
       // Clear the interval to prevent memory leaks

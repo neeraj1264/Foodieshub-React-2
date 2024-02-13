@@ -1,5 +1,6 @@
 footer {
-    background-color: #0071fb;
+    /* background-color: #0071fb; */
+    background-color: var(--bg);
     color: #fff;
     margin: 5rem 0 0 0;
     text-align: center;
@@ -9,6 +10,11 @@ footer {
     width: 100%;
     height: 10vh;
     border-radius: 0.5rem 0.5rem 0 0;
+}
+.grocery{
+  background-color: white;
+  /* color: #0071fb; */
+  color: var(--bg);
 }
 .badge{
     position: absolute;
@@ -21,11 +27,14 @@ footer {
     height: 100%;
     margin: 0 0.5rem;
   }
-  .footer-content a{
+  .footer-content  .i{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    color: white;
+    /* color: white; */
+  }
+  .footer-content  .grocery{
+padding: 0 1rem;
   }

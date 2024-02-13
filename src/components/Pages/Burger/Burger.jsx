@@ -51,19 +51,19 @@ const pastaData = [
     mrp: "150",
   },
 ];
+const renderCards = (data) => {
+  return data.map((item) => <Cards key={item.id} {...item} />);
+};
 const Burger = () => {
+  
   return (
     <>
     <Category/>
     <div>
-      <h2 style={{textAlign: 'center' , marginTop: '1rem'}}>Delicious Burger</h2>
-      {BurgerData.map((Pizza) => (
-        <Cards key={Pizza.id} {...Pizza} />
-      ))}
-       <h2 style={{textAlign: 'center' , marginTop: '4rem'}}>Delicious Pasta</h2>
-      {pastaData.map((Pizza) => (
-        <Cards key={Pizza.id} {...Pizza} />
-      ))}
+      <h2 id='Burger' style={{textAlign: 'center' , marginTop: '8rem'}}>Delicious Burger</h2>
+      {renderCards(BurgerData)}
+       <h2 id='Pasta' style={{textAlign: 'center' , marginTop: '8rem'}}>Delicious Pasta</h2>
+       {renderCards(pastaData)}
     </div>
     </>
   );

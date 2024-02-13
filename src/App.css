@@ -1,6 +1,10 @@
 a{
     text-decoration: none !important;
 }
+:root {
+  --color: red;
+  --bg: #d32e2e;
+}
 .main-content{
   margin-bottom: 4rem;
 }

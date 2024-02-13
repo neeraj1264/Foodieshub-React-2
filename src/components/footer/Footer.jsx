@@ -3,7 +3,7 @@ import './Footer.css'
 import { Link, NavLink } from 'react-router-dom';
 import { FaShoppingBasket } from 'react-icons/fa';
 import { IoHomeOutline } from "react-icons/io5";
-import { TbCategory2 } from "react-icons/tb";
+import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import { MdRestaurantMenu } from "react-icons/md";
 import Badge from 'react-bootstrap/Badge';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,17 +15,17 @@ function Footer() {
     <>
       <footer>
       <div className="footer-content">
-        <NavLink to="/" className="nav-link text-white">
+        <NavLink to="/" className="nav-link text-white i">
           <IoHomeOutline />
           <span className="icon-name">Home</span>
         </NavLink>
 
-        <NavLink to="/" className="nav-link text-white">
-          <TbCategory2 />
-          <span className="icon-name">Category</span>
+        <NavLink to="/burger" className="nav-link text-white i">
+        <MdRestaurantMenu />
+          <span className="icon-name">Menu</span>
         </NavLink>
 
-        <NavLink to="/cart" className="nav-link text-white">
+        <NavLink to="/cart" className="nav-link text-white i">
         <div className="cart">
           <FaShoppingBasket />
           {cartItemsCount > 0 && (
@@ -37,9 +37,10 @@ function Footer() {
           <span className="icon-name">Cart</span>
         </NavLink>
         
-        <NavLink to="/burger" className="nav-link text-white">
-        <MdRestaurantMenu />
-          <span className="icon-name">Menu</span>
+        <NavLink to="/burger" className=" grocery">
+        <span className="icon-name ">Grocery </span>
+        <MdOutlineLocalGroceryStore />
+        <span className='i'> Soon</span>
         </NavLink>
       </div>
     </footer>

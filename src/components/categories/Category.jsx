@@ -18,12 +18,23 @@ const categories = [
 ];
 
 function Category() {
+  const handleCategoryClick = (categoryName) => {
+    const element = document.getElementById(categoryName);
+    if (element) {
+      const offset = -70; 
+      element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest', offset});
+    }
+  };
   return (
     <>
       {/* <h2 style={{ textAlign: 'center' }}>Categories</h2> */}
       <div className="outer-card">
         {categories.map((category) => (
-          <Link to={`/${encodeURIComponent(category.name)}`} key={category.id}>
+          <Link
+           to={`#${encodeURIComponent(category.name)}`}
+           key={category.id}
+           onClick={() => handleCategoryClick(category.name)}
+           >
             <div className="card">
               <img src={category.image} className="card-img-top" alt={category.name} />
               <div className="card-body">
