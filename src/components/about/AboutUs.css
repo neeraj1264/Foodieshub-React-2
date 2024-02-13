@@ -1,6 +1,7 @@
 .about-heading{
     font-weight: 700;
     text-align: center;
+    margin-top: 3rem;
 }
 .about-us-container {
     display: flex;

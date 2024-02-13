@@ -1,0 +1,12 @@
+.carousel-indicators{
+    bottom: -34px;
+}
+.carousel-indicators [data-bs-target] {
+background-color: black;
+}
+.carousel-caption {
+bottom: -14px;
+}
+.carousel-caption title{
+    font-weight: 700;
+    }
