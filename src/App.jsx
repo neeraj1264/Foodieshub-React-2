@@ -5,8 +5,8 @@ import Pasta from './components/Pages/Pasta/Pasta';
 import Pizza from './components/Pages/Pizza/Pizza';
 import Burger from './components/Pages/Burger/Burger';
 import Cart from './components/shoppingCart/Cart';
-import FoodGallery from './components/Gallery/FoodGallery';
 import MyCarousel from './components/Temp';
+import Layout2 from './components/Layout2';
 function App() {
 
   return (
@@ -14,10 +14,11 @@ function App() {
  <Routes>
     <Route path="" element={<Layout />}>
       <Route index element={<MyCarousel/>} />
-      <Route path="Pasta" element={<Pasta />} />
+      {/* <Route path="Pasta" element={<Pasta />} />
       <Route path="Pizza" element={<Pizza />} />
-      <Route path="Burger" element={<Burger />} />
+      <Route path="Burger" element={<Burger />} /> */}
       <Route path="cart" element={<Cart />} />
+      <Route path="layout2" element={<Layout2 />} />
       <Route path="MyCarousel" element={<MyCarousel />} />
     </Route>
   </Routes>   </>

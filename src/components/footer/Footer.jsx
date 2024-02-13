@@ -20,7 +20,7 @@ function Footer() {
           <span className="icon-name">Home</span>
         </NavLink>
 
-        <NavLink to="/burger" className="nav-link text-white i">
+        <NavLink to="/layout2" className="nav-link text-white i">
         <MdRestaurantMenu />
           <span className="icon-name">Menu</span>
         </NavLink>

@@ -1,7 +1,6 @@
 import React from 'react'
 import Header from '../header/Header'
 import './Banner.css'
-import FoodGallery from '../Gallery/FoodGallery'
 import AboutUs from '../about/AboutUs'
 function Banner() {
   return (
@@ -26,7 +25,6 @@ function Banner() {
   </div>
 
 </div>
-<FoodGallery/>
 <AboutUs/>
     </>
   )

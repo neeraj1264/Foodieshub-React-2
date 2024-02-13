@@ -1,5 +1,5 @@
-import React from "react";
-import Cards from "../Un-CustomizeCard/cards";
+import React from 'react';
+import Cards from '../Un-CustomizeCard/cards';
 
 const pastaData = [
   {
@@ -43,16 +43,16 @@ const pastaData = [
     mrp: "150",
   },
 ];
+const renderCards = (data) => {
+  return data.map((item) => <Cards key={item.id} {...item} />);
+};
 const Pasta = () => {
+  
   return (
-    <div>
-      <h2 style={{ textAlign: "center", marginTop: "4rem" }}>
-        Delicious Pasta
-      </h2>
-      {pastaData.map((pasta) => (
-        <Cards key={pasta.id} {...pasta} />
-      ))}
-    </div>
+    <>
+       <h2 id='Pasta' style={{textAlign: 'center' , marginTop: '8rem'}}>Delicious Pasta</h2>
+       {renderCards(pastaData)}
+    </>
   );
 };
 
