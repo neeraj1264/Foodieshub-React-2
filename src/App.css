@@ -10,7 +10,13 @@ a{
     align-items: center;
     padding: .5rem;
   }
-  
+  .hr {
+    margin: .3rem 0;
+    color: inherit;
+    border: 0;
+    border-top: var(--bs-border-width) solid;
+    opacity: .25;
+  }
   .product-details {
     flex: 1;
     margin-right: 20px;
@@ -22,8 +28,11 @@ a{
   }
   
   .add-to-cart img {
-    max-width: 100%;
-    height: auto;
+    width: 5rem;
+    height: 4rem;
+  }
+  .description{
+    font-size: .8rem;
   }
   .add-btn{
     border: 1px solid red;

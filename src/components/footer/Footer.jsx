@@ -4,6 +4,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { FaShoppingBasket } from 'react-icons/fa';
 import { IoHomeOutline } from "react-icons/io5";
 import { TbCategory2 } from "react-icons/tb";
+import { MdRestaurantMenu } from "react-icons/md";
 import Badge from 'react-bootstrap/Badge';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useCart } from '../../ContextApi';
@@ -19,6 +20,11 @@ function Footer() {
           <span className="icon-name">Home</span>
         </NavLink>
 
+        <NavLink to="/" className="nav-link text-white">
+          <TbCategory2 />
+          <span className="icon-name">Category</span>
+        </NavLink>
+
         <NavLink to="/cart" className="nav-link text-white">
         <div className="cart">
           <FaShoppingBasket />
@@ -30,10 +36,10 @@ function Footer() {
           </div>
           <span className="icon-name">Cart</span>
         </NavLink>
-
+        
         <NavLink to="/" className="nav-link text-white">
-          <TbCategory2 />
-          <span className="icon-name">Category</span>
+        <MdRestaurantMenu />
+          <span className="icon-name">Menu</span>
         </NavLink>
       </div>
     </footer>

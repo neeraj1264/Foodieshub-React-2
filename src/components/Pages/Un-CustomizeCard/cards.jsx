@@ -65,11 +65,11 @@ const Cards = ({ name, description, price, image, mrp }) => {
 
   return (
     <>
-      <hr />
+      <hr className="hr"/>
       <div className="product-card">
         <div className="product-details">
-          <h3>{name}</h3>
-          <p style={{ fontWeight: "700" }}>
+          <h5>{name}</h5>
+          <p style={{ fontWeight: "700", marginBottom: ".5rem" }}>
             ₹{price}
             <span
               style={{
@@ -81,7 +81,7 @@ const Cards = ({ name, description, price, image, mrp }) => {
               {mrp}
             </span>
           </p>
-          <p>{description}</p>
+          <p className="description">{description}</p>
         </div>
         <div className="add-to-cart">
           <div>

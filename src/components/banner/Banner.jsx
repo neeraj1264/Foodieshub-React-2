@@ -1,6 +1,7 @@
 import React from 'react'
 import './Banner.css'
 import Category from '../categories/Category'
+import Header from '../header/Header'
 function Banner() {
   return (
     <>
@@ -23,6 +24,7 @@ function Banner() {
   </div>
 
 </div>
+<Header/>
 <Category/>
     </>
   )

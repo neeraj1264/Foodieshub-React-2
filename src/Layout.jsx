@@ -8,7 +8,7 @@ function Layout() {
      <>
          <CartProvider>
       <div className="app-container">
-        <Header />
+        {/* <Header /> */}
         <div className="main-content">
           <Outlet />
         </div>

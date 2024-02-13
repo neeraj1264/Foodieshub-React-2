@@ -20,7 +20,7 @@ const categories = [
 function Category() {
   return (
     <>
-      <h2 style={{ textAlign: 'center' }}>Categories</h2>
+      {/* <h2 style={{ textAlign: 'center' }}>Categories</h2> */}
       <div className="outer-card">
         {categories.map((category) => (
           <Link to={`/${encodeURIComponent(category.name)}`} key={category.id}>

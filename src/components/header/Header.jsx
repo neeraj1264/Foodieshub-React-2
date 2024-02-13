@@ -4,7 +4,7 @@ import './Header.css';
 import { Link, NavLink } from 'react-router-dom';
 import { FaShoppingBasket } from 'react-icons/fa';
 import Badge from 'react-bootstrap/Badge';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import { useCart } from '../../ContextApi';
 
 function Header() {
