@@ -14,6 +14,7 @@ function App() {
  <Routes>
     <Route path="" element={<Layout />}>
       <Route index element={<MyCarousel/>} />
+      <Route path="Pizza" element={<Pizza />} />
       {/* <Route path="Pasta" element={<Pasta />} />
       <Route path="Pizza" element={<Pizza />} />
       <Route path="Burger" element={<Burger />} /> */}

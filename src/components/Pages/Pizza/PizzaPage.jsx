@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Modal, Table } from 'react-bootstrap';
 import { useCart } from "../../../ContextApi";
 
 const PizzaPage = ({ name, description, price, image, mrp }) => {
   const { priceR, priceM, priceL } = price;
 
-  const { decrementCart , addToCart } = useCart();
+  const { decrementCart , incrementCart , AddToCart } = useCart();
 
   const [show, setShow] = useState(false);
   const [showButtons, setShowButtons] = useState(false);
@@ -41,11 +41,50 @@ const PizzaPage = ({ name, description, price, image, mrp }) => {
   };
 
   const handleAddToCart = () => {
+    if (selectedSize === '') {
+      // Handle the case where no size is selected
+      console.error('Please select a size.');
+      return;
+    }
+  
+    // Determine the selected price based on the chosen size
+    let selectedPrice = 0;
+    switch (selectedSize) {
+      case 'Regular':
+        selectedPrice = priceR;
+        break;
+      case 'Medium':
+        selectedPrice = priceM;
+        break;
+      case 'Large':
+        selectedPrice = priceL;
+        break;
+      default:
+        // Handle the case where an unknown size is selected
+        console.error('Unknown size selected.');
+        return;
+    }
+    const product = {
+      name: `${name} [${selectedSize}]`, 
+      price: selectedPrice,
+      quantity,
+      image,
+    };
+    AddToCart(product);
     setShowButtons(true);
-    addToCart(quantity);
+    incrementCart();
     setSelectedSize('');
     setShow(false);
+    localStorage.setItem(`${name}_quantity`, quantity); // Update local storage after adding to cart
   };
+  useEffect(() => {
+    // Retrieve quantity from local storage on component mount
+    const storedQuantity = localStorage.getItem(`${name}_quantity`);
+    if (storedQuantity) {
+      setQuantity(parseInt(storedQuantity, 10));
+      setShowButtons(true);
+    }
+  }, [name]);
   return (
     <>
       <hr />
@@ -78,7 +117,7 @@ const PizzaPage = ({ name, description, price, image, mrp }) => {
                 ADD
               </button>
             )}
-            <Modal show={show} onHide={handleClose} style={{ position: 'absolute', bottom: '2px' }}>
+            <Modal show={show} onHide={handleClose} style={{ position: 'fixed', bottom: '2px' }}>
               <Modal.Header closeButton>
                 <Modal.Title>Select Size</Modal.Title>
               </Modal.Header>

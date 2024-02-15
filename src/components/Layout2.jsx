@@ -11,6 +11,7 @@ import Snacks from './Pages/Snacks';
 import Momos from './Pages/Momos';
 import Chaap from './Pages/Chaap';
 import Dinner from './Pages/Dinner';
+import Pizza from './Pages/Pizza/Pizza';
 
 
 const Layout2 = () => {
@@ -19,6 +20,7 @@ const Layout2 = () => {
     <>
     <Category/>
    <Burger/>
+   <Pizza/>
    <Pasta/>
    <Sandwich/>
    <Shake/>
