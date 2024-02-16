@@ -35,6 +35,6 @@
     flex-wrap: nowrap;
     overflow-x: auto; 
     scrollbar-width: thin;
-    scrollbar-color: var(--bg) var(--bg);  
+    scrollbar-color: transparent transparent;  
   }
   
