@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useCart } from "../../../ContextApi";
+import { FaPlus , FaMinus } from "react-icons/fa6";
 
 const Cards = ({ name, description, price, image, mrp }) => {
   const {
@@ -87,30 +88,34 @@ const Cards = ({ name, description, price, image, mrp }) => {
           <div>
             <img src={image} alt="Product" />
           </div>
-          <div className="add-btn">
+          <div>
             {showButtons && (
               <>
+              <div className="quantity-update">
                 <button
                   variant="contained"
                   className="btn"
                   onClick={handleDecrement}
+                  style={{color: 'white'}}
                 >
-                  -
+                  <FaMinus />
                 </button>
                 <span style={{ margin: "0 0.5rem" }}>{quantity}</span>
                 <button
                   variant="contained"
                   className="btn"
                   onClick={handleIncrement}
+                  style={{color: 'white'}}
                 >
-                  +
+                  <FaPlus />
                 </button>
+                </div>
               </>
             )}
             {!showButtons && (
               <button
                 variant="contained"
-                className="btn"
+                className="add-btn"
                 onClick={handleAddToCart}
               >
                 ADD
