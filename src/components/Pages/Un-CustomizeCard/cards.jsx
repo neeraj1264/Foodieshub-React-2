@@ -20,11 +20,13 @@ const Cards = ({ name, description, price, image, mrp }) => {
   useEffect(() => {
     // Retrieve quantity from local storage on component mount
     const storedQuantity = localStorage.getItem(`${name}_quantity`);
-    if (storedQuantity) {
+    const isItemInCart = cartItems.some(item => item.name === name);
+    
+    if (isItemInCart && storedQuantity) {
       setQuantity(parseInt(storedQuantity, 10));
       setShowButtons(true);
     }
-  }, [name]);
+  }, [name, cartItems]);
 
   const handleIncrement = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);

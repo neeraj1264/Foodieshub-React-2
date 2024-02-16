@@ -3,7 +3,7 @@ import { useCart } from "../../ContextApi";
 import "./Cart.css";
 
 const Cart = () => {
-  let { cartItems , updateCartItemQuantity } = useCart();
+  let { cartItems , setCartItems , updateCartItemQuantity , decrementCart } = useCart();
 
   // Function to calculate the sum of net prices
   const calculateTotal = () => {
@@ -13,7 +13,18 @@ const Cart = () => {
   const dec = (index) => {
     // Assuming index is the index of the item in the cartItems array
     const updatedQuantity = cartItems[index].quantity - 1;
-    updateCartItemQuantity(cartItems[index].name, updatedQuantity);
+    if (updatedQuantity <= 0) {
+      // If the updated quantity is less than or equal to 0, remove the item
+      const updatedCartItems = [...cartItems];
+      updatedCartItems.splice(index, 1);
+      updateCartItemQuantity(cartItems[index].name, 0); // Update quantity in context
+      setCartItems(updatedCartItems); // Update cartItems in context
+      localStorage.setItem("cartItems", JSON.stringify(updatedCartItems)); // Update localStorage
+      decrementCart();
+    } else {
+      // If the updated quantity is greater than 0, update the quantity
+      updateCartItemQuantity(cartItems[index].name, updatedQuantity);
+    }
     localStorage.getItem("cartItems" , cartItems);
   };
 

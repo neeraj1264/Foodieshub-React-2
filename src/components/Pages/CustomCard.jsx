@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal, Table } from 'react-bootstrap';
 import { useCart } from "../../ContextApi";
+import { FaPlus , FaMinus } from "react-icons/fa6";
 
 const CustomCard = ({ name, description, price, image, mrp }) => {
   const { priceH, priceF } = price;
@@ -97,23 +98,33 @@ const CustomCard = ({ name, description, price, image, mrp }) => {
           <div>
             <img src={image} alt="Product" />
           </div>
-          <div className="add-btn">
+          <div>
           {showButtons && (
-              <>
-              <div className="quantity">
-                <button variant="contained" className="btn" onClick={handleDecrement}>
-                  -
-                </button>
-                <span style={{ margin: '0 0.5rem' }}>{quantity}</span>
-                <button variant="contained" className="btn" onClick={handleIncrement}>
-                  +
-                </button>
-                </div>
-              </>
+                <>
+                <div className="quantity-update">
+                  <button
+                    variant="contained"
+                    className="btn"
+                    onClick={handleDecrement}
+                    style={{color: 'white'}}
+                  >
+                    <FaMinus />
+                  </button>
+                  <span style={{ margin: "0 0.5rem" }}>{quantity}</span>
+                  <button
+                    variant="contained"
+                    className="btn"
+                    onClick={handleIncrement}
+                    style={{color: 'white'}}
+                  >
+                    <FaPlus />
+                  </button>
+                  </div>
+                </>
             )}
             {!showButtons && (
                 <>
-              <button variant="contained" className="btn" onClick={handleShow}>
+              <button variant="contained" className="add-btn" onClick={handleShow}>
                 ADD
               </button>
               </>
