@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useCart } from "../../ContextApi";
+import { useNavigate } from "react-router-dom";
 import "./Cart.css";
 
 const Cart = () => {
@@ -9,7 +10,21 @@ const Cart = () => {
   const calculateTotal = () => {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 20);
   };
+  
+useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
 
+
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate("/layout2");
+  };
+
+  const handleNext = () => {
+    navigate("/address");
+  };
   const dec = (index) => {
     // Assuming index is the index of the item in the cartItems array
     const updatedQuantity = cartItems[index].quantity - 1;
@@ -17,13 +32,13 @@ const Cart = () => {
       // If the updated quantity is less than or equal to 0, remove the item
       const updatedCartItems = [...cartItems];
       updatedCartItems.splice(index, 1);
-      updateCartItemQuantity(cartItems[index].name, 0); // Update quantity in context
+      updateCartItemQuantity(cartItems[index].id, 0); // Update quantity in context
       setCartItems(updatedCartItems); // Update cartItems in context
       localStorage.setItem("cartItems", JSON.stringify(updatedCartItems)); // Update localStorage
       decrementCart();
     } else {
       // If the updated quantity is greater than 0, update the quantity
-      updateCartItemQuantity(cartItems[index].name, updatedQuantity);
+      updateCartItemQuantity(cartItems[index].id, updatedQuantity);
     }
     localStorage.getItem("cartItems" , cartItems);
   };
@@ -31,7 +46,7 @@ const Cart = () => {
   const inc = (index) => {
     // Assuming index is the index of the item in the cartItems array
     const updatedQuantity = cartItems[index].quantity + 1;
-    updateCartItemQuantity(cartItems[index].name, updatedQuantity);
+    updateCartItemQuantity(cartItems[index].id, updatedQuantity);
     localStorage.getItem("cartItems" , cartItems);
   };
   return (
@@ -93,6 +108,10 @@ const Cart = () => {
                 )}
               </tbody>
             </table>
+            <div className="cart-navigation-buttons">
+              <button className="back-btn" onClick={() => handleBack()}>Back</button>
+              <button className="next-btn" onClick={() => handleNext()}>Next</button>
+            </div>
           </>
         ) : (
           <p>Loading...</p>

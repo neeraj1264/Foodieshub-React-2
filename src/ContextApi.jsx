@@ -11,10 +11,13 @@ export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [quantity, setQuantity] = useState(1);
 
-  useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  }, [cartItems]);
 
+
+  useEffect(() => {
+    const storedCartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
+    setCartItems(storedCartItems);
+    setCartItemsCount(storedCartItems.length); // Update cart items count
+  }, []);
 
 useEffect(()=>{
   const storedCartItemsCount = localStorage.getItem("cartItemsCount");
@@ -22,13 +25,6 @@ useEffect(()=>{
     setCartItemsCount(parseInt(storedCartItemsCount, 10));
   }
 },[])
-  
-// useEffect(()=>{
-//   const storedCartItems = localStorage.getItem("cartItems");
-//   if (storedCartItems) {
-//     setCartItems(parseInt(storedCartItems));
-//   }
-// },[])
 
   const incrementCart = () => {
     if (cartItemsCount >= 0) {
@@ -57,11 +53,12 @@ useEffect(()=>{
   const updateCartItemQuantity = (productId, newQuantity) => {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
-        item.name === productId ? { ...item, quantity: newQuantity } : item
+        item.id === productId ? { ...item, quantity: newQuantity } : item
       )
     );
     localStorage.getItem("cartItems" , cartItems);
   };
+  
   const value = {
     updateCartItemQuantity,
     cartItemsCount,

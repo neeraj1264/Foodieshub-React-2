@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal, Table } from 'react-bootstrap';
 import { useCart } from "../../../ContextApi";
+import { buttonBaseClasses } from "@mui/material";
 
 const PizzaPage = ({ name, description, price, image, mrp }) => {
   const { priceR, priceM, priceL } = price;
@@ -102,15 +103,12 @@ const PizzaPage = ({ name, description, price, image, mrp }) => {
           </div>
           <div className="add-btn">
           {showButtons && (
-              <>
-                <button variant="contained" className="btn" onClick={handleDecrement}>
-                  -
-                </button>
-                <span style={{ margin: '0 0.5rem' }}>{quantity}</span>
-                <button variant="contained" className="btn" onClick={handleIncrement}>
-                  +
-                </button>
-              </>
+            <button variant="contained" style={{
+              color: 'whitesmoke' ,
+              border: 'none' ,
+              background: 'red' ,
+              borderRadius: '.5rem' ,
+            }}>Added</button>
             )}
             {!showButtons && (
               <button variant="contained" className="btn" onClick={handleShow}>
