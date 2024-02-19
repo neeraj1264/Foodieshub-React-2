@@ -10,8 +10,7 @@ export function CartProvider({ children }) {
   const [cartItemsCount, setCartItemsCount] = useState(0);
   const [cartItems, setCartItems] = useState([]);
   const [quantity, setQuantity] = useState(1);
-
-
+  const [selectedAddress, setSelectedAddress] = useState(null);
 
   useEffect(() => {
     const storedCartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
@@ -69,6 +68,8 @@ useEffect(()=>{
     AddToCart,
     quantity,
     updateQuantity,
+    selectedAddress,
+    setSelectedAddress,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

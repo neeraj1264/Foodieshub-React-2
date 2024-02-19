@@ -8,6 +8,7 @@ import Cart from './components/shoppingCart/Cart';
 import MyCarousel from './components/Temp';
 import Layout2 from './components/Layout2';
 import Address from './components/shippingAddress/Address';
+import ConfirmOrder from './components/confirm/ConfirmOrder';
 function App() {
 
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route index element={<MyCarousel/>} />
       <Route path="Pizza" element={<Pizza />} />
       <Route path="address" element={<Address />} />
+      <Route path="confirm" element={<ConfirmOrder />} />
       {/* <Route path="Pasta" element={<Pasta />} />
       <Route path="Pizza" element={<Pizza />} />
       <Route path="Burger" element={<Burger />} /> */}
