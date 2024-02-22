@@ -3,18 +3,39 @@ import { useCart } from "../../ContextApi";
 import { useNavigate } from "react-router-dom";
 import "./Cart.css";
 
-const Cart = () => {
-  let { cartItems , setCartItems , updateCartItemQuantity , decrementCart } = useCart();
+const Cart = ({ id }) => {
+let {
+  cartItems,
+  setCartItems,
+  updateCartItemQuantity,
+  decrementCart,
+  showButtons,
+  setShowButtons,
+  removeCartItem
+ } = useCart();
+const productShowButtons = showButtons[id] || false;
 
-  // Function to calculate the sum of net prices
-  const calculateTotal = () => {
-    return cartItems.reduce((total, item) => total + item.price * item.quantity, 20);
+const handleRemoveItem = (productId) => {
+  removeCartItem(productId);
+};
+
+const calculateTotal = () => {
+    return cartItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      20
+    );
   };
-  
-useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  }, [cartItems]);
 
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+    // Update showButtons state for each item in cartItems to true
+    const updatedShowButtons = {};
+    cartItems.forEach((item) => {
+      updatedShowButtons[item.id] = true;
+    });
+    setShowButtons(updatedShowButtons);
+  }, [cartItems, setShowButtons]);
 
   const navigate = useNavigate();
 
@@ -26,28 +47,29 @@ useEffect(() => {
     navigate("/address");
   };
   const dec = (index) => {
-    // Assuming index is the index of the item in the cartItems array
     const updatedQuantity = cartItems[index].quantity - 1;
     if (updatedQuantity <= 0) {
-      // If the updated quantity is less than or equal to 0, remove the item
       const updatedCartItems = [...cartItems];
       updatedCartItems.splice(index, 1);
-      updateCartItemQuantity(cartItems[index].id, 0); // Update quantity in context
-      setCartItems(updatedCartItems); // Update cartItems in context
+      // updateCartItemQuantity(cartItems[index].id, 0); 
+      handleRemoveItem(cartItems[index].id);
+      setCartItems(updatedCartItems); 
       localStorage.setItem("cartItems", JSON.stringify(updatedCartItems)); // Update localStorage
       decrementCart();
+      setShowButtons(productShowButtons);
     } else {
       // If the updated quantity is greater than 0, update the quantity
       updateCartItemQuantity(cartItems[index].id, updatedQuantity);
     }
-    localStorage.getItem("cartItems" , cartItems);
+
+    localStorage.getItem("cartItems", cartItems);
   };
 
   const inc = (index) => {
     // Assuming index is the index of the item in the cartItems array
     const updatedQuantity = cartItems[index].quantity + 1;
     updateCartItemQuantity(cartItems[index].id, updatedQuantity);
-    localStorage.getItem("cartItems" , cartItems);
+    localStorage.getItem("cartItems", cartItems);
   };
   return (
     <>
@@ -109,8 +131,12 @@ useEffect(() => {
               </tbody>
             </table>
             <div className="cart-navigation-buttons">
-              <button className="back-btn" onClick={() => handleBack()}>Back</button>
-              <button className="next-btn" onClick={() => handleNext()}>Next</button>
+              <button className="back-btn" onClick={() => handleBack()}>
+                Back
+              </button>
+              <button className="next-btn" onClick={() => handleNext()}>
+                Next
+              </button>
             </div>
           </>
         ) : (

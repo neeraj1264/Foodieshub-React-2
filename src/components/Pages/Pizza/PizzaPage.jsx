@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal, Table } from 'react-bootstrap';
 import { useCart } from "../../../ContextApi";
-import { buttonBaseClasses } from "@mui/material";
 
-const PizzaPage = ({ name, description, price, image, mrp }) => {
+const PizzaPage = ({id , name, description, price, image, mrp }) => {
   const { priceR, priceM, priceL } = price;
 
-  const { decrementCart , incrementCart , AddToCart } = useCart();
+  const { decrementCart , incrementCart , AddToCart , showButtons, setShowButtons} = useCart();
 
   const [show, setShow] = useState(false);
-  const [showButtons, setShowButtons] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState('');
+  const productShowButtons = showButtons[id] || false;
 
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    setShow(true);
+  };
   const handleClose = () => {
     setSelectedSize('');
     setShow(false);
@@ -35,18 +36,15 @@ const PizzaPage = ({ name, description, price, image, mrp }) => {
   const handleDecrement = () => {
     if (quantity > 1) {
       setQuantity((prevQuantity) => prevQuantity - 1);
-    } else {
-      setShowButtons(false);
-      decrementCart();
-    }
+    } 
   };
 
   const handleAddToCart = () => {
-    if (selectedSize === '') {
-      // Handle the case where no size is selected
-      console.error('Please select a size.');
-      return;
-    }
+    // if (selectedSize === '') {
+    //   // Handle the case where no size is selected
+    //   console.error('Please select a size.');
+    //   return;
+    // }
   
     // Determine the selected price based on the chosen size
     let selectedPrice = 0;
@@ -66,26 +64,26 @@ const PizzaPage = ({ name, description, price, image, mrp }) => {
         return;
     }
     const product = {
+      id,
       name: `${name} [${selectedSize}]`, 
       price: selectedPrice,
       quantity,
       image,
     };
     AddToCart(product);
-    setShowButtons(true);
     incrementCart();
     setSelectedSize('');
     setShow(false);
-    localStorage.setItem(`${name}_quantity`, quantity); // Update local storage after adding to cart
+    setShowButtons(prevShowButtons => ({ ...prevShowButtons, [id]: true }));
   };
   useEffect(() => {
     // Retrieve quantity from local storage on component mount
-    const storedQuantity = localStorage.getItem(`${name}_quantity`);
+    const storedQuantity = localStorage.getItem(`${id}_quantity`);
     if (storedQuantity) {
       setQuantity(parseInt(storedQuantity, 10));
-      setShowButtons(true);
+      setShowButtons(prevShowButtons => ({ ...prevShowButtons, [id]: true }));
     }
-  }, [name]);
+  }, [id]);
   return (
     <>
       <hr />
@@ -102,7 +100,7 @@ const PizzaPage = ({ name, description, price, image, mrp }) => {
             <img src={image} alt="Product" />
           </div>
           <div className="add-btn">
-          {showButtons && (
+          {productShowButtons && (
             <button variant="contained" style={{
               color: 'whitesmoke' ,
               border: 'none' ,
@@ -110,7 +108,7 @@ const PizzaPage = ({ name, description, price, image, mrp }) => {
               borderRadius: '.5rem' ,
             }}>Added</button>
             )}
-            {!showButtons && (
+            {!productShowButtons && (
               <button variant="contained" className="btn" onClick={handleShow}>
                 ADD
               </button>

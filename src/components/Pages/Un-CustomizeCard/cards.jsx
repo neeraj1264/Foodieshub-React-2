@@ -6,48 +6,57 @@ const Cards = ({id, name, description, price, image, mrp }) => {
     decrementCart,
     incrementCart,
     AddToCart,
-    // quantity,
-    // updateQuantity,
+    showButtons,
+    setShowButtons,
     cartItems,
     setCartItems,
-    updateCartItemQuantity
+    updateCartItemQuantity,
     } = useCart();
 
-  const [showButtons, setShowButtons] = useState(false);
-  const [quantity, setQuantity] = useState(1);
-
+  const productInCart = cartItems.find(item => item.id === id);
+  const productShowButtons = showButtons[id] || false;
+  const [quantity , setQuantity] = useState(1)
+  
   useEffect(() => {
     // Retrieve quantity from local storage on component mount
     const storedQuantity = localStorage.getItem(`${id}_quantity`);
     if (storedQuantity) {
       setQuantity(parseInt(storedQuantity, 10));
-      setShowButtons(true);
+      setShowButtons(prevShowButtons => ({ ...prevShowButtons, [id]: true }));
     }
   }, [id]);
 
-  const handleIncrement = () => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
-    // Update local storage on quantity change
-    localStorage.setItem(`${id}_quantity`, quantity + 1);
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    updateCartItemQuantity(id, quantity + 1);
-  };
-
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      setQuantity((prevQuantity) => prevQuantity - 1);
-      // Update local storage on quantity change
-      localStorage.setItem(`${id}_quantity`, quantity - 1);
-      updateCartItemQuantity(id, quantity - 1);
-    } else {
-      // If quantity is 1, block add button and hide increment/decrement buttons
-      setShowButtons(false);
-      decrementCart();
-      setCartItems((prevItems) => prevItems.filter(item => item.id !== id));
-      localStorage.removeItem(`${id}_quantity`);
-      updateCartItemQuantity(id, 0);
-    }
-  };
+  // const handleIncrement = () => {
+  //   setQuantity((prevQuantity) => {
+  //     const newQuantity = prevQuantity + 1;
+  //     console.log(`Incrementing quantity for ${id} to ${newQuantity}`);
+  //     localStorage.setItem(`${id}_quantity`, newQuantity);
+  //     updateCartItemQuantity(id, newQuantity);
+  //     return newQuantity;
+  //   });
+  // };
+  
+  // const handleDecrement = () => {
+  //   if (quantity > 1) {
+  //     setQuantity((prevQuantity) => {
+  //       const newQuantity = prevQuantity - 1;
+  //       console.log(`Decrementing quantity for ${id} to ${newQuantity}`);
+  //       localStorage.setItem(`${id}_quantity`, newQuantity);
+  //       updateCartItemQuantity(id, newQuantity);
+  //       return newQuantity;
+  //     });
+  //   } else {
+  //     setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: false }));
+  //     decrementCart();
+  //     setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  
+  //     updateCartItemQuantity(id, 0);
+  //     localStorage.removeItem(`${id}_quantity`); // Remove the quantity from local storage
+  //     console.log(`Removing quantity for ${id}`);
+  //   }
+  // };
+  
+  
 
   const handleAddToCart = () => {
     const product = {
@@ -58,10 +67,9 @@ const Cards = ({id, name, description, price, image, mrp }) => {
       image,
     };
     AddToCart(product);
-    setShowButtons(true);
+    setShowButtons(prevShowButtons => ({ ...prevShowButtons, [id]: true }));
     incrementCart();
     setQuantity(quantity);
-    localStorage.setItem(`${id}_quantity`, quantity); // Update local storage after adding to cart
   };
 
   return (
@@ -89,30 +97,15 @@ const Cards = ({id, name, description, price, image, mrp }) => {
             <img src={image} alt="Product" />
           </div>
           <div className="add-btn">
-            {showButtons && (
-              <>
-              <div className="quantity-update">
-                <button
-                  variant="contained"
-                  className="btn"
-                  style={{color: 'whitesmoke'}}
-                  onClick={handleDecrement}
-                >
-                  -
-                </button>
-                <span style={{ margin: "0 0.5rem" }}>{quantity}</span>
-                <button
-                  variant="contained"
-                  className="btn"
-                  onClick={handleIncrement}
-                  style={{color: 'whitesmoke'}}
-                >
-                  +
-                </button>
-                </div>
-              </>
+            {productShowButtons && (
+              <button variant="contained" style={{
+                color: 'whitesmoke' ,
+                border: 'none' ,
+                background: 'red' ,
+                borderRadius: '.5rem' ,
+              }}>Added</button>
             )}
-            {!showButtons && (
+            {!productShowButtons && (
               <button
                 variant="contained"
                 className="btn"
