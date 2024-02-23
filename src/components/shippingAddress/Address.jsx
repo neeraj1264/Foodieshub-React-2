@@ -44,17 +44,15 @@ const Address = () => {
         city,
       };
 
+      setSelectedAddress(addressData);
+
       if (saveForFuture) {
-        // Save address to local storage for future orders
+        // Save address to local storage for future orders only if the checkbox is checked
         setSavedAddresses([...savedAddresses, addressData]);
         localStorage.setItem('savedAddresses', JSON.stringify([...savedAddresses, addressData]));
       }
-      setSelectedAddress(addressData);
     }
-    // You can also handle the form submission logic here
-    console.log('Customer Name:', customerName);
-    console.log('Street Address:', streetAddress);
-    console.log('City:', city);
+    handleNext();
   };
 
   const handleAddressSelection = (index) => {
@@ -130,15 +128,9 @@ const Address = () => {
             <label className="form-check-label" htmlFor="saveForFuture">
               Use this address for future orders
             </label>
-          </div>          <button type="submit" className="btn btn-primary">
+          </div>        
+            <button type="submit" className="btn btn-primary">
             Next
-          </button>
-          <button
-            type="button"
-            className="btn btn-secondary ms-2"
-            onClick={() => setSelectedAddress(null)}
-          >
-            Add New Address
           </button>
         </form>
       )}
