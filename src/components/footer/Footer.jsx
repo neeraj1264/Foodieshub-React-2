@@ -16,18 +16,22 @@ function Footer() {
       <footer>
       <div className="footer-content">
         <NavLink to="/" className="nav-link text-white i">
-          <IoHomeOutline />
+          <div>
+          <IoHomeOutline  className="icon"/>
+          </div>
           <span className="icon-name">Home</span>
         </NavLink>
 
         <NavLink to="/layout2" className="nav-link text-white i">
-        <MdRestaurantMenu />
+          <div>
+        <MdRestaurantMenu  className="icon"/>
+        </div>
           <span className="icon-name">Menu</span>
         </NavLink>
 
         <NavLink to="/cart" className="nav-link text-white i">
         <div className="cart">
-          <FaShoppingBasket />
+          <FaShoppingBasket  className="icon"/>
           {cartItemsCount > 0 && (
             <Badge bg="success" className="ms-1 ">
               {cartItemsCount}
@@ -39,7 +43,7 @@ function Footer() {
         
         <NavLink to="/burger" className=" grocery">
         <span className="icon-name ">Grocery </span>
-        <MdOutlineLocalGroceryStore />
+        <MdOutlineLocalGroceryStore  className="icon"/>
         <span className='i'> Soon</span>
         </NavLink>
       </div>

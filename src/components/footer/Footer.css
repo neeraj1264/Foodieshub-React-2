@@ -39,3 +39,7 @@ footer {
   padding: 0 1rem;
   border-radius: 0.3rem;
 }
+.nav-link .icon {
+  font-size: 1rem; /* Set your desired size for the icons */
+  margin-bottom: 0.2rem;
+}

@@ -2,11 +2,17 @@ import React from 'react';
 import Cards from './Un-CustomizeCard/cards';
 
 const ChineseData = [
-  { id: 31, name: 'Chinese1', image: '/img/cheesepan.jpg', description: 'Classic Pizza with meat sauce.Classic Pizza with meat sauce.Classic Pizza with meat sauce.Classic Pizza with meat sauce.', price: 50, mrp: '70' },
-  { id: 32, name: 'Chinese2', image: '/img/cheesepan.jpg', description: 'Classic Pizza with meat sauce.', price: 50, mrp: '70' },
-  { id: 33, name: 'Chinese3', image: '/img/cheesepan.jpg', description: 'Classic Pizza with meat sauce.', price: 50, mrp: '70' },
-  { id: 34, name: 'Chinese4', image: '/img/cheesepan.jpg', description: 'Classic Pizza with meat sauce.', price: 50, mrp: '70' },
-  { id: 35, name: 'Chinese5', image: '/img/cheesepan.jpg', description: 'Classic Pizza with meat sauce.', price: 50, mrp: '70' },
+  { id: 45, name: 'Veg Noodle', image: '/img/cheesepan.jpg', description: 'Classic Pizza with meat sauce.Classic Pizza with meat sauce.Classic Pizza with meat sauce.Classic Pizza with meat sauce.', price: 50, mrp: '70' },
+  { id: 46, name: 'White Noodle', image: '/img/cheesepan.jpg', description: 'Classic Pizza with meat sauce.', price: 50, mrp: '70' },
+  { id: 47, name: 'Cheese Noodle', image: '/img/cheesepan.jpg', description: 'Classic Pizza with meat sauce.', price: 50, mrp: '70' },
+  { id: 48, name: 'Hakka Noodle', image: '/img/cheesepan.jpg', description: 'Classic Pizza with meat sauce.', price: 50, mrp: '70' },
+  { id: 49, name: 'Singapoori Noodle', image: '/img/cheesepan.jpg', description: 'Classic Pizza with meat sauce.', price: 50, mrp: '70' },
+  { id: 50, name: 'Spring Roll', image: '/img/cheesepan.jpg', description: 'Classic Pizza with meat sauce.', price: 50, mrp: '70' },
+  { id: 51, name: 'Dry Manchurian', image: '/img/cheesepan.jpg', description: 'Classic Pizza with meat sauce.', price: 50, mrp: '70' },
+  { id: 52, name: 'Gravy Manchurian', image: '/img/cheesepan.jpg', description: 'Classic Pizza with meat sauce.', price: 50, mrp: '70' },
+  { id: 53, name: 'Pav Bhaji', image: '/img/cheesepan.jpg', description: 'Classic Pizza with meat sauce.', price: 50, mrp: '70' },
+  { id: 54, name: 'Cheese Chilli', image: '/img/cheesepan.jpg', description: 'Classic Pizza with meat sauce.', price: 50, mrp: '70' },
+  { id: 55, name: 'Honey Chilli Patato', image: '/img/cheesepan.jpg', description: 'Classic Pizza with meat sauce.', price: 50, mrp: '70' },
 ];
 const renderCards = (data) => {
   return data.map((item) => <Cards key={item.id} {...item} />);

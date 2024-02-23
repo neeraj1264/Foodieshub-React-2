@@ -2,46 +2,11 @@ import React from 'react';
 import Cards from '../Un-CustomizeCard/cards';
 
 const pastaData = [
-  {
-    id: 6,
-    name: "Red Sauce Pasta",
-    image: "/img/pasta.png",
-    description: "Classic pasta with meat sauce.",
-    price: 100,
-    mrp: "150",
-  },
-  {
-    id: 7,
-    name: "White Sauce Pasta",
-    image: "/img/pasta.png",
-    description: "Classic pasta with meat sauce.",
-    price: 100,
-    mrp: "150",
-  },
-  {
-    id: 8,
-    name: "Mix Sauce Pasta",
-    image: "/img/pasta.png",
-    description: "Classic pasta with meat sauce.",
-    price: 100,
-    mrp: "150",
-  },
-  {
-    id: 9,
-    name: "Tandoori Sauce Pasta",
-    image: "/img/pasta.png",
-    description: "Classic pasta with meat sauce.",
-    price: 100,
-    mrp: "150",
-  },
-  {
-    id: 10,
-    name: "Makhni Sauce Pasta",
-    image: "/img/pasta.png",
-    description: "Classic pasta with meat sauce.",
-    price: 100,
-    mrp: "150",
-  },
+  { id: 21, name: 'Red Sauce Pasta', image: '/img/pasta.png', description: 'Classic Pizza with meat sauce.', price: 50, mrp: '70' },
+  { id: 22, name: 'White Sauce Pasta', image: '/img/pasta.png', description: 'Classic Pizza with meat sauce.', price: 50, mrp: '70' },
+  { id: 23, name: 'Tandoori Pasta', image: '/img/pasta.png', description: 'Classic Pizza with meat sauce.', price: 50, mrp: '70' },
+  { id: 24, name: 'Makhani Pasta', image: '/img/pasta.png', description: 'Classic Pizza with meat sauce.', price: 50, mrp: '70' },
+  { id: 25, name: 'Mix Sauce Pasta', image: '/img/pasta.png', description: 'Classic Pizza with meat sauce.', price: 50, mrp: '70' },
 ];
 const renderCards = (data) => {
   return data.map((item) => <Cards key={item.id} {...item} />);

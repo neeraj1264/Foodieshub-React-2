@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal, Table } from 'react-bootstrap';
 import { useCart } from "../../ContextApi";
-import { FaPlus , FaMinus } from "react-icons/fa6";
 
-const CustomCard = ({ name, description, price, image, mrp }) => {
+const CustomCard = ({ id , name, description, price, image, mrp }) => {
   const { priceH, priceF } = price;
 
-  const { decrementCart , incrementCart , AddToCart } = useCart();
+  const { decrementCart , incrementCart , AddToCart , showButtons, setShowButtons } = useCart();
 
   const [show, setShow] = useState(false);
-  const [showButtons, setShowButtons] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState('');
+  const productShowButtons = showButtons[id] || false;
 
   const handleShow = () => setShow(true);
   const handleClose = () => {
@@ -22,11 +21,6 @@ const CustomCard = ({ name, description, price, image, mrp }) => {
   const handleSizeChange = (event) => {
     setSelectedSize(event.target.value);
   };
-
-  // const handleAddToCart = () => {
-  //   // Implement your logic to add the item to the cart with the selected size
-  //   handleClose();
-  // };
 
   const handleIncrement = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
@@ -63,26 +57,54 @@ const CustomCard = ({ name, description, price, image, mrp }) => {
         return;
     }
     const product = {
+      id,
       name: `${name} [${selectedSize}]`, 
       price: selectedPrice,
       quantity,
       image,
     };
     AddToCart(product);
-    setShowButtons(true);
+    setShowButtons(prevShowButtons => ({ ...prevShowButtons, [id]: true }));
     incrementCart();
     setSelectedSize('');
     setShow(false);
-    localStorage.setItem(`${name}_quantity`, quantity); // Update local storage after adding to cart
   };
+
+  const handleAddBtnToCart = () => {
+    const product = {
+      id,
+      name,
+      price,
+      quantity,
+      image,
+    };
+    AddToCart(product);
+    setShowButtons(prevShowButtons => ({ ...prevShowButtons, [id]: true }));
+    incrementCart();
+    setQuantity(quantity);
+  };
+
+  const handleAddBtnClick = () => {
+    // If hasPriceOptions is false, trigger handleAddToCart functionality
+    if (!hasPriceOptions) {
+      handleAddBtnToCart();
+    } else {
+      // Otherwise, show the modal
+      handleShow();
+    }
+  };
+
   useEffect(() => {
     // Retrieve quantity from local storage on component mount
-    const storedQuantity = localStorage.getItem(`${name}_quantity`);
+    const storedQuantity = localStorage.getItem(`${id}_quantity`);
     if (storedQuantity) {
       setQuantity(parseInt(storedQuantity, 10));
-      setShowButtons(true);
+      setShowButtons(prevShowButtons => ({ ...prevShowButtons, [id]: true }));
     }
-  }, [name]);
+  }, [id]);
+
+  const hasPriceOptions = typeof price === 'object' && 'priceH' in price && 'priceF' in price;
+
   return (
     <>
       <hr />
@@ -98,37 +120,21 @@ const CustomCard = ({ name, description, price, image, mrp }) => {
           <div>
             <img src={image} alt="Product" />
           </div>
-          <div>
-          {showButtons && (
-                <>
-                <div className="quantity-update">
-                  <button
-                    variant="contained"
-                    className="btn"
-                    onClick={handleDecrement}
-                    style={{color: 'white'}}
-                  >
-                    <FaMinus />
-                  </button>
-                  <span style={{ margin: "0 0.5rem" }}>{quantity}</span>
-                  <button
-                    variant="contained"
-                    className="btn"
-                    onClick={handleIncrement}
-                    style={{color: 'white'}}
-                  >
-                    <FaPlus />
-                  </button>
-                  </div>
-                </>
-            )}
-            {!showButtons && (
-                <>
-              <button variant="contained" className="add-btn" onClick={handleShow}>
+          <div className="add-btn">
+          {productShowButtons && (
+                <button variant="contained" style={{
+                  color: 'whitesmoke' ,
+                  border: 'none' ,
+                  background: '#d32e2e' ,
+                  borderRadius: '.5rem' ,
+                }}>Added</button>
+                )}
+            {!productShowButtons && (
+              <button variant="contained" className="btn" onClick={handleAddBtnClick}>
                 ADD
               </button>
-              </>
             )}
+            {hasPriceOptions && (
             <Modal show={show} onHide={handleClose} style={{ position: 'fixed', bottom: '2px' }}>
               <Modal.Header closeButton>
                 <Modal.Title>Select Size</Modal.Title>
@@ -185,8 +191,9 @@ const CustomCard = ({ name, description, price, image, mrp }) => {
                 </Button>
               </Modal.Footer>
             </Modal>
+            )}
           </div>
-          <span className="custom-lable">customisable</span>
+          {hasPriceOptions && <div className="cust">customisable</div>}
 
         </div>
       </div>

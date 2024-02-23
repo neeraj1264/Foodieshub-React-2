@@ -101,7 +101,7 @@ const Cards = ({id, name, description, price, image, mrp }) => {
               <button variant="contained" style={{
                 color: 'whitesmoke' ,
                 border: 'none' ,
-                background: 'red' ,
+                background: '#d32e2e' ,
                 borderRadius: '.5rem' ,
               }}>Added</button>
             )}

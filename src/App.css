@@ -2,7 +2,6 @@ a{
     text-decoration: none !important;
 }
 :root {
-  --color: red;
   --bg: #d32e2e;
 }
 .main-content{
@@ -41,7 +40,7 @@ a{
     font-size: .8rem;
   }
   .add-btn {
-    border: 1px solid red;
+    border: 1px solid var(--bg);
     background: whitesmoke;
     width: fit-content;
     align-items: center;
@@ -51,10 +50,10 @@ a{
     display: inline-block;
     font-size: 1.2rem;
     font-weight: 800;
-    color: red;
+    color: var(--bg);
    }
    .add-btn button{
-    color: red;
+    color: var(--bg);
     font-weight: 800;
     padding: 0.4rem 1rem;
     font-size: 1.2rem;
@@ -63,8 +62,8 @@ a{
   border: none;
 }
    .quantity-update{
-    border: 1px solid red;
-    background: red;
+    border: 1px solid var(--bg);
+    background: var(--bg);
     width: fit-content;
     align-items: center;
     margin: -1rem auto 0 ;
@@ -78,6 +77,7 @@ a{
     color: white;
    }
  
-    .custom-lable{
+    .cust{
       color: grey;
+      margin-top: -0.5rem;
     }
