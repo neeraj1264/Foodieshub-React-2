@@ -104,6 +104,14 @@ const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
             >
               {mrp}
             </span>
+            <span
+              style={{
+                marginLeft: ".5rem",
+                color: "var(--bg)",
+              }}
+            >
+              {(((mrp - priceR || price) / mrp) * 100).toFixed(0)}% off
+            </span>
           </p>
           <p>{description}</p>
         </div>

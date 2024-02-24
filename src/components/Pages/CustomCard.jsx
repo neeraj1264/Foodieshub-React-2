@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, Table } from 'react-bootstrap';
+import { Button, Modal, Table } from "react-bootstrap";
 import { useCart } from "../../ContextApi";
 
-const CustomCard = ({ id , name, description, price, image, mrp }) => {
+const CustomCard = ({ id, name, description, price, image, mrp }) => {
   const { priceH, priceF } = price;
 
-  const { decrementCart , incrementCart , AddToCart , showButtons, setShowButtons } = useCart();
+  const {
+    decrementCart,
+    incrementCart,
+    AddToCart,
+    showButtons,
+    setShowButtons,
+  } = useCart();
 
   const [show, setShow] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState('');
+  const [selectedSize, setSelectedSize] = useState("");
   const productShowButtons = showButtons[id] || false;
 
   const handleShow = () => setShow(true);
   const handleClose = () => {
-    setSelectedSize('');
+    setSelectedSize("");
     setShow(false);
   };
 
@@ -36,37 +42,37 @@ const CustomCard = ({ id , name, description, price, image, mrp }) => {
   };
 
   const handleAddToCart = () => {
-    if (selectedSize === '') {
+    if (selectedSize === "") {
       // Handle the case where no size is selected
-      console.error('Please select a size.');
+      console.error("Please select a size.");
       return;
     }
-  
+
     // Determine the selected price based on the chosen size
     let selectedPrice = 0;
     switch (selectedSize) {
-      case 'Half':
+      case "Half":
         selectedPrice = priceH;
         break;
-      case 'Full':
+      case "Full":
         selectedPrice = priceF;
         break;
       default:
         // Handle the case where an unknown size is selected
-        console.error('Unknown size selected.');
+        console.error("Unknown size selected.");
         return;
     }
     const product = {
       id,
-      name: `${name} [${selectedSize}]`, 
+      name: `${name} [${selectedSize}]`,
       price: selectedPrice,
       quantity,
       image,
     };
     AddToCart(product);
-    setShowButtons(prevShowButtons => ({ ...prevShowButtons, [id]: true }));
+    setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: true }));
     incrementCart();
-    setSelectedSize('');
+    setSelectedSize("");
     setShow(false);
   };
 
@@ -79,7 +85,7 @@ const CustomCard = ({ id , name, description, price, image, mrp }) => {
       image,
     };
     AddToCart(product);
-    setShowButtons(prevShowButtons => ({ ...prevShowButtons, [id]: true }));
+    setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: true }));
     incrementCart();
     setQuantity(quantity);
   };
@@ -99,11 +105,12 @@ const CustomCard = ({ id , name, description, price, image, mrp }) => {
     const storedQuantity = localStorage.getItem(`${id}_quantity`);
     if (storedQuantity) {
       setQuantity(parseInt(storedQuantity, 10));
-      setShowButtons(prevShowButtons => ({ ...prevShowButtons, [id]: true }));
+      setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: true }));
     }
   }, [id]);
 
-  const hasPriceOptions = typeof price === 'object' && 'priceH' in price && 'priceF' in price;
+  const hasPriceOptions =
+    typeof price === "object" && "priceH" in price && "priceF" in price;
 
   return (
     <>
@@ -111,8 +118,25 @@ const CustomCard = ({ id , name, description, price, image, mrp }) => {
       <div className="product-card">
         <div className="product-details">
           <h3>{name}</h3>
-          <p style={{ fontWeight: '700' }}>₹{priceH || price}
-            <span style={{ textDecoration: 'line-through', marginLeft: '.5rem', color: 'grey' }}>{mrp}</span>
+          <p style={{ fontWeight: "700" }}>
+            ₹{priceH || price}
+            <span
+              style={{
+                textDecoration: "line-through",
+                marginLeft: ".5rem",
+                color: "grey",
+              }}
+            >
+              {mrp}
+            </span>
+            <span
+              style={{
+                marginLeft: ".5rem",
+                color: "var(--bg)",
+              }}
+            >
+              {(((mrp - priceH || price) / mrp) * 100).toFixed(0)}% off
+            </span>
           </p>
           <p>{description}</p>
         </div>
@@ -121,80 +145,100 @@ const CustomCard = ({ id , name, description, price, image, mrp }) => {
             <img src={image} alt="Product" />
           </div>
           <div className="add-btn">
-          {productShowButtons && (
-                <button variant="contained" style={{
-                  color: 'whitesmoke' ,
-                  border: 'none' ,
-                  background: '#d32e2e' ,
-                  borderRadius: '.5rem' ,
-                }}>Added</button>
-                )}
+            {productShowButtons && (
+              <button
+                variant="contained"
+                style={{
+                  color: "whitesmoke",
+                  border: "none",
+                  background: "#d32e2e",
+                  borderRadius: ".5rem",
+                }}
+              >
+                Added
+              </button>
+            )}
             {!productShowButtons && (
-              <button variant="contained" className="btn" onClick={handleAddBtnClick}>
+              <button
+                variant="contained"
+                className="btn"
+                onClick={handleAddBtnClick}
+              >
                 ADD
               </button>
             )}
             {hasPriceOptions && (
-            <Modal show={show} onHide={handleClose} style={{ position: 'fixed', bottom: '2px' }}>
-              <Modal.Header closeButton>
-                <Modal.Title>Select Size</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-              <h3 style={{textAlign: 'center'}}>{name}</h3>
+              <Modal
+                show={show}
+                onHide={handleClose}
+                style={{ position: "fixed", bottom: "2px" }}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Select Size</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <h3 style={{ textAlign: "center" }}>{name}</h3>
 
-                <Table striped bordered hover>
-                  <thead>
-                    <tr>
-                      <th>Size</th>
-                      <th>Price</th>
-                      <th>Choose</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Half</td>
-                      <td>₹{priceH}</td>
-                      <td>
-                        <input
-                          type="radio"
-                          value="Half"
-                          checked={selectedSize === 'Half'}
-                          onChange={handleSizeChange}
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Full</td>
-                      <td>₹{priceF}</td>
-                      <td>
-                        <input
-                          type="radio"
-                          value="Full"
-                          checked={selectedSize === 'Full'}
-                          onChange={handleSizeChange}
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </Modal.Body>
-              <Modal.Footer>
-              <Button variant="contained" className="btn" onClick={handleDecrement}>
-                  -
-                </Button>
-                <span style={{ margin: '0 0.5rem' }}>{quantity}</span>
-                <Button variant="contained" className="btn" onClick={handleIncrement}>
-                  +
-                </Button>
-                <Button variant="primary" onClick={handleAddToCart}>
-                  Add to Cart
-                </Button>
-              </Modal.Footer>
-            </Modal>
+                  <Table striped bordered hover>
+                    <thead>
+                      <tr>
+                        <th>Size</th>
+                        <th>Price</th>
+                        <th>Choose</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Half</td>
+                        <td>₹{priceH}</td>
+                        <td>
+                          <input
+                            type="radio"
+                            value="Half"
+                            checked={selectedSize === "Half"}
+                            onChange={handleSizeChange}
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Full</td>
+                        <td>₹{priceF}</td>
+                        <td>
+                          <input
+                            type="radio"
+                            value="Full"
+                            checked={selectedSize === "Full"}
+                            onChange={handleSizeChange}
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </Table>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button
+                    variant="contained"
+                    className="btn"
+                    onClick={handleDecrement}
+                  >
+                    -
+                  </Button>
+                  <span style={{ margin: "0 0.5rem" }}>{quantity}</span>
+                  <Button
+                    variant="contained"
+                    className="btn"
+                    onClick={handleIncrement}
+                  >
+                    +
+                  </Button>
+                  <Button variant="primary" onClick={handleAddToCart}>
+                    Add to Cart
+                  </Button>
+                </Modal.Footer>
+              </Modal>
             )}
           </div>
           {hasPriceOptions && <div className="cust">customisable</div>}
-
         </div>
       </div>
     </>

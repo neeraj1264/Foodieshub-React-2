@@ -14,7 +14,7 @@ const items = [
   { id: 7,  imageUrl: '/img/butternaan.jpeg', title: 'Hot Naans',          target: 'Naan'     , description: 'Freshly baked naans offering warmth and a perfect complement to your favorite curry.' },
   { id: 9,  imageUrl: '/img/chaap1.jpg',      title: 'Chatpati Chaap',     target: 'Chaap'    , description: 'The perfect blend of spice and crunch in every bite of our chatpati chaap.' },
   { id: 10, imageUrl: '/img/shakes.jpg',      title: 'Delicious Shakes',   target: 'Shake'    , description: 'Rich and indulgent shakes crafted with the finest ingredients for pure delight.' },
-  { id: 11, imageUrl: '/img/gb.jpg',    title: 'Garkic-Bread',             target: 'Garlic'   , description: 'The essence of Indian street food captured in a flavorful pav bhaji medley.' },
+  { id: 11, imageUrl: '/img/gb.jpg',          title: 'Garkic-Bread',       target: 'Garlic'   , description: 'The essence of Indian street food captured in a flavorful pav bhaji medley.' },
   { id: 12, imageUrl: '/img/momo.jpg',        title: 'Hot Momos',          target: 'Momos'    , description: 'Steaming hot momos filled with succulent meat or vegetables for a comforting treat.' },
   { id: 13, imageUrl: '/img/b1.png',          title: 'Celebrations Cakes', target: 'Cake'     , description: 'Decadent celebration cakes, crafted with love to sweeten every moment.' },
   { id: 14, imageUrl: '/img/bhalle.jpeg',     title: 'Chatpati Chaat',     target: 'Snacks'   , description: 'An explosion of flavors in our tangy and crisp street-style chaat.' },

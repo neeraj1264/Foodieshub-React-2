@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCart } from "../../../ContextApi";
 
-const Cards = ({id, name, description, price, image, mrp }) => {
+const Cards = ({ id, name, description, price, image, mrp }) => {
   const {
     decrementCart,
     incrementCart,
@@ -11,18 +11,18 @@ const Cards = ({id, name, description, price, image, mrp }) => {
     cartItems,
     setCartItems,
     updateCartItemQuantity,
-    } = useCart();
+  } = useCart();
 
-  const productInCart = cartItems.find(item => item.id === id);
+  const productInCart = cartItems.find((item) => item.id === id);
   const productShowButtons = showButtons[id] || false;
-  const [quantity , setQuantity] = useState(1)
-  
+  const [quantity, setQuantity] = useState(1);
+
   useEffect(() => {
     // Retrieve quantity from local storage on component mount
     const storedQuantity = localStorage.getItem(`${id}_quantity`);
     if (storedQuantity) {
       setQuantity(parseInt(storedQuantity, 10));
-      setShowButtons(prevShowButtons => ({ ...prevShowButtons, [id]: true }));
+      setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: true }));
     }
   }, [id]);
 
@@ -35,7 +35,7 @@ const Cards = ({id, name, description, price, image, mrp }) => {
   //     return newQuantity;
   //   });
   // };
-  
+
   // const handleDecrement = () => {
   //   if (quantity > 1) {
   //     setQuantity((prevQuantity) => {
@@ -49,14 +49,12 @@ const Cards = ({id, name, description, price, image, mrp }) => {
   //     setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: false }));
   //     decrementCart();
   //     setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
-  
+
   //     updateCartItemQuantity(id, 0);
   //     localStorage.removeItem(`${id}_quantity`); // Remove the quantity from local storage
   //     console.log(`Removing quantity for ${id}`);
   //   }
   // };
-  
-  
 
   const handleAddToCart = () => {
     const product = {
@@ -67,14 +65,14 @@ const Cards = ({id, name, description, price, image, mrp }) => {
       image,
     };
     AddToCart(product);
-    setShowButtons(prevShowButtons => ({ ...prevShowButtons, [id]: true }));
+    setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: true }));
     incrementCart();
     setQuantity(quantity);
   };
 
   return (
     <>
-      <hr className="hr"/>
+      <hr className="hr" />
       <div className="product-card">
         <div className="product-details">
           <h5>{name}</h5>
@@ -89,6 +87,14 @@ const Cards = ({id, name, description, price, image, mrp }) => {
             >
               {mrp}
             </span>
+            <span
+              style={{
+                marginLeft: ".5rem",
+                color: "var(--bg)",
+              }}
+            >
+              {(((mrp - price) / mrp) * 100).toFixed(0)}% off
+            </span>
           </p>
           <p className="description">{description}</p>
         </div>
@@ -98,12 +104,17 @@ const Cards = ({id, name, description, price, image, mrp }) => {
           </div>
           <div className="add-btn">
             {productShowButtons && (
-              <button variant="contained" style={{
-                color: 'whitesmoke' ,
-                border: 'none' ,
-                background: '#d32e2e' ,
-                borderRadius: '.5rem' ,
-              }}>Added</button>
+              <button
+                variant="contained"
+                style={{
+                  color: "whitesmoke",
+                  border: "none",
+                  background: "#d32e2e",
+                  borderRadius: ".5rem",
+                }}
+              >
+                Added
+              </button>
             )}
             {!productShowButtons && (
               <button
