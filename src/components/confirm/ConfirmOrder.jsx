@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../ContextApi";
-import  './confirm.css'
+// import  './confirm.css'
 const ConfirmOrder = () => {
 
   const { cartItems, selectedAddress } = useCart();
