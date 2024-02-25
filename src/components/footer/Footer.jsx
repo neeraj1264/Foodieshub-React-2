@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Footer.css'
 import { Link, NavLink } from 'react-router-dom';
 import { FaShoppingBasket } from 'react-icons/fa';
@@ -8,9 +8,20 @@ import { MdRestaurantMenu } from "react-icons/md";
 import Badge from 'react-bootstrap/Badge';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useCart } from '../../ContextApi';
-function Footer() {
-  const { cartItemsCount, addToCart } = useCart();
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
+function Footer() {
+  const { cartItemsCount } = useCart();
+  const [showModal, setShowModal] = useState(false);
+
+  const handleGroceryClick = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
   return (
     <>
       <footer>
@@ -41,13 +52,28 @@ function Footer() {
           <span className="icon-name">Cart</span>
         </NavLink>
         
-        <NavLink to="/burger" className=" grocery">
-        <span className="icon-name ">Grocery </span>
-        <MdOutlineLocalGroceryStore  className="icon"/>
-        <span className='i'> Soon</span>
-        </NavLink>
-      </div>
-    </footer>
+        <NavLink to="/" className="grocery" onClick={handleGroceryClick}>
+            <span className="icon-name">Grocery </span>
+            <MdOutlineLocalGroceryStore className="icon" />
+            <span className='i'> Soon</span>
+          </NavLink>
+        </div>
+      </footer>
+
+      {/* Modal for Grocery */}
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Coming Soon</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Grocery Item Coming Soon. Stay tuned!</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" style={{background: '#d32e2e', border: 'none'}} onClick={handleCloseModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   )
 }
