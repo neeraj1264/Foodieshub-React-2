@@ -19,10 +19,21 @@ const ConfirmOrder = () => {
       return Math.floor(1000 + Math.random() * 9000);
     }
     const orderId = getRandom4DigitNumber();
-    const productDetails = cartItems
-      .map((item) => `${item.quantity}.0 x  ${item.name} = ₹${item.price}`)
-      .join("\n");
-    const total = calculateTotal();
+    const orderDetails = cartItems.map((item) => {
+      const addonsDetails = item.addons
+        ? item.addons.map((addon) => `Addons\n${addon.name} + ₹${addon.price}`)
+        : [];
+  
+        const cheesesDetails = item.cheeses
+        ? item.cheeses.map((cheese) => `${cheese.name} + ₹${cheese.price}`)
+        : [];
+  
+      return `${item.quantity}.0 x ${item.name}\n${addonsDetails.join("\n")}\n${cheesesDetails.join("\n")}\n= ₹${calculateTotalForItem(item)}`;
+    });
+
+   const productDetails = orderDetails.join("\n\n");
+  const total = calculateTotal();
+
     const message = `
 Order      : *ORD-${orderId}*
 Phone     : *${selectedAddress.city}*
@@ -42,28 +53,44 @@ Service Charge: ₹20.00`;
     window.open(whatsappLink, "_blank");
   };
 
-  const calculateTotal = () => {
-    return cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
-      20
-    );
+  const calculateTotalForItem = (item) => {
+    const basePrice = item.price * item.quantity;
+
+    const addonsPrice = item.addons
+      ? item.addons.reduce((sum, addon) => sum + addon.price, 0) * item.quantity
+      : 0;
+
+    const cheesesPrice = item.cheeses
+      ? item.cheeses.reduce((sum, cheese) => sum + cheese.price, 0) *
+        item.quantity
+      : 0;
+
+    return basePrice + addonsPrice + cheesesPrice;
   };
 
+  const calculateTotal = () => {
+    return cartItems.reduce((total, item) => {
+      const basePrice = item.price * item.quantity;
+
+      const addonsPrice = item.addons
+        ? item.addons.reduce((sum, addon) => sum + addon.price, 0) *
+          item.quantity
+        : 0;
+
+      const cheesesPrice = item.cheeses
+        ? item.cheeses.reduce((sum, cheese) => sum + cheese.price, 0) *
+          item.quantity
+        : 0;
+
+      return total + basePrice + addonsPrice + cheesesPrice;
+    }, 20); // Assuming 20 is the initial total (Service Charge)
+  };
   return (
     <div className="container">
       <h2 className="text-center mt-4 mb-4">Confirm Order</h2>
       {cartItems.length > 0 ? (
         <>
-          <table className="table  mt-2">
-            {/* <thead>
-              <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Net Price</th>
-              </tr>
-            </thead> */}
+          <table className="table mt-2">
             <tbody>
               {cartItems.map((item, index) => (
                 <tr key={index}>
@@ -74,17 +101,39 @@ Service Charge: ₹20.00`;
                       className="img-thumbnail"
                     />
                   </td>
-                  <td>{item.name}</td>
-                  <td>₹{item.price}</td>
+                  <td>
+                        <div style={{color: 'black' , fontWeight: '700'}}>
+                        {item.name}
+                        </div>
+                        {item.addons && (
+                          <div style={{color: 'grey'}}>
+                            Addons:
+                            {item.addons.map((addon) => (
+                              <div key={addon.name} style={{color: 'grey'}}>
+                                {addon.name} - ₹{addon.price}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                        {item.cheeses && (
+                          <div>
+                            {item.cheeses.map((cheese) => (
+                              <div key={cheese.name} style={{color: 'grey'}}>
+                                {cheese.name} - ₹{cheese.price}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </td>
                   <td>x</td>
                   <td>{item.quantity}</td>
-                  <td>₹{item.price * item.quantity}</td>
+                  <td>₹{calculateTotalForItem(item)}</td>
                 </tr>
               ))}
               {/* Row for the Service Charge */}
               {cartItems.length > 0 && (
                 <tr>
-                  <td colSpan="5" style={{ textAlign: "left" }}>
+                  <td colSpan="4" style={{ textAlign: "left" }}>
                     Service Charge:
                   </td>
                   <td>₹20</td>
@@ -93,7 +142,7 @@ Service Charge: ₹20.00`;
               {/* Row for the sum of net prices */}
               {cartItems.length > 0 && (
                 <tr>
-                  <td colSpan="5" style={{ textAlign: "left" }}>
+                  <td colSpan="4" style={{ textAlign: "left" }}>
                     Total:
                   </td>
                   <td>₹{calculateTotal()}</td>

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, Table } from "react-bootstrap";
+import { Button, Modal, Table, Form } from "react-bootstrap";
 import { useCart } from "../../../ContextApi";
 
 const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
-  const { size1, size2, size3 } = size;
+  const { size1, size2, size3 } = size || {};
   const { priceR, priceM, priceL } = price;
 
   const {
@@ -18,7 +18,18 @@ const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState(size1);
   const [selectedSizePrice, setSelectedSizePrice] = useState(priceR);
+  const [AddonsPrice, setAddonsPrice] = useState(20);
+  const [cheesePrice, setcheesePrice] = useState(30);
   const productShowButtons = showButtons[id] || false;
+  const [addons, setAddons] = useState({
+    extraCheese: false,
+    cheeseburst: false,
+    onion: false,
+    capsicum: false,
+    tomato: false,
+    sweetcorn: false,
+    mushroom: false,
+  });
 
   const handleShow = () => {
     setShow(true);
@@ -29,6 +40,52 @@ const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
     setShow(false);
   };
 
+  const handleAddBtnClick = () => {
+    // If hasPriceOptions is false, trigger handleAddToCart functionality
+    if (!hasPriceOptions) {
+      handleAddBtnToCart();
+    } else {
+      // Otherwise, show the modal
+      handleShow();
+    }
+  };
+  const handleAddonChange = (addon) => {
+    setAddons((prevAddons) => ({
+      ...prevAddons,
+      [addon]: !prevAddons[addon],
+    }));
+  };
+
+  const addonsList = [
+    { name: "onion ", key: "onion" },
+    { name: "capsicum", key: "capsicum" },
+    { name: "tomato", key: "tomato" },
+    { name: "sweetcorn", key: "sweetcorn" },
+    { name: "mushroom", key: "mushroom" },
+  ];
+
+  const cheeselist = [
+    { name: "Extra Cheese", key: "extraCheese" },
+    { name: "Cheeseburst", key: "cheeseburst" },
+  ];
+
+  const getTotalPrice = () => {
+    let total = selectedSizePrice * quantity;
+
+    addonsList.forEach((addon) => {
+      if (addons[addon.key]) {
+        total += AddonsPrice * quantity;
+      }
+    });
+
+    cheeselist.forEach((addon) => {
+      if (addons[addon.key]) {
+        total += cheesePrice * quantity;
+      }
+    });
+    return total;
+  };
+
   const handleSizeChange = (event) => {
     const newSize = event.target.value;
     setSelectedSize(newSize);
@@ -37,12 +94,18 @@ const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
     switch (newSize) {
       case size1:
         setSelectedSizePrice(priceR);
+        setAddonsPrice(30);
+        setcheesePrice(40);
         break;
       case size2:
         setSelectedSizePrice(priceM);
+        setAddonsPrice(50);
+        setcheesePrice(60);
         break;
       case size3:
         setSelectedSizePrice(priceL);
+        setAddonsPrice(70);
+        setcheesePrice(90);
         break;
       default:
         setSelectedSizePrice(priceR); // Default to priceR if an unknown size is selected
@@ -59,19 +122,68 @@ const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
     }
   };
 
+  const handleAddBtnToCart = () => {
+    const product = {
+      id,
+      name,
+      price,
+      quantity,
+      image,
+    };
+    AddToCart(product);
+    setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: true }));
+    incrementCart();
+    setQuantity(quantity);
+  };
+
   const handleAddToCart = () => {
     if (selectedSize === "") {
       // Handle the case where no size is selected
       console.error("Please select a size.");
       return;
     }
+    const selectedAddons = [];
+    addonsList.forEach((addon) => {
+      if (addons[addon.key]) {
+        selectedAddons.push({
+          name: addon.name,
+          price: AddonsPrice, 
+        });
+      }
+    });
+  
+    const selectedCheeses = [];
+    cheeselist.forEach((addon) => {
+      if (addons[addon.key]) {
+        selectedCheeses.push({
+          name: addon.name,
+          price: cheesePrice, 
+        });
+      }
+    });
+
     const product = {
       id,
       name: `${name} [${selectedSize}]`,
       price: selectedSizePrice,
       quantity,
       image,
+      addons: selectedAddons,
+    cheeses: selectedCheeses,
     };
+
+    let total = selectedSizePrice * quantity;
+
+    selectedAddons.forEach((addon) => {
+      total += AddonsPrice * quantity;
+    });
+  
+    selectedCheeses.forEach((addon) => {
+      total += cheesePrice * quantity;
+    });
+  
+    product.totalPrice = total;
+
     AddToCart(product);
     incrementCart();
     setSelectedSize("");
@@ -87,145 +199,212 @@ const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
       setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: true }));
     }
   }, [id]);
-  return (
-    <>
-      <hr />
-      <div className="product-card">
-        <div className="product-details">
-          <h3>{name}</h3>
-          <p style={{ fontWeight: "700" }}>
-            ₹{priceR || price}
-            <span
-              style={{
-                textDecoration: "line-through",
-                marginLeft: ".5rem",
-                color: "grey",
-              }}
-            >
-              {mrp}
-            </span>
-            <span
-              style={{
-                marginLeft: ".5rem",
-                color: "var(--bg)",
-              }}
-            >
-              {(((mrp - priceR || price) / mrp) * 100).toFixed(0)}% off
-            </span>
-          </p>
-          <p>{description}</p>
-        </div>
-        <div className="add-to-cart">
-          <div>
-            <img src={image} alt="Product" />
-          </div>
-          <div className="add-btn">
-            {productShowButtons && (
-              <button
-                variant="contained"
-                style={{
-                  color: "whitesmoke",
-                  border: "none",
-                  background: "#d32e2e",
-                  borderRadius: ".5rem",
-                }}
-              >
-                Added
-              </button>
-            )}
-            {!productShowButtons && (
-              <button variant="contained" className="btn" onClick={handleShow}>
-                ADD
-              </button>
-            )}
-            <Modal
-              show={show}
-              onHide={handleClose}
-              style={{ position: "fixed", bottom: "2px" }}
-            >
-              <Modal.Header closeButton>
-                <Modal.Title>Select Size</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <h3 style={{ textAlign: "center" }}>{name}</h3>
 
-                <Table striped bordered hover>
-                  <thead>
-                    <tr>
-                      <th>Size</th>
-                      <th>Price</th>
-                      <th>Choose</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>{size1}</td>
-                      <td>₹{priceR}</td>
-                      <td>
-                        <input
-                          type="radio"
-                          value={size1}
-                          checked={selectedSize === size1}
-                          onChange={handleSizeChange}
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>{size2}</td>
-                      <td>₹{priceM}</td>
-                      <td>
-                        <input
-                          type="radio"
-                          value={size2}
-                          checked={selectedSize === size2}
-                          onChange={handleSizeChange}
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>{size3}</td>
-                      <td>₹{priceL}</td>
-                      <td>
-                        <input
-                          type="radio"
-                          value={size3}
-                          checked={selectedSize === size3}
-                          onChange={handleSizeChange}
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button
-                  variant="contained"
-                  className="btn"
-                  onClick={handleDecrement}
-                >
-                  -
-                </Button>
-                <span style={{ margin: "0 0.5rem" }}>{quantity}</span>
-                <Button
-                  variant="contained"
-                  className="btn"
-                  onClick={handleIncrement}
-                >
-                  +
-                </Button>
-                <Button variant="primary" onClick={handleAddToCart}>
-                  Add to Cart
-                  <span style={{ paddingLeft: ".3rem" }}>
-                    ₹{selectedSizePrice}
-                  </span>
-                </Button>
-              </Modal.Footer>
-            </Modal>
-          </div>
-          <div className="cust">customisable</div>
-        </div>
-      </div>
-    </>
+  const hasPriceOptions =
+    typeof price === "object" &&
+    "priceR" in price &&
+    "priceM" in price &&
+    "priceL" in price;
+
+  return (
+<>
+<hr />
+<div className="product-card">
+<div className="product-details">
+<h3>{name}</h3>
+<p style={{ fontWeight: "700" }}>
+  ₹{priceR || price}
+  <span
+    style={{
+      textDecoration: "line-through",
+      marginLeft: ".5rem",
+      color: "grey",
+    }}
+  >
+    {mrp}
+  </span>
+  {!hasPriceOptions && (
+    <span
+      style={{
+        marginLeft: ".5rem",
+        color: "var(--bg)",
+      }}
+    >
+      {(((mrp - price) / mrp) * 100).toFixed(0)}% off
+    </span>
+  )}
+  {hasPriceOptions && (
+    <span
+      style={{
+        marginLeft: ".5rem",
+        color: "var(--bg)",
+      }}
+    >
+      {(((mrp - priceR || price) / mrp) * 100).toFixed(0)}% off
+    </span>
+  )}
+</p>
+<p>{description}</p>
+</div>
+<div className="add-to-cart">
+<div>
+  <img src={image} alt="Product" />
+</div>
+<div className="add-btn">
+  {productShowButtons && (
+    <button
+      variant="contained"
+      style={{
+        color: "whitesmoke",
+        border: "none",
+        background: "#d32e2e",
+        borderRadius: ".5rem",
+      }}
+    >
+      Added
+    </button>
+  )}
+  {!productShowButtons && (
+    <button
+      variant="contained"
+      className="btn"
+      onClick={handleAddBtnClick}
+    >
+      ADD
+    </button>
+  )}
+  {hasPriceOptions && (
+    <Modal
+      show={show}
+      onHide={handleClose}
+      style={{ position: "fixed", bottom: "2px" }}
+    >
+      <Modal.Header closeButton>
+        <img
+          src={image}
+          alt={name}
+          style={{
+            maxWidth: "5rem",
+            height: "4rem",
+            margin: "0 10px 10px 0",
+            borderRadius: "1rem",
+          }}
+        />
+        <Modal.Title>{name}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <h3 >Select Size</h3>
+
+        <Table striped bordered hover>
+          <tbody>
+            <tr>
+              <td>{size1}</td>
+              <td>₹{priceR}</td>
+              <td>
+                <input
+                  type="radio"
+                  value={size1}
+                  checked={selectedSize === size1}
+                  onChange={handleSizeChange}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>{size2}</td>
+              <td>₹{priceM}</td>
+              <td>
+                <input
+                  type="radio"
+                  value={size2}
+                  checked={selectedSize === size2}
+                  onChange={handleSizeChange}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>{size3}</td>
+              <td>₹{priceL}</td>
+              <td>
+                <input
+                  type="radio"
+                  value={size3}
+                  checked={selectedSize === size3}
+                  onChange={handleSizeChange}
+                />
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+
+        <h3 >Cheese</h3>
+
+        <Table striped bordered hover>
+          <tbody>
+            {cheeselist.map((addon) => (
+              <tr key={addon.key}>
+                <td>{addon.name}</td>
+                <td>₹{cheesePrice}</td>
+                <td>
+                  <Form.Check
+                    type="checkbox"
+                    checked={addons[addon.key]}
+                    onChange={() => handleAddonChange(addon.key)}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+        <h3 >Toppings</h3>
+
+        <Table striped bordered hover>
+          <tbody>
+            {addonsList.map((addon) => (
+              <tr key={addon.key}>
+                <td>{addon.name}</td>
+                <td>₹{AddonsPrice}</td>
+                <td>
+                  <Form.Check
+                    type="checkbox"
+                    checked={addons[addon.key]}
+                    onChange={() => handleAddonChange(addon.key)}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button
+          variant="contained"
+          className="btn"
+          onClick={handleDecrement}
+        >
+          -
+        </Button>
+        <span style={{ margin: "0 0.5rem" }}>{quantity}</span>
+        <Button
+          variant="contained"
+          className="btn"
+          onClick={handleIncrement}
+        >
+          +
+        </Button>
+        <Button variant="primary" onClick={handleAddToCart}>
+          Add to Cart
+          <span style={{ paddingLeft: ".3rem" }}>
+            ₹{getTotalPrice()}
+          </span>
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  )}
+</div>
+{hasPriceOptions && <div className="cust">customisable</div>}
+</div>
+</div>
+</>
   );
 };
 

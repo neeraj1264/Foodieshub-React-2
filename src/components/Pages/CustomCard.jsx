@@ -174,10 +174,20 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
                 style={{ position: "fixed", bottom: "2px" }}
               >
                 <Modal.Header closeButton>
-                  <Modal.Title>Select Size</Modal.Title>
+                <img
+                  src={image}
+                  alt={name}
+                  style={{
+                    maxWidth: "5rem",
+                    height: "4rem",
+                    margin: "0 10px 10px 0",
+                    borderRadius: '1rem'
+                  }}
+                />
+                  <Modal.Title>{name}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <h3 style={{ textAlign: "center" }}>{name}</h3>
+                  <h3 style={{ textAlign: "center" }}>Select Size</h3>
 
                   <Table striped bordered hover>
                     <thead>

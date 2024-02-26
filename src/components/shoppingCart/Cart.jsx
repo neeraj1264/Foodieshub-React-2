@@ -4,26 +4,52 @@ import { useNavigate } from "react-router-dom";
 import "./Cart.css";
 
 const Cart = ({ id }) => {
-let {
-  cartItems,
-  setCartItems,
-  updateCartItemQuantity,
-  decrementCart,
-  showButtons,
-  setShowButtons,
-  removeCartItem
- } = useCart();
-const productShowButtons = showButtons[id] || false;
+  let {
+    cartItems,
+    setCartItems,
+    updateCartItemQuantity,
+    decrementCart,
+    showButtons,
+    setShowButtons,
+    removeCartItem,
+  } = useCart();
+  const productShowButtons = showButtons[id] || false;
 
-const handleRemoveItem = (productId) => {
-  removeCartItem(productId);
-};
+  const handleRemoveItem = (productId) => {
+    removeCartItem(productId);
+  };
 
-const calculateTotal = () => {
-    return cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
-      20
-    );
+  const calculateTotalForItem = (item) => {
+    const basePrice = item.price * item.quantity;
+
+    const addonsPrice = item.addons
+      ? item.addons.reduce((sum, addon) => sum + addon.price, 0) * item.quantity
+      : 0;
+
+    const cheesesPrice = item.cheeses
+      ? item.cheeses.reduce((sum, cheese) => sum + cheese.price, 0) *
+        item.quantity
+      : 0;
+
+    return basePrice + addonsPrice + cheesesPrice;
+  };
+
+  const calculateTotal = () => {
+    return cartItems.reduce((total, item) => {
+      const basePrice = item.price * item.quantity;
+
+      const addonsPrice = item.addons
+        ? item.addons.reduce((sum, addon) => sum + addon.price, 0) *
+          item.quantity
+        : 0;
+
+      const cheesesPrice = item.cheeses
+        ? item.cheeses.reduce((sum, cheese) => sum + cheese.price, 0) *
+          item.quantity
+        : 0;
+
+      return total + basePrice + addonsPrice + cheesesPrice;
+    }, 20); // Assuming 20 is the initial total (Service Charge)
   };
 
   useEffect(() => {
@@ -51,9 +77,9 @@ const calculateTotal = () => {
     if (updatedQuantity <= 0) {
       const updatedCartItems = [...cartItems];
       updatedCartItems.splice(index, 1);
-      // updateCartItemQuantity(cartItems[index].id, 0); 
+      // updateCartItemQuantity(cartItems[index].id, 0);
       handleRemoveItem(cartItems[index].id);
-      setCartItems(updatedCartItems); 
+      setCartItems(updatedCartItems);
       localStorage.setItem("cartItems", JSON.stringify(updatedCartItems)); // Update localStorage
       decrementCart();
       setShowButtons(productShowButtons);
@@ -82,7 +108,6 @@ const calculateTotal = () => {
                 <tr>
                   <th>Image</th>
                   <th>Name</th>
-                  <th>Price</th>
                   <th>Quantity</th>
                   <th>Net Price</th>
                 </tr>
@@ -94,14 +119,36 @@ const calculateTotal = () => {
                       <td>
                         <img src={item.image} alt={item.name} />
                       </td>
-                      <td>{item.name}</td>
-                      <td>₹{item.price}</td>
+                      <td>
+                        <div style={{color: 'black' , fontWeight: '700'}}>
+                        {item.name}
+                        </div>
+                        {item.addons && (
+                          <div style={{color: 'grey'}}>
+                            Addons:
+                            {item.addons.map((addon) => (
+                              <div key={addon.name} style={{color: 'grey'}}>
+                                {addon.name} - ₹{addon.price}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                        {item.cheeses && (
+                          <div>
+                            {item.cheeses.map((cheese) => (
+                              <div key={cheese.name} style={{color: 'grey'}}>
+                                {cheese.name} - ₹{cheese.price}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </td>
                       <td>
                         <button onClick={() => dec(index)}>-</button>
                         {item.quantity}
                         <button onClick={() => inc(index)}>+</button>
                       </td>
-                      <td>{item.price * item.quantity}</td>
+                      <td>₹{calculateTotalForItem(item)}</td>
                     </tr>
                   ))
                 ) : (
@@ -113,7 +160,7 @@ const calculateTotal = () => {
                 {/* Row for the Service Charge */}
                 {cartItems.length > 0 && (
                   <tr>
-                    <td colSpan="4" style={{ textAlign: "left" }}>
+                    <td colSpan="3" style={{ textAlign: "left" }}>
                       Service Charge:
                     </td>
                     <td>₹20</td>
@@ -122,7 +169,7 @@ const calculateTotal = () => {
                 {/* Row for the sum of net prices */}
                 {cartItems.length > 0 && (
                   <tr>
-                    <td colSpan="4" style={{ textAlign: "left" }}>
+                    <td colSpan="3" style={{ textAlign: "left" }}>
                       Total:
                     </td>
                     <td>₹{calculateTotal()}</td>
