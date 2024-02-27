@@ -28,10 +28,10 @@ const ConfirmOrder = () => {
         ? item.cheeses.map((cheese) => `${cheese.name} + ₹${cheese.price}`)
         : [];
   
-      return `${item.quantity}.0 x ${item.name}\n${addonsDetails.join("\n")}\n${cheesesDetails.join("\n")}\n= ₹${calculateTotalForItem(item)}`;
+      return `${item.quantity}.0 x ${item.name}= ₹${calculateTotalForItem(item)}\n${addonsDetails.join("\n")}\n${cheesesDetails.join("")}`;
     });
 
-   const productDetails = orderDetails.join("\n\n");
+   const productDetails = orderDetails.join("");
   const total = calculateTotal();
 
     const message = `
@@ -42,7 +42,7 @@ Amount   : *₹${total}*
 Address  : *${selectedAddress.streetAddress}*\n
     ----------Items----------\n
 ${productDetails}
-Service Charge: ₹20.00`;
+\nService Charge: ₹20.00`;
 
     const whatsappLink =
       "https://api.whatsapp.com/send?phone=" +
