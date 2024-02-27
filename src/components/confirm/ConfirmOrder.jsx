@@ -158,7 +158,7 @@ Service Charge: ₹20.00`;
                 : "No address selected"}
             </p>
           </div>
-          <div className="d-flex justify-content-between mt-4">
+          <div className="d-flex justify-content-between mt-4 pb-4">
             <button className="back-btn" onClick={() => handleBack()}>
               Back
             </button>
