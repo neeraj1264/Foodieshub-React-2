@@ -25,7 +25,7 @@ const ConfirmOrder = () => {
         : [];
   
         const cheesesDetails = item.cheeses
-        ? item.cheeses.map((cheese) => `${cheese.name} + ₹${cheese.price}`)
+        ? item.cheeses.map((cheese) => `\n${cheese.name} + ₹${cheese.price}`)
         : [];
   
       return `${item.quantity}.0 x ${item.name}= ₹${calculateTotalForItem(item)}\n${addonsDetails.join("\n")}\n${cheesesDetails.join("")}`;
