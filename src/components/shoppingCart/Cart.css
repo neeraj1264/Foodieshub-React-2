@@ -28,16 +28,15 @@
   margin: 2rem 1rem;
 }
 .back-btn {
-  color: red;
-  border: 1px solid red;
+  background-color: var(--bg);
   border-radius: 1rem;
   padding: 0.4rem 1rem;
   font-weight: 800;
+  color: white;
 }
 .next-btn {
-  background-color: red;
+  background-color: var(--bg);
   color: white;
-  border: none;
   border-radius: 1rem;
   padding: 0.4rem 1rem;
   font-weight: 800;

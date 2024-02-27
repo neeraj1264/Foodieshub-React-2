@@ -129,16 +129,30 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
             >
               {mrp}
             </span>
-            <span
-              style={{
-                marginLeft: ".5rem",
-                color: "var(--bg)",
-              }}
-            >
-              {(((mrp - priceH || price) / mrp) * 100).toFixed(0)}% off
-            </span>
+            {!hasPriceOptions && (
+    <span
+      style={{
+        marginLeft: ".5rem",
+        color: "var(--bg)",
+      }}
+    >
+      {(((mrp - price) / mrp) * 100).toFixed(0)}% off
+    </span>
+  )}
+  {hasPriceOptions && (
+    <span
+      style={{
+        marginLeft: ".5rem",
+        color: "var(--bg)",
+      }}
+    >
+      {(((mrp - priceH || price) / mrp) * 100).toFixed(0)}% off
+    </span>
+  )}
           </p>
-          <p>{description}</p>
+          <p
+          style={{fontSize: '.8rem'}}
+          >{description}</p>
         </div>
         <div className="add-to-cart">
           <div>

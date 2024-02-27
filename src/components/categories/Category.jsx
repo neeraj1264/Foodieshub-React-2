@@ -8,7 +8,7 @@ const categories = [
   { id: 3,  name: 'Sandwich',image: '/img/cornsand.jpg'},
   { id: 4,  name: 'Pasta',   image: '/img/pasta.png'},
   { id: 5,  name: 'Shake',   image: '/img/shakes.jpg'},
-  { id: 13, name: 'Cakes',  image: '/img/b1.png'},
+  { id: 13, name: 'Cakes',  image: '/img/cakes/choco.jpg'},
   { id: 6,  name: 'Garlic',  image: '/img/gb.jpg' },
   { id: 7,  name: 'Chinese', image: '/img/cheesepan.jpg'},
   { id: 8,  name: 'Wrap',    image: '/img/aloowrap.jpeg'},

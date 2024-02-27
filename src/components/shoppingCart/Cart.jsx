@@ -120,7 +120,7 @@ const Cart = ({ id }) => {
                         <img src={item.image} alt={item.name} />
                       </td>
                       <td>
-                        <div style={{color: 'black' , fontWeight: '700'}}>
+                        <div style={{color: 'black' , fontWeight: '500'}}>
                         {item.name}
                         </div>
                         {item.addons && (

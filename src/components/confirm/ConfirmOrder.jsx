@@ -21,11 +21,11 @@ const ConfirmOrder = () => {
     const orderId = getRandom4DigitNumber();
     const orderDetails = cartItems.map((item) => {
       const addonsDetails = item.addons
-        ? item.addons.map((addon) => `Addons\n${addon.name} + ₹${addon.price}`)
+        ? item.addons.map((addon) => `Addons\n${addon.name} + ₹${addon.price}\n`)
         : [];
   
         const cheesesDetails = item.cheeses
-        ? item.cheeses.map((cheese) => `\n${cheese.name} + ₹${cheese.price}`)
+        ? item.cheeses.map((cheese) => `${cheese.name} + ₹${cheese.price}\n\n`)
         : [];
   
       return `${item.quantity}.0 x ${item.name}= ₹${calculateTotalForItem(item)}\n${addonsDetails.join("\n")}\n${cheesesDetails.join("")}`;
@@ -42,7 +42,7 @@ Amount   : *₹${total}*
 Address  : *${selectedAddress.streetAddress}*\n
     ----------Items----------\n
 ${productDetails}
-\nService Charge: ₹20.00`;
+Service Charge: ₹20.00`;
 
     const whatsappLink =
       "https://api.whatsapp.com/send?phone=" +
@@ -102,7 +102,7 @@ ${productDetails}
                     />
                   </td>
                   <td>
-                        <div style={{color: 'black' , fontWeight: '700'}}>
+                        <div style={{color: 'black' , fontWeight: '500'}}>
                         {item.name}
                         </div>
                         {item.addons && (
@@ -143,7 +143,7 @@ ${productDetails}
               {cartItems.length > 0 && (
                 <tr>
                   <td colSpan="4" style={{ textAlign: "left" }}>
-                    Total:
+                    Net Total:
                   </td>
                   <td>₹{calculateTotal()}</td>
                 </tr>
@@ -163,7 +163,7 @@ ${productDetails}
               Back
             </button>
             <button
-              className="btn btn-success"
+              className="btnn btn-success"
               onClick={() => handlePlaceOrder()}
             >
               Place Order

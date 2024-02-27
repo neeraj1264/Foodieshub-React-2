@@ -18,8 +18,8 @@ const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState(size1);
   const [selectedSizePrice, setSelectedSizePrice] = useState(priceR);
-  const [AddonsPrice, setAddonsPrice] = useState(20);
-  const [cheesePrice, setcheesePrice] = useState(30);
+  const [AddonsPrice, setAddonsPrice] = useState(30);
+  const [cheesePrice, setcheesePrice] = useState(40);
   const productShowButtons = showButtons[id] || false;
   const [addons, setAddons] = useState({
     extraCheese: false,
@@ -244,7 +244,10 @@ const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
     </span>
   )}
 </p>
-<p>{description}</p>
+<p
+style={{fontSize: '.8rem'}}
+>
+  {description}</p>
 </div>
 <div className="add-to-cart">
 <div>
