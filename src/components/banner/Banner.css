@@ -13,7 +13,7 @@ bottom: -14px;
   .carousel-inner img{
       height: 35rem;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 499px) {
       .carousel-inner img{
           height: 15rem;
           padding: 1rem;
@@ -21,6 +21,33 @@ bottom: -14px;
           margin-top: 3rem;
       }
   } 
+  @media (min-width: 500px) {
+    .carousel-inner img{
+        height: 18rem;
+        padding: 1rem;
+        border-radius: 2rem;
+        margin-top: 3rem;
+    }
+} 
+@media (min-width: 768px) {
+  .carousel-inner img{
+      height: 22rem;
+      padding: 1rem;
+      border-radius: 2rem;
+      margin-top: 3rem;
+  }
+  .carousel-indicators{
+    display: none;
+  }
+} 
+@media (min-width: 891px) {
+  .carousel-inner img{
+      height: 30rem;
+      padding: 1rem;
+      border-radius: 2rem;
+      margin: 3rem 4rem 4rem 0;
+  }
+} 
     .carousel-indicators button {
       background-color: transparent;
       border: 1px solid #fff;

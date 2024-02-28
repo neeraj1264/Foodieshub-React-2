@@ -33,7 +33,7 @@ function Footer() {
           <span className="icon-name">Home</span>
         </NavLink>
 
-        <NavLink to="/layout2" className="nav-link text-white i">
+        <NavLink to="/menu" className="nav-link text-white i">
           <div>
         <MdRestaurantMenu  className="icon"/>
         </div>

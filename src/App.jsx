@@ -1,14 +1,13 @@
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Layout from './Layout';import Banner from './components/banner/Banner';
-import Pasta from './components/Pages/Pasta/Pasta';
+import Layout from './Layout';
+import Banner from './components/banner/Banner';
 import Pizza from './components/Pages/Pizza/Pizza';
-import Burger from './components/Pages/Burger/Burger';
 import Cart from './components/shoppingCart/Cart';
-import Layout2 from './components/Layout2';
 import Address from './components/shippingAddress/Address';
 import ConfirmOrder from './components/confirm/ConfirmOrder';
 import MyCarousel from './components/banner/Banner';
+import MenuLayout from './MenuLayout';
 function App() {
 
   return (
@@ -23,7 +22,7 @@ function App() {
       <Route path="Pizza" element={<Pizza />} />
       <Route path="Burger" element={<Burger />} /> */}
       <Route path="cart" element={<Cart />} />
-      <Route path="layout2" element={<Layout2 />} />
+      <Route path="menu" element={<MenuLayout/>} />
       <Route path="MyCarousel" element={<MyCarousel />} />
     </Route>
   </Routes>   </>

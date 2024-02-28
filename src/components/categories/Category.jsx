@@ -3,9 +3,9 @@ import './Category.css';
 import { Link } from 'react-router-dom';
 
 const categories = [
-  { id: 1,  name: 'Pizza',   image: '/img/pizza.png' },
   { id: 2,  name: 'Burger',  image: '/img/burger.png'},
   { id: 3,  name: 'Sandwich',image: '/img/cornsand.jpg'},
+  { id: 1,  name: 'Pizza',   image: '/img/pizza.png' },
   { id: 4,  name: 'Pasta',   image: '/img/pasta.png'},
   { id: 5,  name: 'Shake',   image: '/img/shakes.jpg'},
   { id: 13, name: 'Cakes',  image: '/img/cakes/choco.jpg'},
