@@ -5,10 +5,10 @@ import Pasta from './components/Pages/Pasta/Pasta';
 import Pizza from './components/Pages/Pizza/Pizza';
 import Burger from './components/Pages/Burger/Burger';
 import Cart from './components/shoppingCart/Cart';
-import MyCarousel from './components/Temp';
 import Layout2 from './components/Layout2';
 import Address from './components/shippingAddress/Address';
 import ConfirmOrder from './components/confirm/ConfirmOrder';
+import MyCarousel from './components/banner/Banner';
 function App() {
 
   return (
