@@ -33,16 +33,3 @@
     color: #555;
   }
   
-  @media (min-width: 768px) {
-    .about-us-container {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-    }
-  
-    .about-us-content {
-      max-width: 400px;
-      text-align: left;
-    }
-  }
-  
