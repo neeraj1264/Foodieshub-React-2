@@ -34,10 +34,9 @@ const MyCarousel = () => {
     }, 3000);
 
     return () => {
-      // Clear the interval to prevent memory leaks
       clearInterval(intervalId);
     };
-  }, []); // Empty dependency array ensures this effect runs once when the component mounts
+  }, []);
 
   return (
     <>
@@ -47,7 +46,7 @@ const MyCarousel = () => {
             <div className="carousel-inner">
 
       <Link
-       to={`/layout2#${encodeURIComponent(item.target)}`}>
+       to={`/menu#${encodeURIComponent(item.target)}`}>
           <img className="d-block w-100" src={item.imageUrl} alt={item.title} />
           <Carousel.Caption>
             <h3>{item.title}</h3>
