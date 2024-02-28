@@ -1,6 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect , useState} from "react";
 import { useCart } from "../../ContextApi";
 import { useNavigate } from "react-router-dom";
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
 import "./Cart.css";
 
 const Cart = ({ id }) => {
@@ -14,6 +17,7 @@ const Cart = ({ id }) => {
     removeCartItem,
   } = useCart();
   const productShowButtons = showButtons[id] || false;
+  const [showModal, setShowModal] = useState(false);
 
   const handleRemoveItem = (productId) => {
     removeCartItem(productId);
@@ -66,7 +70,7 @@ const Cart = ({ id }) => {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate("/layout2");
+    navigate("/menu");
   };
 
   const handleNext = () => {
@@ -97,11 +101,19 @@ const Cart = ({ id }) => {
     updateCartItemQuantity(cartItems[index].id, updatedQuantity);
     localStorage.getItem("cartItems", cartItems);
   };
+
+  useEffect(() => {
+    // ... (Remaining code for useEffect)
+    if (cartItems.length === 0) {
+      setShowModal(true);
+    }
+  }, [cartItems]);
+  
   return (
     <>
       <div className="cart-page">
         <h2 style={{ textAlign: "center" }}>Your Cart</h2>
-        {cartItems ? (
+        {cartItems.length > 0 ? (
           <>
             <table className="cart-table">
               <thead>
@@ -187,11 +199,26 @@ const Cart = ({ id }) => {
             </div>
           </>
         ) : (
-          <p>Loading...</p>
+          <ComingSoonModal onClose={() =>navigate("/menu")} />
         )}
       </div>
     </>
   );
 };
+
+const ComingSoonModal = ({ onClose }) => (
+  <Modal show={true}  backdrop="static"  centered>
+  
+    <Modal.Body>
+      <p>Your cart is empty please <br /> Add item in cart </p>
+    </Modal.Body>
+    <Modal.Footer>
+      <Button variant="secondary" style={{ background: '#d32e2e', border: 'none' }} onClick={onClose}>
+        Close
+      </Button>
+    </Modal.Footer>
+  </Modal>
+);
+
 
 export default Cart;
