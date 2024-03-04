@@ -12,6 +12,8 @@ const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
     AddToCart,
     showButtons,
     setShowButtons,
+    setCartItems,
+    updateCartItemQuantity,
   } = useCart();
 
   const [show, setShow] = useState(false);
@@ -191,6 +193,15 @@ const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
     setShow(false);
     setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: true }));
   };
+
+  const handleRemoveToCart =()=>{
+    decrementCart();
+     setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+     updateCartItemQuantity(id, 0);
+     setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: false }));
+     localStorage.removeItem(`${id}_quantity`);
+ }
+
   useEffect(() => {
     // Retrieve quantity from local storage on component mount
     const storedQuantity = localStorage.getItem(`${id}_quantity`);
@@ -263,6 +274,7 @@ style={{fontSize: '.8rem'}}
         background: "#d32e2e",
         borderRadius: ".5rem",
       }}
+      onClick={handleRemoveToCart}
     >
       Added
     </button>

@@ -11,6 +11,8 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
     AddToCart,
     showButtons,
     setShowButtons,
+    setCartItems,
+    updateCartItemQuantity,
   } = useCart();
 
   const [show, setShow] = useState(false);
@@ -100,6 +102,14 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
     }
   };
 
+  const handleRemoveToCart =()=>{
+    decrementCart();
+     setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+     updateCartItemQuantity(id, 0);
+     setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: false }));
+     localStorage.removeItem(`${id}_quantity`);
+ }
+
   useEffect(() => {
     // Retrieve quantity from local storage on component mount
     const storedQuantity = localStorage.getItem(`${id}_quantity`);
@@ -168,6 +178,7 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
                   background: "#d32e2e",
                   borderRadius: ".5rem",
                 }}
+                onClick={handleRemoveToCart}
               >
                 Added
               </button>

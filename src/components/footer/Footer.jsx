@@ -52,11 +52,11 @@ function Footer() {
           <span className="icon-name">Cart</span>
         </NavLink>
         
-        <NavLink to="/" className="grocery" onClick={handleGroceryClick}>
+        <div className="grocery" onClick={handleGroceryClick}>
             <span className="icon-name">Grocery </span>
             <MdOutlineLocalGroceryStore className="icon" />
             <span className='i'> Soon</span>
-          </NavLink>
+          </div>
         </div>
       </footer>
 

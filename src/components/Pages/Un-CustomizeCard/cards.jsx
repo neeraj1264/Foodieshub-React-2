@@ -70,6 +70,13 @@ const Cards = ({ id, name, description, price, image, mrp }) => {
     setQuantity(quantity);
   };
 
+  const handleRemoveToCart =()=>{
+     decrementCart();
+      setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+      updateCartItemQuantity(id, 0);
+      setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: false }));
+      localStorage.removeItem(`${id}_quantity`);
+  }
   return (
     <>
       <hr className="hr" />
@@ -112,6 +119,7 @@ const Cards = ({ id, name, description, price, image, mrp }) => {
                   background: "#d32e2e",
                   borderRadius: ".5rem",
                 }}
+                onClick={handleRemoveToCart}
               >
                 Added
               </button>
