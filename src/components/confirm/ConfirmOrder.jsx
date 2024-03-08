@@ -8,7 +8,7 @@ const ConfirmOrder = () => {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate("/address");
+    navigate(-1);
   };
 
   const handlePlaceOrder = () => {

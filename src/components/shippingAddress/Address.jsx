@@ -15,7 +15,7 @@ const Address = () => {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate("/cart");
+    navigate(-1);
   };
 
   const handleNext = () => {

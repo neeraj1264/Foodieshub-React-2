@@ -70,7 +70,7 @@ const Cart = ({ id }) => {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate("/menu");
+    navigate(-1);
   };
 
   const handleNext = () => {
@@ -96,17 +96,19 @@ const Cart = ({ id }) => {
   };
 
   const inc = (index) => {
+    // Assuming index is the index of the item in the cartItems array
     const updatedQuantity = cartItems[index].quantity + 1;
     updateCartItemQuantity(cartItems[index].id, updatedQuantity);
     localStorage.getItem("cartItems", cartItems);
   };
 
   useEffect(() => {
+    // ... (Remaining code for useEffect)
     if (cartItems.length === 0) {
       setShowModal(true);
     }
   }, [cartItems]);
-
+  
   return (
     <>
       <div className="cart-page">
@@ -167,6 +169,7 @@ const Cart = ({ id }) => {
                   </tr>
                 )}
 
+                {/* Row for the Service Charge */}
                 {cartItems.length > 0 && (
                   <tr>
                     <td colSpan="3" style={{ textAlign: "left" }}>
@@ -175,6 +178,7 @@ const Cart = ({ id }) => {
                     <td>₹20</td>
                   </tr>
                 )}
+                {/* Row for the sum of net prices */}
                 {cartItems.length > 0 && (
                   <tr>
                     <td colSpan="3" style={{ textAlign: "left" }}>
