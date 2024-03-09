@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useCart } from '../../ContextApi';
+import React, { useState, useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useCart } from "../../ContextApi";
 import { useNavigate } from "react-router-dom";
+import "./Address.css";
 
 const Address = () => {
-  const {selectedAddress, setSelectedAddress} = useCart()
-  const [customerName, setCustomerName] = useState('');
-  const [streetAddress, setStreetAddress] = useState('');
-  const [city, setCity] = useState('');
+  const { selectedAddress, setSelectedAddress } = useCart();
+  const [customerName, setCustomerName] = useState("");
+  const [streetAddress, setStreetAddress] = useState("");
+  const [city, setCity] = useState("");
   const [saveForFuture, setSaveForFuture] = useState(false);
   const [savedAddresses, setSavedAddresses] = useState([]);
-  // const [selectedAddress, setSelectedAddress] = useState(null);
+  const [isNewAddress, setIsNewAddress] = useState(savedAddresses.length === 0); // Check if there are saved addresses
 
   const navigate = useNavigate();
 
@@ -24,7 +25,7 @@ const Address = () => {
 
   // Load saved addresses from local storage on component mount
   useEffect(() => {
-    const savedAddressesJson = localStorage.getItem('savedAddresses');
+    const savedAddressesJson = localStorage.getItem("savedAddresses");
     if (savedAddressesJson) {
       const parsedAddresses = JSON.parse(savedAddressesJson);
       setSavedAddresses(parsedAddresses);
@@ -49,7 +50,10 @@ const Address = () => {
       if (saveForFuture) {
         // Save address to local storage for future orders only if the checkbox is checked
         setSavedAddresses([...savedAddresses, addressData]);
-        localStorage.setItem('savedAddresses', JSON.stringify([...savedAddresses, addressData]));
+        localStorage.setItem(
+          "savedAddresses",
+          JSON.stringify([...savedAddresses, addressData])
+        );
       }
     }
     handleNext();
@@ -59,9 +63,17 @@ const Address = () => {
     setSelectedAddress(savedAddresses[index]);
   };
 
+  const handleAddNewAddress = () => {
+    setIsNewAddress(true);
+    setCustomerName("");
+    setStreetAddress("");
+    setCity("");
+    setSavedAddresses([]);
+  };
+
   return (
     <div className="container">
-      <h2 style={{ textAlign: 'center', margin: '1rem' }}>Shipping Address</h2>
+      <h2 style={{ textAlign: "center", margin: "1rem" }}>Shipping Address</h2>
       {savedAddresses.length > 0 ? (
         <div>
           <h5>Saved Addresses:</h5>
@@ -75,23 +87,37 @@ const Address = () => {
                 checked={selectedAddress === address}
                 onChange={() => handleAddressSelection(index)}
               />
-              <label className="form-check-label" htmlFor={`savedAddress${index}`}>
+              <label
+                className="form-check-label"
+                htmlFor={`savedAddress${index}`}
+              >
                 {`${address.customerName}, ${address.streetAddress}, ${address.city}`}
               </label>
             </div>
           ))}
-           <div className="cart-navigation-buttons">
-              <button className="back-btn" onClick={() => handleBack()}>Back</button>
-              <button className="next-btn" onClick={() => handleNext()}>Next</button>
-            </div>
+          <button
+            type="button"
+            className="new-address"
+            onClick={handleAddNewAddress}
+          >
+            Change Address
+          </button>
+          <div className="cart-navigation-buttons">
+            <button className="back-btn" onClick={() => handleBack()}>
+              Back
+            </button>
+            <button className="next-btn" onClick={() => handleNext()}>
+              Next
+            </button>
+          </div>
         </div>
       ) : (
         <form onSubmit={handleFormSubmit}>
-   <div className="mb-3">
+          <div className="mb-3">
             <input
               type="text"
               className="form-control"
-              placeholder='Full Name...'
+              placeholder="Full Name..."
               value={customerName}
               onChange={(e) => setCustomerName(e.target.value)}
               required
@@ -102,7 +128,7 @@ const Address = () => {
               type="text"
               className="form-control"
               value={streetAddress}
-              placeholder='Address...'
+              placeholder="Address..."
               onChange={(e) => setStreetAddress(e.target.value)}
               required
             />
@@ -111,7 +137,7 @@ const Address = () => {
             <input
               type="number"
               className="form-control"
-              placeholder='Phone Number...'
+              placeholder="Phone Number..."
               value={city}
               onChange={(e) => setCity(e.target.value)}
               required
@@ -128,10 +154,15 @@ const Address = () => {
             <label className="form-check-label" htmlFor="saveForFuture">
               Use this address for future orders
             </label>
-          </div>        
-            <button type="submit" className="btn btn-primary">
-            Next
-          </button>
+          </div>
+          <div className="cart-navigation-buttons">
+            <button className="back-btn" onClick={() => handleBack()}>
+              Back
+            </button>
+            <button type="submit" className="next-btn">
+              Next
+            </button>
+          </div>
         </form>
       )}
     </div>
