@@ -141,7 +141,7 @@ const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
   const handleAddToCart = () => {
     if (selectedSize === "") {
       // Handle the case where no size is selected
-      console.error("Please select a size.");
+      alert("Please select a size.");
       return;
     }
     const selectedAddons = [];

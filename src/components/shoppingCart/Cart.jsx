@@ -135,7 +135,7 @@ const Cart = ({ id }) => {
                         <div style={{color: 'black' , fontWeight: '500'}}>
                         {item.name}
                         </div>
-                        {item.addons && (
+                        {item.addons && item.addons.length > 0 && (
                           <div style={{color: 'grey'}}>
                             Addons:
                             {item.addons.map((addon) => (
