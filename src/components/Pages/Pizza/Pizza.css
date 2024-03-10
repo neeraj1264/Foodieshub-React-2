@@ -26,9 +26,14 @@
 }
 input[type="radio"] {
    accent-color: var(--bg);
+   border: 1px solid red;
   }
   .form-check-input:checked {
     background-color: var(--bg);
     border-color: var(--bg);
+  }
+  .form-check-input{
+    border: 2px solid red;
+
   }
   
