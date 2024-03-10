@@ -292,11 +292,15 @@ style={{fontSize: '.8rem'}}
   )}
   {hasPriceOptions && (
     <Modal
+    className="modeldialog"
       show={show}
       onHide={handleClose}
-      style={{ position: "fixed", bottom: "2px" }}
+      style={{ position: "fixed", bottom: "2px" , background: 'white'}}
     >
-      <Modal.Header closeButton>
+      <Modal.Header 
+      closeButton 
+      className="modalheader"
+      >
         <img
           src={image}
           alt={name}
@@ -375,7 +379,7 @@ style={{fontSize: '.8rem'}}
         <h3 >Toppings</h3>
 
         <Table striped bordered hover
-                  style={{marginBottom: '5rem'}}
+                  style={{marginBottom: '10rem'}}
         >
           <tbody>
             {addonsList.map((addon) => (
@@ -394,7 +398,9 @@ style={{fontSize: '.8rem'}}
           </tbody>
         </Table>
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer
+      className="modalfooter"
+      >
         <div className="quantity-update">
         <Button
           variant="contained"

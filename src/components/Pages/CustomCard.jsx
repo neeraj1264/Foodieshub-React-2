@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal, Table } from "react-bootstrap";
 import { useCart } from "../../ContextApi";
-import '../Pages/Pizza/Pizza.css'
+import "../Pages/Pizza/Pizza.css";
 import { FaMinus, FaPlus } from "react-icons/fa";
 const CustomCard = ({ id, name, description, price, image, mrp }) => {
   const { priceH, priceF } = price;
@@ -103,13 +103,13 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
     }
   };
 
-  const handleRemoveToCart =()=>{
+  const handleRemoveToCart = () => {
     decrementCart();
-     setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
-     updateCartItemQuantity(id, 0);
-     setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: false }));
-     localStorage.removeItem(`${id}_quantity`);
- }
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+    updateCartItemQuantity(id, 0);
+    setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: false }));
+    localStorage.removeItem(`${id}_quantity`);
+  };
 
   useEffect(() => {
     // Retrieve quantity from local storage on component mount
@@ -141,29 +141,27 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
               {mrp}
             </span>
             {!hasPriceOptions && (
-    <span
-      style={{
-        marginLeft: ".5rem",
-        color: "var(--bg)",
-      }}
-    >
-      {(((mrp - price) / mrp) * 100).toFixed(0)}% off
-    </span>
-  )}
-  {hasPriceOptions && (
-    <span
-      style={{
-        marginLeft: ".5rem",
-        color: "var(--bg)",
-      }}
-    >
-      {(((mrp - priceH || price) / mrp) * 100).toFixed(0)}% off
-    </span>
-  )}
+              <span
+                style={{
+                  marginLeft: ".5rem",
+                  color: "var(--bg)",
+                }}
+              >
+                {(((mrp - price) / mrp) * 100).toFixed(0)}% off
+              </span>
+            )}
+            {hasPriceOptions && (
+              <span
+                style={{
+                  marginLeft: ".5rem",
+                  color: "var(--bg)",
+                }}
+              >
+                {(((mrp - priceH || price) / mrp) * 100).toFixed(0)}% off
+              </span>
+            )}
           </p>
-          <p
-          style={{fontSize: '.8rem'}}
-          >{description}</p>
+          <p style={{ fontSize: ".8rem" }}>{description}</p>
         </div>
         <div className="add-to-cart">
           <div>
@@ -195,21 +193,26 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
             )}
             {hasPriceOptions && (
               <Modal
+                className="modeldialog"
                 show={show}
                 onHide={handleClose}
-                style={{ position: "fixed", bottom: "2px" , background: 'white'}}
+                style={{
+                  position: "fixed",
+                  bottom: "2px",
+                  background: "white",
+                }}
               >
-                <Modal.Header closeButton>
-                <img
-                  src={image}
-                  alt={name}
-                  style={{
-                    maxWidth: "5rem",
-                    height: "4rem",
-                    margin: "0 10px 10px 0",
-                    borderRadius: '1rem'
-                  }}
-                />
+                <Modal.Header closeButton className="modalheader">
+                  <img
+                    src={image}
+                    alt={name}
+                    style={{
+                      maxWidth: "5rem",
+                      height: "4rem",
+                      margin: "0 10px 10px 0",
+                      borderRadius: "1rem",
+                    }}
+                  />
                   <Modal.Title>{name}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -251,23 +254,25 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
                     </tbody>
                   </Table>
                 </Modal.Body>
-                <Modal.Footer>
-                <div className="quantity-update">
-                  <Button
-                    variant="contained"
-                    style={{color: 'var(--bg)'}}
-                    onClick={handleDecrement}
-                  >
-                    <FaMinus/>
-                  </Button>
-                  <span style={{ margin: "0 0.5rem" , color: 'black'}}>{quantity}</span>
-                  <Button
-                    variant="contained"
-                    style={{color: 'var(--bg)'}}
-                    onClick={handleIncrement}
-                  >
-                    <FaPlus/>
-                  </Button>
+                <Modal.Footer className="modalfooter">
+                  <div className="quantity-update">
+                    <Button
+                      variant="contained"
+                      style={{ color: "var(--bg)" }}
+                      onClick={handleDecrement}
+                    >
+                      <FaMinus />
+                    </Button>
+                    <span style={{ margin: "0 0.5rem", color: "black" }}>
+                      {quantity}
+                    </span>
+                    <Button
+                      variant="contained"
+                      style={{ color: "var(--bg)" }}
+                      onClick={handleIncrement}
+                    >
+                      <FaPlus />
+                    </Button>
                   </div>
                   <Button className="addtocart" onClick={handleAddToCart}>
                     Add to Cart
