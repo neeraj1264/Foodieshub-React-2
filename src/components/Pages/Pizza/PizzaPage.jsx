@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal, Table, Form } from "react-bootstrap";
 import { useCart } from "../../../ContextApi";
+import { FaPlus , FaMinus } from "react-icons/fa";
+import './Pizza.css';
 
 const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
   const { size1, size2, size3 } = size || {};
@@ -372,7 +374,9 @@ style={{fontSize: '.8rem'}}
         </Table>
         <h3 >Toppings</h3>
 
-        <Table striped bordered hover>
+        <Table striped bordered hover
+                  style={{marginBottom: '5rem'}}
+        >
           <tbody>
             {addonsList.map((addon) => (
               <tr key={addon.key}>
@@ -391,24 +395,26 @@ style={{fontSize: '.8rem'}}
         </Table>
       </Modal.Body>
       <Modal.Footer>
+        <div className="quantity-update">
         <Button
           variant="contained"
-          className="btn"
+          style={{color: 'var(--bg)'}}
           onClick={handleDecrement}
         >
-          -
+          <FaMinus />
         </Button>
-        <span style={{ margin: "0 0.5rem" }}>{quantity}</span>
+        <span style={{ margin: "0 0.5rem" , color: 'black'}}>{quantity}</span>
         <Button
           variant="contained"
-          className="btn"
+          style={{color: 'var(--bg)' , border: 'none'}}
           onClick={handleIncrement}
         >
-          +
+          <FaPlus />
         </Button>
-        <Button variant="primary" onClick={handleAddToCart}>
+        </div>
+        <Button className="addtocart" onClick={handleAddToCart}>
           Add to Cart
-          <span style={{ paddingLeft: ".3rem" }}>
+          <span style={{ paddingLeft: ".3rem", fontWeight: '800' }}>
             ₹{getTotalPrice()}
           </span>
         </Button>

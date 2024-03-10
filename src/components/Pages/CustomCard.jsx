@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal, Table } from "react-bootstrap";
 import { useCart } from "../../ContextApi";
-
+import '../pages/Pizza/Pizza.css'
+import { FaMinus, FaPlus } from "react-icons/fa";
 const CustomCard = ({ id, name, description, price, image, mrp }) => {
   const { priceH, priceF } = price;
 
@@ -196,7 +197,7 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
               <Modal
                 show={show}
                 onHide={handleClose}
-                style={{ position: "fixed", bottom: "2px" }}
+                style={{ position: "fixed", bottom: "2px" , background: 'white'}}
               >
                 <Modal.Header closeButton>
                 <img
@@ -251,22 +252,24 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
                   </Table>
                 </Modal.Body>
                 <Modal.Footer>
+                <div className="quantity-update">
                   <Button
                     variant="contained"
-                    className="btn"
+                    style={{color: 'var(--bg)'}}
                     onClick={handleDecrement}
                   >
-                    -
+                    <FaMinus/>
                   </Button>
-                  <span style={{ margin: "0 0.5rem" }}>{quantity}</span>
+                  <span style={{ margin: "0 0.5rem" , color: 'black'}}>{quantity}</span>
                   <Button
                     variant="contained"
-                    className="btn"
+                    style={{color: 'var(--bg)'}}
                     onClick={handleIncrement}
                   >
-                    +
+                    <FaPlus/>
                   </Button>
-                  <Button variant="primary" onClick={handleAddToCart}>
+                  </div>
+                  <Button className="addtocart" onClick={handleAddToCart}>
                     Add to Cart
                   </Button>
                 </Modal.Footer>
