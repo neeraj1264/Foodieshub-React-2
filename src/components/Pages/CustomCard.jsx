@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal, Table } from "react-bootstrap";
 import { useCart } from "../../ContextApi";
-import '../pages/Pizza/Pizza.css'
+import '../Pages/Pizza/Pizza.css'
 import { FaMinus, FaPlus } from "react-icons/fa";
 const CustomCard = ({ id, name, description, price, image, mrp }) => {
   const { priceH, priceF } = price;
