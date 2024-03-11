@@ -4,6 +4,7 @@ import './Banner.css'
 import { Link } from 'react-router-dom';
 import Header from '../header/Header';
 import AboutUs from '../about/AboutUs';
+import ContactForm from '../ContactUs/Contact';
 const items = [
   { id: 1,  imageUrl: '/img/burger.jpg',      title: 'Delicious Burger',   target: 'Burger'   , description: 'Hot Pattie, fresh veggies, and savory sauces in a perfect bun.' },
   { id: 2,  imageUrl: '/img/pizza.jpg',       title: 'Hot Pizzas',         target: 'Pizza'    , description: 'Crispy crusts and gooey cheese meet a medley of mouth-watering toppings in every slice.' },
@@ -60,6 +61,7 @@ const MyCarousel = () => {
     </Carousel>
     <Header/>
 <AboutUs/>
+<ContactForm/>
     </>
   );
 };
