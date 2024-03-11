@@ -60,7 +60,12 @@ const ContactForm = () => {
 
       if (response.ok) {
         alert("Form submitted successfully!");
-        // You can handle success behavior here
+        // Clear form data after successful submission
+        setFormData({
+          name: "",
+          number: "",
+          message: "",
+        });
       } else {
         console.error("Form submission failed!");
         alert("Form submission failed!");
@@ -110,7 +115,7 @@ const ContactForm = () => {
             required
           />
         </label>
-        <button type="submit" disabled={submitting} className="Contact-btn" >
+        <button type="submit" disabled={submitting} className="Contact-btn">
           {submitting ? "Submitting..." : "Submit"}
         </button>{" "}
       </form>
