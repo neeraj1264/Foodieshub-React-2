@@ -54,6 +54,9 @@ function App() {
     };
   }, []);
 
+  // Get the current route
+  const currentRoute = window.location.pathname;
+
   return (
    <>
  <Routes>
@@ -71,7 +74,7 @@ function App() {
     </Route>
   </Routes>  
   
-  {installPrompt && (
+  {installPrompt && currentRoute === '/' && (
         <AddToHomeModal
         installPrompt={installPrompt}
         onInstallClick={handleInstallClick}
