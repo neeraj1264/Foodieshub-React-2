@@ -1,16 +1,19 @@
-import React from 'react';
-import './AddToHome.css';
+import React from "react";
+import "./AddToHome.css";
 
 const AddToHomeModal = ({ installPrompt, onInstallClick, onCloseClick }) => {
   return (
     installPrompt && (
       <div className="install-popup-overlay">
         <div className="install-popup">
-          <button className="close-button" onClick={onCloseClick}>
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <p>Install this app on your home screen for a better experience!</p>
-                    <button onClick={onInstallClick}>  Add to home screen</button>
+          <div className="installApp">
+          <img src="img/logo1.png" alt="logo"  className="install-img"/>
+            <p style={{ color: "white" }}> Install App in your device</p>
+            <p style={{ margin: "0 1rem", color: "white" }}>|</p>
+            <span onClick={onInstallClick} className="install">
+              Install
+            </span>
+          </div>
         </div>
       </div>
     )

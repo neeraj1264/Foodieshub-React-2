@@ -38,10 +38,19 @@ function App() {
       setInstallPrompt(event);
     };
 
+    const handleClickOutsidePopup = (event) => {
+      // Check if the clicked element is not inside the install popup
+      if (!event.target.closest('.install-popup')) {
+        setInstallPrompt(null);
+      }
+    };
+
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    document.addEventListener('click', handleClickOutsidePopup);
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      document.removeEventListener('click', handleClickOutsidePopup);
     };
   }, []);
 
