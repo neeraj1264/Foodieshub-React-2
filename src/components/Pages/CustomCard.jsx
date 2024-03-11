@@ -18,17 +18,14 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
 
   const [show, setShow] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState("");
+  const [selectedSize, setSelectedSize] = useState("Half");
+  const [selectedSizePrice, setSelectedSizePrice] = useState(priceH);
   const productShowButtons = showButtons[id] || false;
 
   const handleShow = () => setShow(true);
   const handleClose = () => {
     setSelectedSize("");
     setShow(false);
-  };
-
-  const handleSizeChange = (event) => {
-    setSelectedSize(event.target.value);
   };
 
   const handleIncrement = () => {
@@ -47,28 +44,14 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
   const handleAddToCart = () => {
     if (selectedSize === "") {
       // Handle the case where no size is selected
-      console.error("Please select a size.");
+      alert("Please select a size.");
       return;
     }
 
-    // Determine the selected price based on the chosen size
-    let selectedPrice = 0;
-    switch (selectedSize) {
-      case "Half":
-        selectedPrice = priceH;
-        break;
-      case "Full":
-        selectedPrice = priceF;
-        break;
-      default:
-        // Handle the case where an unknown size is selected
-        console.error("Unknown size selected.");
-        return;
-    }
     const product = {
       id,
       name: `${name} [${selectedSize}]`,
-      price: selectedPrice,
+      price: selectedSizePrice,
       quantity,
       image,
     };
@@ -111,6 +94,24 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
     localStorage.removeItem(`${id}_quantity`);
   };
 
+  const handleSizeChange = (event) => {
+    const newSize = event.target.value;
+
+    // Update the selected size and its corresponding price
+    setSelectedSize(newSize);
+    switch (newSize) {
+      case "Half":
+        setSelectedSizePrice(priceH);
+        break;
+      case "Full":
+        setSelectedSizePrice(priceF);
+        break;
+      default:
+        // Handle the case where an unknown size is selected
+        console.error("Unknown size selected.");
+        return;
+    }
+  };
   useEffect(() => {
     // Retrieve quantity from local storage on component mount
     const storedQuantity = localStorage.getItem(`${id}_quantity`);
@@ -122,6 +123,11 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
 
   const hasPriceOptions =
     typeof price === "object" && "priceH" in price && "priceF" in price;
+
+  const getTotalPrice = () => {
+    let total = selectedSizePrice * quantity;
+    return total;
+  };
 
   return (
     <>
@@ -276,6 +282,9 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
                   </div>
                   <Button className="addtocart" onClick={handleAddToCart}>
                     Add to Cart
+                    <span style={{ paddingLeft: ".3rem", fontWeight: "800" }}>
+                      ₹{getTotalPrice()}
+                    </span>
                   </Button>
                 </Modal.Footer>
               </Modal>
