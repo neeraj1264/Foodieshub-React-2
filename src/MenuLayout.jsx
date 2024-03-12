@@ -12,7 +12,7 @@ import Momos from './components/Pages/Momos';
 import Chaap from './components/Pages/Chaap';
 import Dinner from './components/Pages/Dinner';
 import Pizza from './components/Pages/Pizza/Pizza';
-import Cakes from './components/Pages/Cakes';
+import Cakes from './components/Pages/cakes/Cakes';
 import Naan from './components/Pages/Naan';
 
 

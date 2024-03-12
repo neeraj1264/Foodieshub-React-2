@@ -74,7 +74,12 @@ const Cart = ({ id }) => {
   };
 
   const handleNext = () => {
+    let total = calculateTotal()
+    if(total < 170){
+      alert('Minimum order amount is ₹150')
+    } else {
     navigate("/address");
+    }
   };
   const dec = (index) => {
     const updatedQuantity = cartItems[index].quantity - 1;

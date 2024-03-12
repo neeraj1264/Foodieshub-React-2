@@ -51,6 +51,11 @@ Service Charge: ₹20.00`;
       encodeURIComponent(message);
 
     window.open(whatsappLink, "_blank");
+    setTimeout(()=>{
+      navigate('/')
+      location.reload()
+    },3000)
+
   };
 
   const calculateTotalForItem = (item) => {

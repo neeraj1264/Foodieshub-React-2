@@ -4,3 +4,6 @@
   font-weight: 700;
   color: grey;
 }
+.form-check-label{
+  margin: 0;
+}
