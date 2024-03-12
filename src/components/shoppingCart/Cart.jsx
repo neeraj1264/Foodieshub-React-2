@@ -160,7 +160,7 @@ const Cart = ({ id }) => {
                           </div>
                         )}
                       </td>
-                      <td>
+                      <td style={{width: '6rem'}}> 
                         <button onClick={() => dec(index)}>-</button>
                         {item.quantity}
                         <button onClick={() => inc(index)}>+</button>
