@@ -260,7 +260,7 @@ const CakeCard = ({ id, name, description, price, image, mrp, size }) => {
                         <td>
                           <input
                             type="radio"
-                            value={size3}
+                            value={size2}
                             checked={selectedSize === size2}
                             onChange={handlecakeSizeChange}
                           />
