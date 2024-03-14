@@ -1,48 +1,88 @@
-import React from 'react';
-import './Category.css';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import "./Category.css";
+import { Link } from "react-router-dom";
 
 const categories = [
-  { id: 2,  name: 'Burger',  image: '/img/burger.png'},
-  { id: 3,  name: 'Sandwich',image: '/img/cornsand.jpg'},
-  { id: 1,  name: 'Pizza',   image: '/img/pizza.png' },
-  { id: 4,  name: 'Pasta',   image: '/img/pasta.png'},
-  { id: 5,  name: 'Shake',   image: '/img/shakes.jpg'},
-  { id: 13, name: 'Cakes',  image: '/img/cakes/choco.jpg'},
-  { id: 6,  name: 'Garlic',  image: '/img/gb.jpg' },
-  { id: 7,  name: 'Chinese', image: '/img/cheesepan.jpg'},
-  { id: 8,  name: 'Wrap',    image: '/img/aloowrap.jpeg'},
-  { id: 9,  name: 'Snacks',  image: '/img/bhalle.jpeg'},
-  { id: 10, name: 'Momos',   image: '/img/momo.jpg'},
-  { id: 11, name: 'Chaap',   image: '/img/chaap1.jpg'},
-  { id: 12, name: 'Dinner',  image: '/img/dalmakhani.jpeg'},
-  { id: 14, name: 'Naan',  image: '/img/butternaan.jpeg'},
+  { id: 2, name: "Burger", image: "/img/burger.png" },
+  { id: 3, name: "Sandwich", image: "/img/cornsand.jpg" },
+  { id: 1, name: "Pizza", image: "/img/pizza.png" },
+  { id: 4, name: "Pasta", image: "/img/pasta.png" },
+  { id: 5, name: "Shake", image: "/img/shakes.jpg" },
+  { id: 13, name: "Cakes", image: "/img/cakes/choco.jpg" },
+  { id: 6, name: "Garlic", image: "/img/gb.jpg" },
+  { id: 7, name: "Chinese", image: "/img/cheesepan.jpg" },
+  { id: 8, name: "Wrap", image: "/img/aloowrap.jpeg" },
+  { id: 9, name: "Snacks", image: "/img/bhalle.jpeg" },
+  { id: 10, name: "Momos", image: "/img/momo.jpg" },
+  { id: 11, name: "Chaap", image: "/img/chaap1.jpg" },
+  { id: 12, name: "Dinner", image: "/img/dalmakhani.jpeg" },
+  { id: 14, name: "Naan", image: "/img/butternaan.jpeg" },
 ];
 
 function Category() {
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+
+      const selectedSection = categories.find((category) => {
+        const section = document.getElementById(category.name);
+        if (section) {
+          const { top, bottom } = section.getBoundingClientRect();
+          return top <= 0 && bottom > 0;
+        }
+        return false;
+      });
+
+      if (selectedSection) {
+        setSelectedCategory(selectedSection.name);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
 
     if (section) {
-      const offset = section.offsetTop - 5 * parseFloat(getComputedStyle(section).fontSize);
+      const offset =
+        section.offsetTop - 5 * parseFloat(getComputedStyle(section).fontSize);
       window.scrollTo({
         top: offset,
-        behavior: 'smooth',
+        behavior: "smooth",
       });
     }
-  }
+  };
+
+
   return (
     <>
       {/* <h2 style={{ textAlign: 'center' }}>Categories</h2> */}
       <div className="outer-card">
         {categories.map((category) => (
           <Link
-           to={`#${encodeURIComponent(category.name)}`}
-           key={category.id}
-           onClick={() => scrollToSection(category.name)}
-           >
+            to={`#${encodeURIComponent(category.name)}`}
+            key={category.id}
+           onClick={() => {
+              scrollToSection(category.name);
+              // setSelectedCategory(category.name);
+            }}
+          >
+            {/* <div className={`card ${selectedCategory === category.name ? 'selected' : ''}`}> */}
+
             <div className="card">
-              <img src={category.image} className="card-img-top" alt={category.name} />
+              <img
+                src={category.image}
+                className={`card-img-top ${
+                  selectedCategory === category.name ? "selected" : ""
+                }`}
+                alt={category.name}
+              />
               <div className="card-body">
                 <p className="card-text">{category.name}</p>
               </div>
