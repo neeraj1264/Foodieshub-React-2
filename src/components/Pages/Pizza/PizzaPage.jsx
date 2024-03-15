@@ -133,6 +133,7 @@ const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
       price,
       quantity,
       image,
+      mrp,
     };
     AddToCart(product);
     setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: true }));
@@ -172,6 +173,7 @@ const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
       price: selectedSizePrice,
       quantity,
       image,
+      mrp,
       addons: selectedAddons,
     cheeses: selectedCheeses,
     };

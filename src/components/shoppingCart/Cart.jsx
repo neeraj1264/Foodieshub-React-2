@@ -1,9 +1,10 @@
-import React, { useEffect , useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useCart } from "../../ContextApi";
 import { useNavigate } from "react-router-dom";
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import Spinner from 'react-bootstrap/Spinner';
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
+import { FaMinus , FaPlus , FaMinusCircle , FaPlusCircle} from "react-icons/fa";
 import "./Cart.css";
 
 const Cart = ({ id }) => {
@@ -22,6 +23,34 @@ const Cart = ({ id }) => {
   const handleRemoveItem = (productId) => {
     removeCartItem(productId);
   };
+//   const calculateSavingForItem = (item) => {
+//     let priceToUse;
+
+//     // Check if the item is a pizza with customizable prices
+//     if (typeof item.price === 'object' && 'priceR' in item.price) {
+//         priceToUse = item.priceR;
+//     } else if (typeof item.price === 'object' && 'priceH' in item.price) {
+//         priceToUse = item.priceH;
+//     } else {
+//         priceToUse = item.price;
+//     }
+
+//     console.log('item.mrp:', item.mrp);
+//     console.log('priceToUse:', priceToUse);
+//     console.log('item.quantity:', item.quantity);
+
+//     const saving = (item.mrp - priceToUse) * item.quantity;
+
+//     console.log('saving:', saving);
+
+//     return saving;
+// };
+
+// const calculateTotalSaving = () => {
+//     return cartItems.reduce((totalSaving, item) => {
+//         return totalSaving + calculateSavingForItem(item);
+//     }, 0);
+// };
 
   const calculateTotalForItem = (item) => {
     const basePrice = item.price * item.quantity;
@@ -74,11 +103,11 @@ const Cart = ({ id }) => {
   };
 
   const handleNext = () => {
-    let total = calculateTotal()
-    if(total < 170){
-      alert('Minimum order amount is ₹150')
+    let total = calculateTotal();
+    if (total < 170) {
+      alert("Minimum order amount is ₹150");
     } else {
-    navigate("/address");
+      navigate("/address");
     }
   };
   const dec = (index) => {
@@ -113,11 +142,11 @@ const Cart = ({ id }) => {
       setShowModal(true);
     }
   }, [cartItems]);
-  
+
   return (
     <>
       <div className="cart-page">
-        <h2 style={{ textAlign: "center" }}>Your Cart</h2>
+        {/* <h2 style={{ textAlign: "center" }}>Cart</h2> */}
         {cartItems.length > 0 ? (
           <>
             <table className="cart-table">
@@ -137,14 +166,14 @@ const Cart = ({ id }) => {
                         <img src={item.image} alt={item.name} />
                       </td>
                       <td>
-                        <div style={{color: 'black' , fontWeight: '500'}}>
-                        {item.name}
+                        <div style={{ color: "black", fontWeight: "500" , textAlign: 'center' }}>
+                          {item.name}
                         </div>
                         {item.addons && item.addons.length > 0 && (
-                          <div style={{color: 'grey'}}>
+                          <div style={{ color: "grey" }}>
                             Addons:
                             {item.addons.map((addon) => (
-                              <div key={addon.name} style={{color: 'grey'}}>
+                              <div key={addon.name} style={{ color: "grey" }}>
                                 {addon.name} - ₹{addon.price}
                               </div>
                             ))}
@@ -153,19 +182,57 @@ const Cart = ({ id }) => {
                         {item.cheeses && (
                           <div>
                             {item.cheeses.map((cheese) => (
-                              <div key={cheese.name} style={{color: 'grey'}}>
+                              <div key={cheese.name} style={{ color: "grey" }}>
                                 {cheese.name} - ₹{cheese.price}
                               </div>
                             ))}
                           </div>
                         )}
                       </td>
-                      <td style={{width: '6rem'}}> 
-                        <button onClick={() => dec(index)}>-</button>
-                        {item.quantity}
-                        <button onClick={() => inc(index)}>+</button>
+                      <td >
+                        <div
+                         style={{
+                           width: "6rem",
+                           padding: '0 1rem',
+                           display: 'flex',
+                           border: 'none',
+                           margin: 'auto'
+                           }}>
+                        <button 
+                        onClick={() => dec(index)}
+                        style={{
+                          background:'whitesmoke',
+                          color: 'var(--bg)',
+                          borderRadius: '0.8rem 0 0 0.8rem',
+                          border: 'none',
+                          paddingBottom: '0.3rem',
+                          fontSize: '1.2rem'
+                        }}
+                        ><FaMinusCircle/></button>
+                        <span
+                         style={{
+                          background:'whitesmoke',
+                          color: 'var(--bg)',
+                          fontSize: '1.2rem',
+                          fontWeight: 700,
+                           }}>
+                            {item.quantity}
+                            </span>
+                        <button 
+                        onClick={() => inc(index)}
+                        style={{
+                          background:'whitesmoke',
+                          color: 'var(--bg)',
+                          borderRadius: '0 0.8rem 0.8rem 0',
+                          border: 'none',
+                          paddingBottom: '0.3rem',
+                          fontSize: '1.2rem'
+                        }}
+                        >
+                          <FaPlusCircle/></button>
+                        </div>
                       </td>
-                      <td>₹{calculateTotalForItem(item)}</td>
+                      <td style={{textAlign: 'center' ,fontWeight: 500}}>₹{calculateTotalForItem(item)}</td>
                     </tr>
                   ))
                 ) : (
@@ -177,21 +244,40 @@ const Cart = ({ id }) => {
                 {/* Row for the Service Charge */}
                 {cartItems.length > 0 && (
                   <tr>
-                    <td colSpan="3" style={{ textAlign: "left" }}>
+                                        <td colSpan="4"></td>
+                  </tr>
+                )}
+                {cartItems.length > 0 && (
+                  <tr>
+                    <td colSpan="3" style={{ textAlign: "left" , fontWeight: 500 }}>
                       Service Charge:
                     </td>
-                    <td>₹20</td>
+                    <td style={{fontWeight: 500 , textAlign: "center"}}>₹20</td>
                   </tr>
                 )}
                 {/* Row for the sum of net prices */}
                 {cartItems.length > 0 && (
                   <tr>
-                    <td colSpan="3" style={{ textAlign: "left" }}>
-                      Total:
+                    <td colSpan="3" style={{ textAlign: "left" , fontWeight: 500 }}>
+                     Net Total:
                     </td>
-                    <td>₹{calculateTotal()}</td>
+                    <td style={{fontWeight: 500 ,textAlign: "center" }}>₹{calculateTotal()}</td>
                   </tr>
                 )}
+                {/* Row for the total saving */}
+                {/* {cartItems.length > 0 && (
+                  <tr>
+                    <td colSpan='1'></td>
+                    <td
+                      colSpan="2"
+                      style={{ textAlign: "center", color: "green" , fontWeight: 800}}
+                    >
+                      Total Saving: ₹{calculateTotalSaving()}
+                    </td>
+                    <td  colSpan='1'>
+                    </td>
+                  </tr>
+                )} */}
               </tbody>
             </table>
             <div className="cart-navigation-buttons">
@@ -204,7 +290,7 @@ const Cart = ({ id }) => {
             </div>
           </>
         ) : (
-          <ComingSoonModal onClose={() =>navigate("/menu")} />
+          <ComingSoonModal onClose={() => navigate("/menu")} />
         )}
       </div>
     </>
@@ -212,18 +298,22 @@ const Cart = ({ id }) => {
 };
 
 const ComingSoonModal = ({ onClose }) => (
-  <Modal show={true}  backdrop="static"  centered>
-  
+  <Modal show={true} backdrop="static" centered>
     <Modal.Body>
-      <p>Your cart is empty please <br /> Add item in cart </p>
+      <p>
+        Your cart is empty please <br /> Add item in cart{" "}
+      </p>
     </Modal.Body>
     <Modal.Footer>
-      <Button variant="secondary" style={{ background: '#d32e2e', border: 'none' }} onClick={onClose}>
+      <Button
+        variant="secondary"
+        style={{ background: "#d32e2e", border: "none" }}
+        onClick={onClose}
+      >
         Close
       </Button>
     </Modal.Footer>
   </Modal>
 );
-
 
 export default Cart;

@@ -54,6 +54,7 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
       price: selectedSizePrice,
       quantity,
       image,
+      mrp,
     };
     AddToCart(product);
     setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: true }));
@@ -69,6 +70,7 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
       price,
       quantity,
       image,
+      mrp,
     };
     AddToCart(product);
     setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: true }));

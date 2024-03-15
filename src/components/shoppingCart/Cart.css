@@ -14,13 +14,17 @@
 }
 
 .cart-table th {
-  background-color: #f2f2f2;
+  /* background-color: #f2f2f2; */
+  color: var(--bg);
+  text-align: center;
 }
 
 .cart-table img {
   max-width: 50px;
   max-height: 50px;
   border-radius: 4px;
+  display: flex;
+margin: auto;
 }
 .cart-navigation-buttons {
   justify-content: space-between;

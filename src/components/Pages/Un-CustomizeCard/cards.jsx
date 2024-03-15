@@ -26,36 +26,6 @@ const Cards = ({ id, name, description, price, image, mrp }) => {
     }
   }, [id]);
 
-  // const handleIncrement = () => {
-  //   setQuantity((prevQuantity) => {
-  //     const newQuantity = prevQuantity + 1;
-  //     console.log(`Incrementing quantity for ${id} to ${newQuantity}`);
-  //     localStorage.setItem(`${id}_quantity`, newQuantity);
-  //     updateCartItemQuantity(id, newQuantity);
-  //     return newQuantity;
-  //   });
-  // };
-
-  // const handleDecrement = () => {
-  //   if (quantity > 1) {
-  //     setQuantity((prevQuantity) => {
-  //       const newQuantity = prevQuantity - 1;
-  //       console.log(`Decrementing quantity for ${id} to ${newQuantity}`);
-  //       localStorage.setItem(`${id}_quantity`, newQuantity);
-  //       updateCartItemQuantity(id, newQuantity);
-  //       return newQuantity;
-  //     });
-  //   } else {
-  //     setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: false }));
-  //     decrementCart();
-  //     setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
-
-  //     updateCartItemQuantity(id, 0);
-  //     localStorage.removeItem(`${id}_quantity`); // Remove the quantity from local storage
-  //     console.log(`Removing quantity for ${id}`);
-  //   }
-  // };
-
   const handleAddToCart = () => {
     const product = {
       id,
@@ -63,6 +33,7 @@ const Cards = ({ id, name, description, price, image, mrp }) => {
       price,
       quantity,
       image,
+      mrp,
     };
     AddToCart(product);
     setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: true }));
