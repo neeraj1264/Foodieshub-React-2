@@ -13,19 +13,6 @@ import { useEffect, useState } from 'react';
 import { HashLoader } from 'react-spinners';
 function App() {
   const [installPrompt, setInstallPrompt] = useState(null);
-  const [Loading, SetLoading] = useState(true)
-
-  useEffect(() => {
-    const handleLoad = () => {
-      SetLoading(false);
-    };
-
-    window.addEventListener('load', handleLoad);
-
-    return () => { 
-      window.removeEventListener('load', handleLoad);
-    };
-  }, []);
 
   const handleInstallClick = () => {
     if (installPrompt instanceof Event) {
@@ -73,22 +60,17 @@ function App() {
 
   return (
    <>
-        {Loading ? <HashLoader color="#d32e2e" style={{position: 'absolute', top: '50%', left: '50%'}}/> : (
  <Routes>
     <Route path="" element={<Layout />}>
       <Route index element={<MyCarousel/>} />
       <Route path="Pizza" element={<Pizza />} />
       <Route path="address" element={<Address />} />
       <Route path="confirm" element={<ConfirmOrder />} />
-      {/* <Route path="Pasta" element={<Pasta />} />
-      <Route path="Pizza" element={<Pizza />} />
-      <Route path="Burger" element={<Burger />} /> */}
       <Route path="cart" element={<Cart />} />
       <Route path="menu" element={<MenuLayout/>} />
       <Route path="MyCarousel" element={<MyCarousel />} />
     </Route>
   </Routes>  
-    )}
   {installPrompt && currentRoute === '/' && (
         <AddToHomeModal
         installPrompt={installPrompt}
