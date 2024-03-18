@@ -22,7 +22,7 @@ function App() {
 
     window.addEventListener('load', handleLoad);
 
-    return () => {
+    return () => { 
       window.removeEventListener('load', handleLoad);
     };
   }, []);
