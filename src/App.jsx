@@ -10,8 +10,22 @@ import MyCarousel from './components/banner/Banner';
 import MenuLayout from './MenuLayout';
 import AddToHomeModal from './components/AddToHome/AddToHome';
 import { useEffect, useState } from 'react';
+import { HashLoader } from 'react-spinners';
 function App() {
   const [installPrompt, setInstallPrompt] = useState(null);
+  const [Loading, SetLoading] = useState(true)
+
+  useEffect(() => {
+    const handleLoad = () => {
+      SetLoading(false);
+    };
+
+    window.addEventListener('load', handleLoad);
+
+    return () => {
+      window.removeEventListener('load', handleLoad);
+    };
+  }, []);
 
   const handleInstallClick = () => {
     if (installPrompt instanceof Event) {
@@ -59,6 +73,7 @@ function App() {
 
   return (
    <>
+        {Loading ? <HashLoader color="#d32e2e" style={{position: 'absolute', top: '50%', left: '50%'}}/> : (
  <Routes>
     <Route path="" element={<Layout />}>
       <Route index element={<MyCarousel/>} />
@@ -73,7 +88,7 @@ function App() {
       <Route path="MyCarousel" element={<MyCarousel />} />
     </Route>
   </Routes>  
-  
+    )}
   {installPrompt && currentRoute === '/' && (
         <AddToHomeModal
         installPrompt={installPrompt}
@@ -81,6 +96,7 @@ function App() {
         onCloseClick={handleCloseClick}
         />
       )}
+      
    </>
   )
 }

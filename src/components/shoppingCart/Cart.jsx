@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import { FaMinus , FaPlus , FaMinusCircle , FaPlusCircle} from "react-icons/fa";
 import "./Cart.css";
+import { HashLoader } from "react-spinners";
 
 const Cart = ({ id }) => {
   let {
@@ -19,7 +20,13 @@ const Cart = ({ id }) => {
   } = useCart();
   const productShowButtons = showButtons[id] || false;
   const [showModal, setShowModal] = useState(false);
+  const [Loading, SetLoading] = useState(true);
 
+  useEffect(()=>{
+      setTimeout(() => {
+      SetLoading(false)
+    }, 500);
+  })
   const handleRemoveItem = (productId) => {
     removeCartItem(productId);
   };
@@ -146,8 +153,10 @@ const Cart = ({ id }) => {
   return (
     <>
       <div className="cart-page">
-        {/* <h2 style={{ textAlign: "center" }}>Cart</h2> */}
-        {cartItems.length > 0 ? (
+      <h2 style={{ textAlign: "center" }}>Shopping Cart</h2>
+        {Loading ? <HashLoader color="#d32e2e" style={{position: 'absolute', top: '50%', left: '50%'}}/> : (
+          <>
+          {cartItems.length > 0 ? (
           <>
             <table className="cart-table">
               <thead>
@@ -291,6 +300,8 @@ const Cart = ({ id }) => {
           </>
         ) : (
           <ComingSoonModal onClose={() => navigate("/menu")} />
+        )}
+          </>
         )}
       </div>
     </>

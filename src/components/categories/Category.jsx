@@ -20,31 +20,6 @@ const categories = [
 ];
 
 function Category() {
-  const [selectedCategory, setSelectedCategory] = useState(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-
-      const selectedSection = categories.find((category) => {
-        const section = document.getElementById(category.name);
-        if (section) {
-          const { top, bottom } = section.getBoundingClientRect();
-          return top <= 0 && bottom > 0;
-        }
-        return false;
-      });
-
-      if (selectedSection) {
-        setSelectedCategory(selectedSection.name);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
@@ -62,27 +37,16 @@ function Category() {
 
   return (
     <>
-      {/* <h2 style={{ textAlign: 'center' }}>Categories</h2> */}
       <div className="outer-card">
         {categories.map((category) => (
           <Link
-            to={`#${encodeURIComponent(category.name)}`}
-            key={category.id}
-           onClick={() => {
-              scrollToSection(category.name);
-              // setSelectedCategory(category.name);
-            }}
+          to={`#${encodeURIComponent(category.name)}`}
+          key={category.id}
+          onClick={() => scrollToSection(category.name)}
           >
-            {/* <div className={`card ${selectedCategory === category.name ? 'selected' : ''}`}> */}
 
             <div className="card">
-              <img
-                src={category.image}
-                className={`card-img-top ${
-                  selectedCategory === category.name ? "selected" : ""
-                }`}
-                alt={category.name}
-              />
+              <img src={category.image} className="card-img-top" alt={category.name} />
               <div className="card-body">
                 <p className="card-text">{category.name}</p>
               </div>

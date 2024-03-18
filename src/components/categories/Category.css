@@ -37,9 +37,5 @@
     scrollbar-width: thin;
     scrollbar-color: transparent transparent;  
   }
-  .card-img-top.selected {
-    border: 3px solid red;
-    padding: .2rem;
-    background-color: white;
-  }
+
   

@@ -43,7 +43,7 @@ bottom: -14px;
 @media (min-width: 891px) {
   .carousel-inner img{
       height: 30rem;
-      padding: 4rem 7rem;
+      padding: 1rem;
       border-radius: 2rem;
       margin: 3rem 4rem 4rem 0;
   }
