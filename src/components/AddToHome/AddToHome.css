@@ -14,12 +14,12 @@
   
   .install-popup {
     background: rgb(43 43 43);
-    padding: 9px 11px;
+    padding: 0px 6px;
     border-radius: 8px;
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     position: absolute;
-    margin: 2rem auto;
+    margin: 1rem auto;
     top: 2rem;
     animation: slideIn 0.5s ease-out;
   }
