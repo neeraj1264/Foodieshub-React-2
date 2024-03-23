@@ -153,20 +153,20 @@ const Cart = ({ id }) => {
   return (
     <>
       <div className="cart-page">
-      <h2 style={{ textAlign: "center" }}>Shopping Cart</h2>
+      <h2 style={{ textAlign: "center" , marginBottom: '1rem'}}>Shopping Cart</h2>
         {Loading ? <HashLoader color="#d32e2e" style={{position: 'absolute', top: '50%', left: '50%'}}/> : (
           <>
           {cartItems.length > 0 ? (
           <>
             <table className="cart-table">
-              <thead>
+              {/* <thead>
                 <tr>
-                  <th>Image</th>
-                  <th>Name</th>
-                  <th>Quantity</th>
-                  <th>Net Price</th>
+                  <th colSpan='1'>Image</th>
+                  <th colSpan='1'>Name</th>
+                  <th colSpan='1'>Quantity</th>
+                  <th colSpan='1'>Net Price</th>
                 </tr>
-              </thead>
+              </thead> */}
               <tbody>
                 {cartItems.length > 0 ? (
                   cartItems.map((item, index) => (
@@ -174,7 +174,7 @@ const Cart = ({ id }) => {
                       <td>
                         <img src={item.image} alt={item.name} />
                       </td>
-                      <td>
+                      <td colSpan='2'>
                         <div style={{ color: "black", fontWeight: "500" , textAlign: 'center' }}>
                           {item.name}
                         </div>
@@ -241,7 +241,7 @@ const Cart = ({ id }) => {
                           <FaPlusCircle/></button>
                         </div>
                       </td>
-                      <td style={{textAlign: 'center' ,fontWeight: 500}}>₹{calculateTotalForItem(item)}</td>
+                      <td style={{textAlign: 'left' ,fontWeight: 700}}>₹{calculateTotalForItem(item)}</td>
                     </tr>
                   ))
                 ) : (
@@ -253,24 +253,24 @@ const Cart = ({ id }) => {
                 {/* Row for the Service Charge */}
                 {cartItems.length > 0 && (
                   <tr>
-                                        <td colSpan="4"></td>
+                                        <td colSpan="5"></td>
                   </tr>
                 )}
                 {cartItems.length > 0 && (
                   <tr>
-                    <td colSpan="3" style={{ textAlign: "left" , fontWeight: 500 }}>
-                      Service Charge:
+                    <td colSpan="4" style={{ textAlign: "left" , fontWeight: 500 }}>
+                      Service Charge <span style={{textAlign: "center"}}>[Upto 2Km]</span>
                     </td>
-                    <td style={{fontWeight: 500 , textAlign: "center"}}>₹20</td>
+                    <td style={{fontWeight: 700 , textAlign: "left"}}>₹20</td>
                   </tr>
                 )}
                 {/* Row for the sum of net prices */}
                 {cartItems.length > 0 && (
                   <tr>
-                    <td colSpan="3" style={{ textAlign: "left" , fontWeight: 500 }}>
+                    <td colSpan="4" style={{ textAlign: "left" , fontWeight: 500 }}>
                      Net Total:
                     </td>
-                    <td style={{fontWeight: 500 ,textAlign: "center" }}>₹{calculateTotal()}</td>
+                    <td style={{fontWeight: 800 ,textAlign: "left" }}>₹{calculateTotal()}</td>
                   </tr>
                 )}
                 {/* Row for the total saving */}
