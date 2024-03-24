@@ -103,10 +103,21 @@ const Cart = ({ id }) => {
     setShowButtons(updatedShowButtons);
   }, [cartItems, setShowButtons]);
 
+  useEffect(() => {
+    // Save scroll position when component unmounts
+    const scrollPosition = window.scrollY;
+    return () => {
+      window.scrollTo(0, scrollPosition);
+    };
+  }, []);
+
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate(-1);
+    SetLoading(true)
+    setTimeout(() => {
+      navigate(-1);
+    }, 450);
   };
 
   const handleNext = () => {
@@ -153,7 +164,7 @@ const Cart = ({ id }) => {
   return (
     <>
       <div className="cart-page">
-      <h2 style={{ textAlign: "center" , marginBottom: '1rem'}}>Shopping Cart</h2>
+      <h2 style={{ textAlign: "center" , margin: '1rem'}}>Shopping Cart</h2>
         {Loading ? <HashLoader color="#d32e2e" style={{position: 'absolute', top: '50%', left: '50%'}}/> : (
           <>
           {cartItems.length > 0 ? (
@@ -175,7 +186,7 @@ const Cart = ({ id }) => {
                         <img src={item.image} alt={item.name} />
                       </td>
                       <td colSpan='2'>
-                        <div style={{ color: "black", fontWeight: "500" , textAlign: 'center' }}>
+                        <div style={{ color: "black", fontWeight: "500" , textAlign: 'left' }}>
                           {item.name}
                         </div>
                         {item.addons && item.addons.length > 0 && (
@@ -201,8 +212,8 @@ const Cart = ({ id }) => {
                       <td >
                         <div
                          style={{
-                           width: "6rem",
-                           padding: '0 1rem',
+                          //  width: "6rem",
+                          //  padding: '0 1rem',
                            display: 'flex',
                            border: 'none',
                            margin: 'auto'
@@ -241,7 +252,7 @@ const Cart = ({ id }) => {
                           <FaPlusCircle/></button>
                         </div>
                       </td>
-                      <td style={{textAlign: 'left' ,fontWeight: 700}}>₹{calculateTotalForItem(item)}</td>
+                      <td style={{textAlign: 'left' ,fontWeight: 700 , paddingRight: '1.5rem'}}>₹{calculateTotalForItem(item)}</td>
                     </tr>
                   ))
                 ) : (
@@ -259,9 +270,9 @@ const Cart = ({ id }) => {
                 {cartItems.length > 0 && (
                   <tr>
                     <td colSpan="4" style={{ textAlign: "left" , fontWeight: 500 }}>
-                      Service Charge <span style={{textAlign: "center"}}>[Upto 2Km]</span>
+                      Delivery Charge <span style={{textAlign: "center", paddingLeft: '2rem' , fontWeight: 700}}>[Upto 2Km]</span>
                     </td>
-                    <td style={{fontWeight: 700 , textAlign: "left"}}>₹20</td>
+                    <td style={{fontWeight: 700 , textAlign: "left", paddingRight: '1.5rem' }}>₹20</td>
                   </tr>
                 )}
                 {/* Row for the sum of net prices */}
@@ -270,7 +281,7 @@ const Cart = ({ id }) => {
                     <td colSpan="4" style={{ textAlign: "left" , fontWeight: 500 }}>
                      Net Total:
                     </td>
-                    <td style={{fontWeight: 800 ,textAlign: "left" }}>₹{calculateTotal()}</td>
+                    <td style={{fontWeight: 800 ,textAlign: "left" , paddingRight: '1.5rem' }}>₹{calculateTotal()}</td>
                   </tr>
                 )}
                 {/* Row for the total saving */}

@@ -14,23 +14,23 @@ import Dinner from './components/Pages/Dinner';
 import Pizza from './components/Pages/Pizza/Pizza';
 import Cakes from './components/Pages/cakes/Cakes';
 import Naan from './components/Pages/Naan';
-import { HashLoader } from 'react-spinners';
+// import { HashLoader } from 'react-spinners';
 
 
 const MenuLayout = () => {
 
-  const [Loading, SetLoading] = useState(true);
+  // const [Loading, SetLoading] = useState(true);
 
-  useEffect(()=>{
-      setTimeout(() => {
-      SetLoading(false)
-    }, 500);
-  })
+  // useEffect(()=>{
+  //     setTimeout(() => {
+  //     SetLoading(false)
+  //   }, 500);
+  // })
 
   return (
     <>
-            {Loading ? <HashLoader color="#d32e2e" style={{position: 'absolute', top: '50%', left: '50%'}}/> : (
-<>
+            {/* {Loading ? <HashLoader color="#d32e2e" style={{position: 'absolute', top: '50%', left: '50%'}}/> : (
+<> */}
     <Category/>
    <Burger/>
    <Sandwich/>
@@ -46,8 +46,8 @@ const MenuLayout = () => {
    <Chaap/>
    <Dinner/>
    <Naan/>
-   </>
-            )}
+   {/* </>
+            )} */}
     </>
   );
 };
