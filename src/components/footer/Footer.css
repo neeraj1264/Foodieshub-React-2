@@ -43,3 +43,19 @@ footer {
   font-size: 1rem; /* Set your desired size for the icons */
   margin-bottom: 0.2rem;
 }
+.nav-link.active  {
+  font-weight: 800;
+  font-size: 1.2rem;
+  background: white;
+  color: var(--bg);
+  padding: .2rem .5rem;
+  border-radius: .5rem;
+}
+.nav-link.pad.active{
+  font-weight: 800;
+    font-size: 1.2rem;
+    background: white;
+    color: var(--bg);
+    padding: .2rem 1.3rem;
+    border-radius: .5rem;
+}

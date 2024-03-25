@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import './Footer.css'
-import { Link, NavLink } from 'react-router-dom';
+import React, { useState } from 'react';
+import './Footer.css';
+import { NavLink } from 'react-router-dom';
 import { FaShoppingBasket } from 'react-icons/fa';
 import { IoHomeOutline } from "react-icons/io5";
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
@@ -22,39 +22,36 @@ function Footer() {
   const handleCloseModal = () => {
     setShowModal(false);
   };
+
   return (
     <>
       <footer>
-      <div className="footer-content">
-        <NavLink to="/" className="nav-link text-white i">
-          <div>
-          <IoHomeOutline  className="icon"/>
-          </div>
-          <span className="icon-name">Home</span>
-        </NavLink>
+        <div className="footer-content">
+          <NavLink to="/" className="nav-link i" activeclassname="active">
+            <IoHomeOutline className="icon" />
+            <span className="icon-name">Home</span>
+          </NavLink>
 
-        <NavLink to="/menu" className="nav-link text-white i">
-          <div>
-        <MdRestaurantMenu  className="icon"/>
-        </div>
-          <span className="icon-name">Menu</span>
-        </NavLink>
+          <NavLink to="/menu" className="nav-link i" activeclassname="active">
+            <MdRestaurantMenu className="icon" />
+            <span className="icon-name">Menu</span>
+          </NavLink>
 
-        <NavLink to="/cart" className="nav-link text-white i">
-        <div className="cart">
-          <FaShoppingBasket  className="icon"/>
-          {cartItemsCount > 0 && (
-            <Badge bg="success" className="ms-1 ">
-              {cartItemsCount}
-            </Badge>
-          )}
-          </div>
-          <span className="icon-name">Cart</span>
-        </NavLink>
-        
-        <div className="grocery" onClick={handleGroceryClick}>
-            <span className="icon-name">Grocery </span>
+          <NavLink to="/cart" className="nav-link pad i" activeclassname="active">
+            <div className="cart">
+              <FaShoppingBasket className="icon" />
+              {cartItemsCount > 0 && (
+                <Badge bg="success" className="ms-1">
+                  {cartItemsCount}
+                </Badge>
+              )}
+            </div>
+            <span className="icon-name">Cart</span>
+          </NavLink>
+
+          <div className="" onClick={handleGroceryClick}>
             <MdOutlineLocalGroceryStore className="icon" />
+            <span className="icon-name">Grocery </span>
             <span className='i'> Soon</span>
           </div>
         </div>
@@ -75,7 +72,7 @@ function Footer() {
         </Modal.Footer>
       </Modal>
     </>
-  )
+  );
 }
 
-export default Footer
+export default Footer;
