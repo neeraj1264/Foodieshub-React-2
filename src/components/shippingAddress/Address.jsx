@@ -3,6 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useCart } from "../../ContextApi";
 import { useNavigate } from "react-router-dom";
 import "./Address.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Address = () => {
   const { selectedAddress, setSelectedAddress } = useCart();
@@ -14,6 +16,13 @@ const Address = () => {
   const [isNewAddress, setIsNewAddress] = useState(savedAddresses.length === 0); // Check if there are saved addresses
 
   const navigate = useNavigate();
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 3000,
+    // pauseOnHover: true,
+    draggable: true,
+    theme: "dark",
+  };
 
   const handleBack = () => {
     navigate(-1);
@@ -37,9 +46,19 @@ const Address = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    // You can add additional validation logic here if needed
-    if (customerName && streetAddress && city) {
-      const addressData = {
+ // Validation checks
+ if (customerName.length < 3) {
+  toast.error("Name should have at least 3 characters" , toastOptions);
+  return;
+}
+if (streetAddress.length < 3) {
+  toast.error("Address should have at least 3 characters" , toastOptions);
+  return;
+}
+if (!/^\d{10}$/.test(city)) {
+  toast.error("Phone number should have exactly 10 digits" , toastOptions);
+  return;
+}   const addressData = {
         customerName,
         streetAddress,
         city,
@@ -55,7 +74,6 @@ const Address = () => {
           JSON.stringify([...savedAddresses, addressData])
         );
       }
-    }
     handleNext();
   };
 
@@ -165,6 +183,8 @@ const Address = () => {
           </div>
         </form>
       )}
+                  <ToastContainer />
+
     </div>
   );
 };
