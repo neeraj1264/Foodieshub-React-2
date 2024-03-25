@@ -7,6 +7,8 @@ import Spinner from "react-bootstrap/Spinner";
 import { FaMinus , FaPlus , FaMinusCircle , FaPlusCircle} from "react-icons/fa";
 import "./Cart.css";
 import { HashLoader } from "react-spinners";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Cart = ({ id }) => {
   let {
@@ -21,6 +23,13 @@ const Cart = ({ id }) => {
   const productShowButtons = showButtons[id] || false;
   const [showModal, setShowModal] = useState(false);
   const [Loading, SetLoading] = useState(true);
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 3000,
+    // pauseOnHover: true,
+    draggable: true,
+    theme: "dark",
+  };
 
   useEffect(()=>{
       setTimeout(() => {
@@ -123,7 +132,7 @@ const Cart = ({ id }) => {
   const handleNext = () => {
     let total = calculateTotal();
     if (total < 170) {
-      alert("Minimum order amount is ₹150");
+      toast.error("Minimum order amount is ₹150", toastOptions);
     } else {
       navigate("/address");
     }
@@ -308,6 +317,7 @@ const Cart = ({ id }) => {
                 Next
               </button>
             </div>
+            <ToastContainer/>
           </>
         ) : (
           <ComingSoonModal onClose={() => navigate("/menu")} />
