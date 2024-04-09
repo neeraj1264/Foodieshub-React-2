@@ -39,12 +39,15 @@ footer {
   border-radius: 0.3rem;
 }
 .nav-link .icon {
-  font-size: 1rem; /* Set your desired size for the icons */
-  margin-bottom: 0.2rem;
+  font-size: 1.2rem;
+  /* margin-bottom: 0.2rem; */
+}
+.nav-link{
+  font-size: .8rem !important;
 }
 .nav-link.active  {
   font-weight: 800;
-  font-size: 1.2rem;
+  /* font-size: .8rem; */
   background: white;
   color: var(--bg) !important;
   padding: .2rem .5rem;
@@ -52,9 +55,15 @@ footer {
 }
 .nav-link.pad.active{
   font-weight: 800;
-    font-size: 1.2rem;
+    font-size: 1rem;
     background: white;
     color: var(--bg) !important;
     padding: .2rem 1.3rem;
     border-radius: .5rem;
+}
+.G-icon{
+font-size: 1.2rem;
+}
+.G-name{
+  font-size: .8rem;
 }

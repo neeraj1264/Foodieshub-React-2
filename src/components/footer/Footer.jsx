@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import './Footer.css';
 import { NavLink } from 'react-router-dom';
-import { FaShoppingBasket } from 'react-icons/fa';
+// import { FaShoppingBasket } from 'react-icons/fa';
+import { FaCartPlus } from "react-icons/fa";
 import { IoHomeOutline } from "react-icons/io5";
-import { MdOutlineLocalGroceryStore } from "react-icons/md";
+// import { MdOutlineLocalGroceryStore } from "react-icons/md";
+import { GiSlicedBread } from "react-icons/gi";
 import { MdRestaurantMenu } from "react-icons/md";
 import Badge from 'react-bootstrap/Badge';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -39,7 +41,7 @@ function Footer() {
 
           <NavLink to="/cart" className="nav-link pad i" activeclassname="active">
             <div className="cart">
-              <FaShoppingBasket className="icon" />
+              <FaCartPlus className="icon" />
               {cartItemsCount > 0 && (
                 <Badge bg="success" className="ms-1">
                   {cartItemsCount}
@@ -50,9 +52,9 @@ function Footer() {
           </NavLink>
 
           <div className="" onClick={handleGroceryClick}>
-            <MdOutlineLocalGroceryStore className="icon" />
-            <span className="icon-name">Grocery </span>
-            <span className='i'> Soon</span>
+            <GiSlicedBread className="G-icon" />
+            <div className="G-name">Grocery </div>
+            {/* <span className='i'> Soon</span> */}
           </div>
         </div>
       </footer>

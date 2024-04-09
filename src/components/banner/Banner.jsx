@@ -50,10 +50,10 @@ const MyCarousel = () => {
       <Link
        to={`/menu#${encodeURIComponent(item.target)}`}>
           <img className="d-block w-100" src={item.imageUrl} alt={item.title} />
-          <Carousel.Caption>
+          {/* <Carousel.Caption>
             <h3>{item.title}</h3>
             <p>{item.description}</p>
-          </Carousel.Caption>
+          </Carousel.Caption> */}
           </Link>
           </div>
         </Carousel.Item>
