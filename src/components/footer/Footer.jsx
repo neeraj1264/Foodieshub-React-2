@@ -43,7 +43,7 @@ function Footer() {
             <div className="cart">
               <FaCartPlus className="icon" />
               {cartItemsCount > 0 && (
-                <Badge bg="success" className="ms-1">
+                <Badge bg="success" style={{fontSize:".7rem"}} className="ms-1">
                   {cartItemsCount}
                 </Badge>
               )}
