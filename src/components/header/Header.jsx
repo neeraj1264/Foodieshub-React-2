@@ -5,9 +5,7 @@ import "./Header.css";
 function Header() {
   const handlePlaceOrder = () => {
     const whatsappNumber = "+917015823645";
-    const message = `Hello! I'm interested in placing an order.
-   Could you please provide me with more information about 
-   your menu options and delivery timings? Thanks!`;
+    const message = `Hello! I'm interested in placing an order. Could you please provide me with more information about your menu options and delivery timings? Thanks!`;
 
     const whatsappLink =
       "https://api.whatsapp.com/send?phone=" +
