@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Category.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const categories = [
   { id: 2, name: "Burger", image: "/img/burger.png" },
@@ -20,13 +20,22 @@ const categories = [
 ];
 
 function Category() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const hash = location.hash.substring(1);
+    if (hash) {
+      scrollToSection(hash);
+    }
+  }, [location]);
 
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
 
     if (section) {
       const offset =
-        section.offsetTop - 5 * parseFloat(getComputedStyle(section).fontSize);
+        section.offsetTop -
+        parseFloat(getComputedStyle(section).marginTop);
       window.scrollTo({
         top: offset,
         behavior: "smooth",
@@ -34,27 +43,27 @@ function Category() {
     }
   };
 
-
   return (
-    <>
-      <div className="outer-card">
-        {categories.map((category) => (
-          <Link
+    <div className="outer-card">
+      {categories.map((category) => (
+        <Link
           to={`#${encodeURIComponent(category.name)}`}
           key={category.id}
           onClick={() => scrollToSection(category.name)}
-          >
-
-            <div className="card">
-              <img src={category.image} className="card-img-top" alt={category.name} />
-              <div className="card-body">
-                <p className="card-text">{category.name}</p>
-              </div>
+        >
+          <div className="card">
+            <img
+              src={category.image}
+              className="card-img-top"
+              alt={category.name}
+            />
+            <div className="card-body">
+              <p className="card-text">{category.name}</p>
             </div>
-          </Link>
-        ))}
-      </div>
-    </>
+          </div>
+        </Link>
+      ))}
+    </div>
   );
 }
 
