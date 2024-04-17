@@ -14,6 +14,8 @@ import Dinner from './components/Pages/Dinner';
 import Pizza from './components/Pages/Pizza/Pizza';
 import Cakes from './components/Pages/cakes/Cakes';
 import Naan from './components/Pages/Naan';
+import Fruit from './components/Pages/Fruit';
+import Juice from './components/Pages/Juice';
 // import { HashLoader } from 'react-spinners';
 
 
@@ -36,6 +38,8 @@ const MenuLayout = () => {
    <Sandwich/>
    <Pizza/>
    <Pasta/>
+   <Fruit/>
+   <Juice/>
    <Shake/>
    <Cakes/>
    <GarlicBread/>

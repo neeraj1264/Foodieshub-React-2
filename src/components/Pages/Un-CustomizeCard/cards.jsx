@@ -17,6 +17,15 @@ const Cards = ({ id, name, description, price, image, mrp }) => {
   const productShowButtons = showButtons[id] || false;
   const [quantity, setQuantity] = useState(1);
 
+   //                                                     description functionality
+  
+   const [showFullDescription, setShowFullDescription] = useState(false);
+   const toggleDescription = () => setShowFullDescription(!showFullDescription);
+ 
+   const truncatedDescription =
+     description.length > 100 ? description.substring(0, 100) : description;
+
+     
   useEffect(() => {
     // Retrieve quantity from local storage on component mount
     const storedQuantity = localStorage.getItem(`${id}_quantity`);
@@ -74,7 +83,14 @@ const Cards = ({ id, name, description, price, image, mrp }) => {
               {(((mrp - price) / mrp) * 100).toFixed(0)}% off
             </span>
           </p>
-          <p className="description">{description}</p>
+          <p className="description" onClick={toggleDescription}>
+          {showFullDescription ? description : (
+    <>
+      {description.length > 100 ? description.substring(0, 100) + "..." : description}
+      {description.length > 100 && <span style={{ color: "black", fontWeight: 500 }}> read more</span>}
+    </>
+  )}
+            </p>
         </div>
         <div className="add-to-cart">
           <div>

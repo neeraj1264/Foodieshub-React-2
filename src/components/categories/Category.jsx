@@ -3,20 +3,22 @@ import "./Category.css";
 import { Link, useLocation } from "react-router-dom";
 
 const categories = [
-  { id: 2, name: "Burger", image: "/img/burger.png" },
-  { id: 3, name: "Sandwich", image: "/img/cornsand.jpg" },
-  { id: 1, name: "Pizza", image: "/img/pizza.png" },
-  { id: 4, name: "Pasta", image: "/img/pasta.png" },
-  { id: 5, name: "Shake", image: "/img/shakes.jpg" },
-  { id: 13, name: "Cakes", image: "/img/cakes/choco.jpg" },
-  { id: 6, name: "Garlic", image: "/img/gb.jpg" },
-  { id: 7, name: "Chinese", image: "/img/cheesepan.jpg" },
-  { id: 8, name: "Wrap", image: "/img/aloowrap.jpeg" },
-  { id: 9, name: "Snacks", image: "/img/bhalle.jpeg" },
-  { id: 10, name: "Momos", image: "/img/momo.jpg" },
-  { id: 11, name: "Chaap", image: "/img/chaap1.jpg" },
-  { id: 12, name: "Dinner", image: "/img/dalmakhani.jpeg" },
-  { id: 14, name: "Naan", image: "/img/butternaan.jpeg" },
+  { id: 2, name: "burger", image: "/img/burger.png" },
+  { id: 3, name: "sandwich", image: "/img/cornsand.jpg" },
+  { id: 1, name: "pizza", image: "/img/pizza.png" },
+  { id: 4, name: "pasta", image: "/img/pasta.png" },
+  { id: 15, name: "fruits", image: "/img/fruit/fruit.jpeg" },
+  { id: 16, name: "juice", image: "/img/juice/mix.jpeg" },
+  { id: 5, name: "shake", image: "/img/shakes.jpg" },
+  { id: 13, name: "cakes", image: "/img/cakes/choco.jpg" },
+  { id: 6, name: "garlic", image: "/img/gb.jpg" },
+  { id: 7, name: "chinese", image: "/img/cheesepan.jpg" },
+  { id: 8, name: "wrap", image: "/img/aloowrap.jpeg" },
+  { id: 9, name: "snacks", image: "/img/bhalle.jpeg" },
+  { id: 10, name: "momos", image: "/img/momo.jpg" },
+  { id: 11, name: "chaap", image: "/img/chaap1.jpg" },
+  { id: 12, name: "dinner", image: "/img/dalmakhani.jpeg" },
+  { id: 14, name: "naan", image: "/img/butternaan.jpeg" },
 ];
 
 function Category() {

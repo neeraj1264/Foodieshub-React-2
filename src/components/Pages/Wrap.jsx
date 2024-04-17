@@ -15,7 +15,7 @@ const Wrap = () => {
   
   return (
     <>
-      <h2 id='Wrap' style={{textAlign: 'center' , marginTop: '8rem'}}>Delicious Wrap</h2>
+      <h2 id='wrap' style={{textAlign: 'center' , marginTop: '8rem'}}>Delicious Wrap</h2>
       {renderCards(WrapData)}
     </>
   );

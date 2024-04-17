@@ -3,8 +3,9 @@ import { Button, Modal, Table } from "react-bootstrap";
 import { useCart } from "../../ContextApi";
 import "../Pages/Pizza/Pizza.css";
 import { FaMinus, FaPlus } from "react-icons/fa";
-const CustomCard = ({ id, name, description, price, image, mrp }) => {
+const CustomCard = ({ id, name, description, price, image, mrp , size}) => {
   const { priceH, priceF } = price;
+  const {size1, size2 } = size
 
   const {
     decrementCart,
@@ -18,9 +19,18 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
 
   const [show, setShow] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState("Half");
+  const [selectedSize, setSelectedSize] = useState(size1);
   const [selectedSizePrice, setSelectedSizePrice] = useState(priceH);
   const productShowButtons = showButtons[id] || false;
+
+  //                                                     description functionality
+  
+  const [showFullDescription, setShowFullDescription] = useState(false);
+  const toggleDescription = () => setShowFullDescription(!showFullDescription);
+
+  const truncatedDescription =
+    description.length > 100 ? description.substring(0, 100) : description;
+
 
   const handleShow = () => setShow(true);
   const handleClose = () => {
@@ -102,10 +112,10 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
     // Update the selected size and its corresponding price
     setSelectedSize(newSize);
     switch (newSize) {
-      case "Half":
+      case size1:
         setSelectedSizePrice(priceH);
         break;
-      case "Full":
+      case size2:
         setSelectedSizePrice(priceF);
         break;
       default:
@@ -136,7 +146,7 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
       <hr />
       <div className="product-card">
         <div className="product-details">
-          <h3>{name}</h3>
+          <h3 style={{fontSize: '1rem' , fontWeight: 700}}>{name}</h3>
           <p style={{ fontWeight: "700" }}>
             ₹{priceH || price}
             <span
@@ -169,7 +179,15 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
               </span>
             )}
           </p>
-          <p style={{ fontSize: ".8rem" }}>{description}</p>
+          <p style={{ fontSize: ".8rem" }} onClick={toggleDescription}>
+            {showFullDescription ? description : (
+    <>
+      {description.length > 100 ? description.substring(0, 100) + "..." : description}
+      {description.length > 100 && <span style={{ color: "black", fontWeight: 500 }}> read more</span>}
+    </>
+  )}
+          </p>
+
         </div>
         <div className="add-to-cart">
           <div>
@@ -236,25 +254,25 @@ const CustomCard = ({ id, name, description, price, image, mrp }) => {
                     </thead>
                     <tbody>
                       <tr>
-                        <td>Half</td>
+                        <td>{size1}</td>
                         <td>₹{priceH}</td>
                         <td>
                           <input
                             type="radio"
-                            value="Half"
-                            checked={selectedSize === "Half"}
+                            value={size1}
+                            checked={selectedSize === size1}
                             onChange={handleSizeChange}
                           />
                         </td>
                       </tr>
                       <tr>
-                        <td>Full</td>
+                        <td>{size2}</td>
                         <td>₹{priceF}</td>
                         <td>
                           <input
                             type="radio"
-                            value="Full"
-                            checked={selectedSize === "Full"}
+                            value={size2}
+                            checked={selectedSize === size2}
                             onChange={handleSizeChange}
                           />
                         </td>
