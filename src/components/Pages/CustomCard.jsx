@@ -146,7 +146,7 @@ const CustomCard = ({ id, name, description, price, image, mrp , size}) => {
       <hr />
       <div className="product-card">
         <div className="product-details">
-          <h3 style={{fontSize: '1rem' , fontWeight: 700}}>{name}</h3>
+          <h3 style={{fontSize: '1rem' , fontWeight: 700}}>{name} [{size1}]</h3>
           <p style={{ fontWeight: "700" }}>
             ₹{priceH || price}
             <span
@@ -182,8 +182,8 @@ const CustomCard = ({ id, name, description, price, image, mrp , size}) => {
           <p style={{ fontSize: ".8rem" }} onClick={toggleDescription}>
             {showFullDescription ? description : (
     <>
-      {description.length > 100 ? description.substring(0, 100) + "..." : description}
-      {description.length > 100 && <span style={{ color: "black", fontWeight: 500 }}> read more</span>}
+      {description.length > 50 ? description.substring(0, 50) + "..." : description}
+      {description.length > 50 && <span style={{ color: "black", fontWeight: 500 }}> read more</span>}
     </>
   )}
           </p>

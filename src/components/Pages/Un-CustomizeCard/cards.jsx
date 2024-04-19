@@ -86,8 +86,8 @@ const Cards = ({ id, name, description, price, image, mrp }) => {
           <p className="description" onClick={toggleDescription}>
           {showFullDescription ? description : (
     <>
-      {description.length > 100 ? description.substring(0, 100) + "..." : description}
-      {description.length > 100 && <span style={{ color: "black", fontWeight: 500 }}> read more</span>}
+      {description.length > 50 ? description.substring(0, 50) + "..." : description}
+      {description.length > 50 && <span style={{ color: "black", fontWeight: 500 }}> read more</span>}
     </>
   )}
             </p>
