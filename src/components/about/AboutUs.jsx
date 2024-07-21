@@ -1,16 +1,15 @@
 // AboutUs.js
 
 import React from "react";
-import aboutUsImage from "/img/offer.png";
+import OfferImg from "/img/offer.png";
+import aboutUsImage from "/img/about.png";
 import "./AboutUs.css"; 
 
 const AboutUs = () => {
 
   const OfferDetail = () => {
     const whatsappNumber = "+917015823645";
-
     const message = `Hello! I'm interested in your "Buy 1 Get 1 Free Pizza" offer. Could you please provide me with more details? Thank you! `;
-
     const whatsappLink =
       "https://api.whatsapp.com/send?phone=" +
       whatsappNumber +
@@ -24,9 +23,9 @@ const AboutUs = () => {
   return (
     <>
     <div className="about-us-container">
-      <img src={aboutUsImage} alt="About Us" className="about-us-image" onClick={() => OfferDetail()}/>
+      <img src={OfferImg} alt="About Us" className="offer-image" onClick={() => OfferDetail()}/>
       <h3 className="about-heading">Why Foodies Hub?</h3>
-
+      <img src={aboutUsImage} alt="About Us" className="about-us-image"/>
       <div className="about-us-content">
         <p>
         Discover a world of flavors under one roof, from hearty breakfasts to delectable dinners,
