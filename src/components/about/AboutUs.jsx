@@ -5,10 +5,28 @@ import aboutUsImage from "/img/offer.png";
 import "./AboutUs.css"; 
 
 const AboutUs = () => {
+
+  const OfferDetail = () => {
+    const whatsappNumber = "+917015823645";
+
+    const message = `
+please provide more detail about offer
+    `;
+
+    const whatsappLink =
+      "https://api.whatsapp.com/send?phone=" +
+      whatsappNumber +
+      "&text=" +
+      encodeURIComponent(message);
+
+    window.open(whatsappLink, "_blank");
+
+  };
+
   return (
     <>
     <div className="about-us-container">
-      <img src={aboutUsImage} alt="About Us" className="about-us-image" />
+      <img src={aboutUsImage} alt="About Us" className="about-us-image" onClick={() => OfferDetail()}/>
       <h3 className="about-heading">Why Foodies Hub?</h3>
 
       <div className="about-us-content">
