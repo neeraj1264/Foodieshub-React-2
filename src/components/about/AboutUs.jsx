@@ -9,9 +9,7 @@ const AboutUs = () => {
   const OfferDetail = () => {
     const whatsappNumber = "+917015823645";
 
-    const message = `
-please provide more detail about offer
-    `;
+    const message = `Hello! I'm interested in your "Buy 1 Get 1 Free Pizza" offer. Could you please provide me with more details? Thank you! `;
 
     const whatsappLink =
       "https://api.whatsapp.com/send?phone=" +
