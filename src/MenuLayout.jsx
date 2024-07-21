@@ -38,7 +38,7 @@ const MenuLayout = () => {
    <Sandwich/>
    <Pizza/>
    <Pasta/>
-   <Fruit/>
+   {/* <Fruit/> */}
    <Juice/>
    <Shake/>
    <Cakes/>

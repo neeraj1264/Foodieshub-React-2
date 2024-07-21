@@ -3,13 +3,13 @@ import "./Category.css";
 import { Link, useLocation } from "react-router-dom";
 
 const categories = [
-  { id: 15, name: "fruits", image: "/img/fruit/fruit.jpeg" },
-  { id: 16, name: "juice", image: "/img/juice/mix.jpeg" },
-  { id: 5, name: "shake", image: "/img/shakes.jpg" },
+  // { id: 15, name: "fruits", image: "/img/fruit/fruit.jpeg" },
   { id: 2, name: "burger", image: "/img/burger.png" },
   { id: 3, name: "sandwich", image: "/img/cornsand.jpg" },
   { id: 1, name: "pizza", image: "/img/pizza.png" },
   { id: 4, name: "pasta", image: "/img/pasta.png" },
+  { id: 16, name: "juice", image: "/img/juice/mix.jpeg" },
+  { id: 5, name: "shake", image: "/img/shakes.jpg" },
   { id: 13, name: "cakes", image: "/img/cakes/choco.jpg" },
   { id: 6, name: "garlic", image: "/img/gb.jpg" },
   { id: 7, name: "chinese", image: "/img/cheesepan.jpg" },

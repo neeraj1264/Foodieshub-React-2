@@ -1,7 +1,7 @@
 // AboutUs.js
 
 import React from "react";
-import aboutUsImage from "/img/about.png";
+import aboutUsImage from "/img/offer.png";
 import "./AboutUs.css"; 
 
 const AboutUs = () => {
