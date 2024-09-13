@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useCart } from "../../../ContextApi";
-
+import { FaMinus, FaPlus } from "react-icons/fa";
+import { Button, Modal, Table } from "react-bootstrap";
+import "../../Pages/Pizza/Pizza.css";
 const Cards = ({ id, name, description, price, image, mrp }) => {
   const {
     decrementCart,
@@ -16,7 +18,29 @@ const Cards = ({ id, name, description, price, image, mrp }) => {
   const productInCart = cartItems.find((item) => item.id === id);
   const productShowButtons = showButtons[id] || false;
   const [quantity, setQuantity] = useState(1);
+  const [show, setShow] = useState(false);
 
+  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setShow(false);
+  };
+
+  const handleIncrement = () => {
+    setQuantity((prevQuantity) => prevQuantity + 1);
+  };
+
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      setQuantity((prevQuantity) => prevQuantity - 1);
+    } else {
+      setShowButtons(false);
+      decrementCart();
+    }
+  };
+  const getTotalPrice = () => {
+    let total = price * quantity;
+    return total;
+  };
    //                                                     description functionality
   
    const [showFullDescription, setShowFullDescription] = useState(false);
@@ -48,6 +72,7 @@ const Cards = ({ id, name, description, price, image, mrp }) => {
     setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: true }));
     incrementCart();
     setQuantity(quantity);
+    setShow(false);
   };
 
   const handleRemoveToCart =()=>{
@@ -94,7 +119,7 @@ const Cards = ({ id, name, description, price, image, mrp }) => {
         </div>
         <div className="add-to-cart">
           <div>
-            <img src={image} alt="Product" />
+            <img src={image} alt="Product" onClick={()=> handleShow()}/>
           </div>
           <div className="add-btn">
             {productShowButtons && (
@@ -120,6 +145,77 @@ const Cards = ({ id, name, description, price, image, mrp }) => {
                 ADD
               </button>
             )}
+
+<Modal
+                className="modeldialog"
+                show={show}
+                onHide={handleClose}
+                style={{
+                  position: "fixed",
+                  bottom: "2px",
+                  background: "white",
+                }}
+              >
+                <Modal.Header closeButton className="modalheader">
+                  <Modal.Title style={{ textAlign: "center" }}>
+                    {name}
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body
+                  style={{
+                    height: "75vh",
+                    overflowY: "auto",
+                    scrollbarWidth: "thin",
+                    scrollbarColor: "transparent transparent",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginBottom: "1rem", // Add some margin at the bottom for spacing
+                    }}
+                  >
+                    <img
+                      src={image}
+                      alt={name}
+                      style={{
+                        maxWidth: "18rem",
+                        borderRadius: "1rem",
+                      }}
+                    />
+                  </div>
+
+                </Modal.Body>
+                <Modal.Footer className="modalfooter">
+                  <div className="quantity-update">
+                    <Button
+                      variant="contained"
+                      style={{ color: "var(--bg)" }}
+                      onClick={handleDecrement}
+                    >
+                      <FaMinus />
+                    </Button>
+                    <span style={{ margin: "0 0.5rem", color: "black" }}>
+                      {quantity}
+                    </span>
+                    <Button
+                      variant="contained"
+                      style={{ color: "var(--bg)" }}
+                      onClick={handleIncrement}
+                    >
+                      <FaPlus />
+                    </Button>
+                  </div>
+                  <Button className="addtocart" onClick={handleAddToCart}>
+                    Add to Cart
+                    <span style={{ paddingLeft: ".3rem", fontWeight: "800" }}>
+                      ₹{getTotalPrice()}
+                    </span>
+                  </Button>
+                </Modal.Footer>
+              </Modal>
           </div>
         </div>
       </div>

@@ -191,7 +191,7 @@ const CustomCard = ({ id, name, description, price, image, mrp , size}) => {
         </div>
         <div className="add-to-cart">
           <div>
-            <img src={image} alt="Product" />
+          <img src={image} alt="Product" onClick={()=> handleShow()} />
           </div>
           <div className="add-btn">
             {productShowButtons && (
@@ -229,20 +229,34 @@ const CustomCard = ({ id, name, description, price, image, mrp , size}) => {
                 }}
               >
                 <Modal.Header closeButton className="modalheader">
-                  <img
-                    src={image}
-                    alt={name}
-                    style={{
-                      maxWidth: "5rem",
-                      height: "4rem",
-                      margin: "0 10px 10px 0",
-                      borderRadius: "1rem",
-                    }}
-                  />
+                
                   <Modal.Title>{name}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                  <h3 style={{ textAlign: "center" }}>Select Size</h3>
+                <Modal.Body
+                  style={{
+                    height: "75vh",
+                    overflowY: "auto",
+                    scrollbarWidth: "thin",
+                    scrollbarColor: "transparent transparent",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginBottom: "1rem", // Add some margin at the bottom for spacing
+                    }}
+                  >
+                     <img
+                      src={image}
+                      alt={name}
+                      style={{
+                        maxWidth: "18rem",
+                        borderRadius: "1rem",
+                      }}
+                    />
+                    </div>
 
                   <Table striped bordered hover>
                     <thead>

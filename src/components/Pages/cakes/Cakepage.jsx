@@ -4,8 +4,8 @@ import "../../Pages/Pizza/Pizza.css";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { useCart } from "../../../ContextApi";
 const CakeCard = ({ id, name, description, price, image, mrp, size }) => {
-    const { cake1, cake2, cake3, cake4 } = price;
-    const { size1, size2, size3, size4 } = size;
+  const { cake1, cake2, cake3, cake4 } = price;
+  const { size1, size2, size3, size4 } = size;
 
   const {
     decrementCart,
@@ -101,19 +101,19 @@ const CakeCard = ({ id, name, description, price, image, mrp, size }) => {
     // Update the selected size and its corresponding price
     setSelectedSize(newSize);
     switch (newSize) {
-        case size1:
-            setSelectedSizePrice(cake1);
-            break;
-          case size2:
-            setSelectedSizePrice(cake2);
-            break;
-            case size3:
-              setSelectedSizePrice(cake3);
-              break;
-            case size4:
-              setSelectedSizePrice(cake4);
-              break;
-    
+      case size1:
+        setSelectedSizePrice(cake1);
+        break;
+      case size2:
+        setSelectedSizePrice(cake2);
+        break;
+      case size3:
+        setSelectedSizePrice(cake3);
+        break;
+      case size4:
+        setSelectedSizePrice(cake4);
+        break;
+
       default:
         // Handle the case where an unknown size is selected
         console.error("Unknown size selected.");
@@ -130,7 +130,11 @@ const CakeCard = ({ id, name, description, price, image, mrp, size }) => {
   }, [id]);
 
   const hascakeOptions =
-    typeof price === "object" && "cake1" in price && "cake2" in price && "cake3" in price && "cake4" in price;
+    typeof price === "object" &&
+    "cake1" in price &&
+    "cake2" in price &&
+    "cake3" in price &&
+    "cake4" in price;
 
   const getTotalPrice = () => {
     let total = selectedSizePrice * quantity;
@@ -164,8 +168,8 @@ const CakeCard = ({ id, name, description, price, image, mrp, size }) => {
                 {(((mrp - price) / mrp) * 100).toFixed(0)}% off
               </span>
             )}
-             {hascakeOptions && (
-                <span
+            {hascakeOptions && (
+              <span
                 style={{
                   marginLeft: ".5rem",
                   color: "var(--bg)",
@@ -179,7 +183,7 @@ const CakeCard = ({ id, name, description, price, image, mrp, size }) => {
         </div>
         <div className="add-to-cart">
           <div>
-            <img src={image} alt="Product" />
+            <img src={image} alt="Product" onClick={()=> handleShow()} />
           </div>
           <div className="add-btn">
             {productShowButtons && (
@@ -205,9 +209,9 @@ const CakeCard = ({ id, name, description, price, image, mrp, size }) => {
                 ADD
               </button>
             )}
-          
-       {hascakeOptions && (
-                <Modal
+
+            {hascakeOptions && (
+              <Modal
                 className="modeldialog"
                 show={show}
                 onHide={handleClose}
@@ -218,19 +222,36 @@ const CakeCard = ({ id, name, description, price, image, mrp, size }) => {
                 }}
               >
                 <Modal.Header closeButton className="modalheader">
-                  <img
-                    src={image}
-                    alt={name}
-                    style={{
-                      maxWidth: "5rem",
-                      height: "4rem",
-                      margin: "0 10px 10px 0",
-                      borderRadius: "1rem",
-                    }}
-                  />
-                  <Modal.Title>{name}</Modal.Title>
+                  <Modal.Title style={{ textAlign: "center" }}>
+                    {name}
+                  </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body
+                  style={{
+                    height: "75vh",
+                    overflowY: "auto",
+                    scrollbarWidth: "thin",
+                    scrollbarColor: "transparent transparent",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginBottom: "1rem", // Add some margin at the bottom for spacing
+                    }}
+                  >
+                    <img
+                      src={image}
+                      alt={name}
+                      style={{
+                        maxWidth: "18rem",
+                        borderRadius: "1rem",
+                      }}
+                    />
+                  </div>
+
                   <h3 style={{ textAlign: "center" }}>Select Size</h3>
 
                   <Table striped bordered hover>
@@ -255,8 +276,8 @@ const CakeCard = ({ id, name, description, price, image, mrp, size }) => {
                         </td>
                       </tr>
                       <tr>
-                      <td>{size2}</td>
-                      <td>₹{cake2}</td>
+                        <td>{size2}</td>
+                        <td>₹{cake2}</td>
                         <td>
                           <input
                             type="radio"
@@ -279,8 +300,8 @@ const CakeCard = ({ id, name, description, price, image, mrp, size }) => {
                         </td>
                       </tr>
                       <tr>
-                      <td>{size4}</td>
-                      <td>₹{cake4}</td>
+                        <td>{size4}</td>
+                        <td>₹{cake4}</td>
                         <td>
                           <input
                             type="radio"
