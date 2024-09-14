@@ -3,9 +3,9 @@ import { Button, Modal, Table } from "react-bootstrap";
 import { useCart } from "../../ContextApi";
 import "../Pages/Pizza/Pizza.css";
 import { FaMinus, FaPlus } from "react-icons/fa";
-const CustomCard = ({ id, name, description, price, image, mrp , size}) => {
+const CustomCard = ({ id, name, description, price, image, mrp, size }) => {
   const { priceH, priceF } = price;
-  const {size1, size2 } = size
+  const { size1, size2 } = size;
 
   const {
     decrementCart,
@@ -24,13 +24,12 @@ const CustomCard = ({ id, name, description, price, image, mrp , size}) => {
   const productShowButtons = showButtons[id] || false;
 
   //                                                     description functionality
-  
+
   const [showFullDescription, setShowFullDescription] = useState(false);
   const toggleDescription = () => setShowFullDescription(!showFullDescription);
 
   const truncatedDescription =
     description.length > 100 ? description.substring(0, 100) : description;
-
 
   const handleShow = () => setShow(true);
   const handleClose = () => {
@@ -61,7 +60,7 @@ const CustomCard = ({ id, name, description, price, image, mrp , size}) => {
     const product = {
       id,
       name: `${name} [${selectedSize}]`,
-      price: selectedSizePrice,
+      price: selectedSizePrice || price, 
       quantity,
       image,
       mrp,
@@ -89,13 +88,7 @@ const CustomCard = ({ id, name, description, price, image, mrp , size}) => {
   };
 
   const handleAddBtnClick = () => {
-    // If hasPriceOptions is false, trigger handleAddToCart functionality
-    if (!hasPriceOptions) {
-      handleAddBtnToCart();
-    } else {
-      // Otherwise, show the modal
       handleShow();
-    }
   };
 
   const handleRemoveToCart = () => {
@@ -137,7 +130,7 @@ const CustomCard = ({ id, name, description, price, image, mrp , size}) => {
     typeof price === "object" && "priceH" in price && "priceF" in price;
 
   const getTotalPrice = () => {
-    let total = selectedSizePrice * quantity;
+    let total = selectedSizePrice ? selectedSizePrice * quantity : price * quantity;
     return total;
   };
 
@@ -146,7 +139,9 @@ const CustomCard = ({ id, name, description, price, image, mrp , size}) => {
       <hr />
       <div className="product-card">
         <div className="product-details">
-          <h3 style={{fontSize: '1rem' , fontWeight: 700}}>{name} [{size1}]</h3>
+          <h3 style={{ fontSize: "1rem", fontWeight: 700 }}>
+            {name} [{size1}]
+          </h3>
           <p style={{ fontWeight: "700" }}>
             ₹{priceH || price}
             <span
@@ -180,18 +175,26 @@ const CustomCard = ({ id, name, description, price, image, mrp , size}) => {
             )}
           </p>
           <p style={{ fontSize: ".8rem" }} onClick={toggleDescription}>
-            {showFullDescription ? description : (
-    <>
-      {description.length > 50 ? description.substring(0, 50) + "..." : description}
-      {description.length > 50 && <span style={{ color: "black", fontWeight: 500 }}> read more</span>}
-    </>
-  )}
+            {showFullDescription ? (
+              description
+            ) : (
+              <>
+                {description.length > 50
+                  ? description.substring(0, 50) + "..."
+                  : description}
+                {description.length > 50 && (
+                  <span style={{ color: "black", fontWeight: 500 }}>
+                    {" "}
+                    read more
+                  </span>
+                )}
+              </>
+            )}
           </p>
-
         </div>
         <div className="add-to-cart">
           <div>
-          <img src={image} alt="Product" onClick={()=> handleShow()} />
+            <img src={image} alt="Product" onClick={() => handleShow()} />
           </div>
           <div className="add-btn">
             {productShowButtons && (
@@ -229,7 +232,6 @@ const CustomCard = ({ id, name, description, price, image, mrp , size}) => {
                 }}
               >
                 <Modal.Header closeButton className="modalheader">
-                
                   <Modal.Title>{name}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body
@@ -248,7 +250,7 @@ const CustomCard = ({ id, name, description, price, image, mrp , size}) => {
                       marginBottom: "1rem", // Add some margin at the bottom for spacing
                     }}
                   >
-                     <img
+                    <img
                       src={image}
                       alt={name}
                       style={{
@@ -256,7 +258,7 @@ const CustomCard = ({ id, name, description, price, image, mrp , size}) => {
                         borderRadius: "1rem",
                       }}
                     />
-                    </div>
+                  </div>
 
                   <Table striped bordered hover>
                     <thead>
@@ -293,6 +295,114 @@ const CustomCard = ({ id, name, description, price, image, mrp , size}) => {
                       </tr>
                     </tbody>
                   </Table>
+                </Modal.Body>
+                <Modal.Footer className="modalfooter">
+                  <div className="quantity-update">
+                    <Button
+                      variant="contained"
+                      style={{ color: "var(--bg)" }}
+                      onClick={handleDecrement}
+                    >
+                      <FaMinus />
+                    </Button>
+                    <span style={{ margin: "0 0.5rem", color: "black" }}>
+                      {quantity}
+                    </span>
+                    <Button
+                      variant="contained"
+                      style={{ color: "var(--bg)" }}
+                      onClick={handleIncrement}
+                    >
+                      <FaPlus />
+                    </Button>
+                  </div>
+                  <Button className="addtocart" onClick={handleAddToCart}>
+                    Add to Cart
+                    <span style={{ paddingLeft: ".3rem", fontWeight: "800" }}>
+                      ₹{getTotalPrice()}
+                    </span>
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            )}
+            {!hasPriceOptions && (
+              <Modal
+                className="modeldialog"
+                show={show}
+                onHide={handleClose}
+                style={{
+                  position: "fixed",
+                  bottom: "2px",
+                  background: "white",
+                }}
+              >
+                <Modal.Header closeButton className="modalheader">
+                  <Modal.Title>
+                    <div
+                      style={{
+                        textAlign: "center",
+                        fontWeight: "700",
+                      }}
+                    >
+                      Foodies Hub
+                    </div>
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body
+                  style={{
+                    height: "75vh",
+                    overflowY: "auto",
+                    scrollbarWidth: "thin",
+                    scrollbarColor: "transparent transparent",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginBottom: "1rem", // Add some margin at the bottom for spacing
+                    }}
+                  >
+                    <img
+                      src={image}
+                      alt={name}
+                      style={{
+                        maxWidth: "18rem",
+                        borderRadius: "1rem",
+                      }}
+                    />
+                  </div>
+
+                  <h5 style={{ fontSize: "1.7rem" }}>{name}</h5>
+                  <p
+                    style={{
+                      fontWeight: "700",
+                      marginBottom: ".5rem",
+                      fontSize: "1.3rem",
+                    }}
+                  >
+                    ₹{price}
+                    <span
+                      style={{
+                        textDecoration: "line-through",
+                        marginLeft: ".5rem",
+                        color: "grey",
+                      }}
+                    >
+                      {mrp}
+                    </span>
+                    <span
+                      style={{
+                        marginLeft: ".5rem",
+                        color: "var(--bg)",
+                      }}
+                    >
+                      {(((mrp - price) / mrp) * 100).toFixed(0)}% off
+                    </span>
+                  </p>
+
+                  <p>{description}</p>
                 </Modal.Body>
                 <Modal.Footer className="modalfooter">
                   <div className="quantity-update">

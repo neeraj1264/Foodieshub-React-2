@@ -1,6 +1,5 @@
 import React from "react";
 import { BiMessageDetail } from "react-icons/bi";
-import "./Header.css";
 
 function Header() {
   const handlePlaceOrder = () => {

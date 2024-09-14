@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal, Table, Form } from "react-bootstrap";
 import { useCart } from "../../../ContextApi";
-import { FaPlus , FaMinus } from "react-icons/fa";
-import './Pizza.css';
+import { FaPlus, FaMinus } from "react-icons/fa";
+import "./Pizza.css";
 
 const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
   const { size1, size2, size3 } = size || {};
@@ -43,16 +43,6 @@ const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
     setSelectedSizePrice(priceR);
     setShow(false);
   };
-
-  const handleAddBtnClick = () => {
-    // If hasPriceOptions is false, trigger handleAddToCart functionality
-    if (!hasPriceOptions) {
-      handleAddBtnToCart();
-    } else {
-      // Otherwise, show the modal
-      handleShow();
-    }
-  };
   const handleAddonChange = (addon) => {
     setAddons((prevAddons) => ({
       ...prevAddons,
@@ -74,7 +64,9 @@ const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
   ];
 
   const getTotalPrice = () => {
-    let total = selectedSizePrice * quantity;
+    let total = selectedSizePrice
+      ? selectedSizePrice * quantity
+      : price * quantity;
 
     addonsList.forEach((addon) => {
       if (addons[addon.key]) {
@@ -152,30 +144,30 @@ const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
       if (addons[addon.key]) {
         selectedAddons.push({
           name: addon.name,
-          price: AddonsPrice, 
+          price: AddonsPrice,
         });
       }
     });
-  
+
     const selectedCheeses = [];
     cheeselist.forEach((addon) => {
       if (addons[addon.key]) {
         selectedCheeses.push({
           name: addon.name,
-          price: cheesePrice, 
+          price: cheesePrice,
         });
       }
     });
 
     const product = {
       id,
-      name: `${name} [${selectedSize}]`,
-      price: selectedSizePrice,
+      name: selectedSize ? `${name} [${selectedSize}]` : name,
+      price: selectedSizePrice || price,
       quantity,
       image,
       mrp,
-      addons: selectedAddons,
-    cheeses: selectedCheeses,
+      ...(selectedAddons && selectedAddons.length > 0 && { addons: selectedAddons }),
+      ...(selectedCheeses && selectedCheeses.length > 0 && { cheeses: selectedCheeses }),
     };
 
     let total = selectedSizePrice * quantity;
@@ -183,11 +175,11 @@ const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
     selectedAddons.forEach((addon) => {
       total += AddonsPrice * quantity;
     });
-  
+
     selectedCheeses.forEach((addon) => {
       total += cheesePrice * quantity;
     });
-  
+
     product.totalPrice = total;
 
     AddToCart(product);
@@ -198,13 +190,13 @@ const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
     setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: true }));
   };
 
-  const handleRemoveToCart =()=>{
+  const handleRemoveToCart = () => {
     decrementCart();
-     setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
-     updateCartItemQuantity(id, 0);
-     setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: false }));
-     localStorage.removeItem(`${id}_quantity`);
- }
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+    updateCartItemQuantity(id, 0);
+    setShowButtons((prevShowButtons) => ({ ...prevShowButtons, [id]: false }));
+    localStorage.removeItem(`${id}_quantity`);
+  };
 
   useEffect(() => {
     // Retrieve quantity from local storage on component mount
@@ -222,218 +214,327 @@ const PizzaPage = ({ id, name, description, price, image, mrp, size }) => {
     "priceL" in price;
 
   return (
-<>
-<hr />
-<div className="product-card">
-<div className="product-details">
-<h3>{name}</h3>
-<p style={{ fontWeight: "700" }}>
-  ₹{priceR || price}
-  <span
-    style={{
-      textDecoration: "line-through",
-      marginLeft: ".5rem",
-      color: "grey",
-    }}
-  >
-    {mrp}
-  </span>
-  {!hasPriceOptions && (
-    <span
-      style={{
-        marginLeft: ".5rem",
-        color: "var(--bg)",
-      }}
-    >
-      {(((mrp - price) / mrp) * 100).toFixed(0)}% off
-    </span>
-  )}
-  {hasPriceOptions && (
-    <span
-      style={{
-        marginLeft: ".5rem",
-        color: "var(--bg)",
-      }}
-    >
-      {(((mrp - priceR || price) / mrp) * 100).toFixed(0)}% off
-    </span>
-  )}
-</p>
-<p
-style={{fontSize: '.8rem'}}
->
-  {description}</p>
-</div>
-<div className="add-to-cart">
-<div>
-  <img src={image} alt="Product" />
-</div>
-<div className="add-btn">
-  {productShowButtons && (
-    <button
-      variant="contained"
-      style={{
-        color: "whitesmoke",
-        border: "none",
-        background: "#d32e2e",
-        borderRadius: ".5rem",
-      }}
-      onClick={handleRemoveToCart}
-    >
-      Added
-    </button>
-  )}
-  {!productShowButtons && (
-    <button
-      variant="contained"
-      className="btn"
-      onClick={handleAddBtnClick}
-    >
-      ADD
-    </button>
-  )}
-  {hasPriceOptions && (
-    <Modal
-    className="modeldialog"
-      show={show}
-      onHide={handleClose}
-      style={{ position: "fixed", bottom: "2px" , background: 'white'}}
-    >
-      <Modal.Header 
-      closeButton 
-      className="modalheader"
-      >
-        <img
-          src={image}
-          alt={name}
-          style={{
-            maxWidth: "5rem",
-            height: "4rem",
-            margin: "0 10px 10px 0",
-            borderRadius: "1rem",
-          }}
-        />
-        <Modal.Title>{name}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <h3 >Select Size</h3>
-
-        <Table striped bordered hover>
-          <tbody>
-            <tr>
-              <td>{size1}</td>
-              <td>₹{priceR}</td>
-              <td>
-                <input
-                  type="radio"
-                  value={size1}
-                  checked={selectedSize === size1}
-                  onChange={handleSizeChange}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>{size2}</td>
-              <td>₹{priceM}</td>
-              <td>
-                <input
-                  type="radio"
-                  value={size2}
-                  checked={selectedSize === size2}
-                  onChange={handleSizeChange}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>{size3}</td>
-              <td>₹{priceL}</td>
-              <td>
-                <input
-                  type="radio"
-                  value={size3}
-                  checked={selectedSize === size3}
-                  onChange={handleSizeChange}
-                />
-              </td>
-            </tr>
-          </tbody>
-        </Table>
-
-        <h3 >Cheese</h3>
-
-        <Table striped bordered hover>
-          <tbody>
-            {cheeselist.map((addon) => (
-              <tr key={addon.key}>
-                <td>{addon.name}</td>
-                <td>₹{cheesePrice}</td>
-                <td>
-                  <Form.Check
-                    type="checkbox"
-                    checked={addons[addon.key]}
-                    onChange={() => handleAddonChange(addon.key)}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-        <h3 >Toppings</h3>
-
-        <Table striped bordered hover
-                  style={{marginBottom: '10rem'}}
-        >
-          <tbody>
-            {addonsList.map((addon) => (
-              <tr key={addon.key}>
-                <td>{addon.name}</td>
-                <td>₹{AddonsPrice}</td>
-                <td>
-                  <Form.Check
-                    type="checkbox"
-                    checked={addons[addon.key]}
-                    onChange={() => handleAddonChange(addon.key)}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </Modal.Body>
-      <Modal.Footer
-      className="modalfooter"
-      >
-        <div className="quantity-update">
-        <Button
-          variant="contained"
-          style={{color: 'var(--bg)'}}
-          onClick={handleDecrement}
-        >
-          <FaMinus />
-        </Button>
-        <span style={{ margin: "0 0.5rem" , color: 'black'}}>{quantity}</span>
-        <Button
-          variant="contained"
-          style={{color: 'var(--bg)' , border: 'none'}}
-          onClick={handleIncrement}
-        >
-          <FaPlus />
-        </Button>
+    <>
+      <hr />
+      <div className="product-card">
+        <div className="product-details">
+          <h3>{name}</h3>
+          <p style={{ fontWeight: "700" }}>
+            ₹{priceR || price}
+            <span
+              style={{
+                textDecoration: "line-through",
+                marginLeft: ".5rem",
+                color: "grey",
+              }}
+            >
+              {mrp}
+            </span>
+            {!hasPriceOptions && (
+              <span
+                style={{
+                  marginLeft: ".5rem",
+                  color: "var(--bg)",
+                }}
+              >
+                {(((mrp - price) / mrp) * 100).toFixed(0)}% off
+              </span>
+            )}
+            {hasPriceOptions && (
+              <span
+                style={{
+                  marginLeft: ".5rem",
+                  color: "var(--bg)",
+                }}
+              >
+                {(((mrp - priceR || price) / mrp) * 100).toFixed(0)}% off
+              </span>
+            )}
+          </p>
+          <p style={{ fontSize: ".8rem" }}>{description}</p>
         </div>
-        <Button className="addtocart" onClick={handleAddToCart}>
-          Add to Cart
-          <span style={{ paddingLeft: ".3rem", fontWeight: '800' }}>
-            ₹{getTotalPrice()}
-          </span>
-        </Button>
-      </Modal.Footer>
-    </Modal>
-  )}
-</div>
-{hasPriceOptions && <div className="cust">customisable</div>}
-</div>
-</div>
-</>
+        <div className="add-to-cart">
+          <div>
+            <img src={image} alt="Product" onClick={handleShow}/>
+          </div>
+          <div className="add-btn">
+            {productShowButtons && (
+              <button
+                variant="contained"
+                style={{
+                  color: "whitesmoke",
+                  border: "none",
+                  background: "#d32e2e",
+                  borderRadius: ".5rem",
+                }}
+                onClick={handleRemoveToCart}
+              >
+                Added
+              </button>
+            )}
+            {!productShowButtons && (
+              <button
+                variant="contained"
+                className="btn"
+                onClick={handleShow}
+              >
+                ADD
+              </button>
+            )}
+            {hasPriceOptions && (
+              <Modal
+                className="modeldialog"
+                show={show}
+                onHide={handleClose}
+                style={{
+                  position: "fixed",
+                  bottom: "2px",
+                  background: "white",
+                }}
+              >
+                <Modal.Header closeButton className="modalheader">
+                  <img
+                    src={image}
+                    alt={name}
+                    style={{
+                      maxWidth: "5rem",
+                      height: "4rem",
+                      margin: "0 10px 10px 0",
+                      borderRadius: "1rem",
+                    }}
+                  />
+                  <Modal.Title>{name}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <h3>Select Size</h3>
+
+                  <Table striped bordered hover>
+                    <tbody>
+                      <tr>
+                        <td>{size1}</td>
+                        <td>₹{priceR}</td>
+                        <td>
+                          <input
+                            type="radio"
+                            value={size1}
+                            checked={selectedSize === size1}
+                            onChange={handleSizeChange}
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>{size2}</td>
+                        <td>₹{priceM}</td>
+                        <td>
+                          <input
+                            type="radio"
+                            value={size2}
+                            checked={selectedSize === size2}
+                            onChange={handleSizeChange}
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>{size3}</td>
+                        <td>₹{priceL}</td>
+                        <td>
+                          <input
+                            type="radio"
+                            value={size3}
+                            checked={selectedSize === size3}
+                            onChange={handleSizeChange}
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </Table>
+
+                  <h3>Cheese</h3>
+
+                  <Table striped bordered hover>
+                    <tbody>
+                      {cheeselist.map((addon) => (
+                        <tr key={addon.key}>
+                          <td>{addon.name}</td>
+                          <td>₹{cheesePrice}</td>
+                          <td>
+                            <Form.Check
+                              type="checkbox"
+                              checked={addons[addon.key]}
+                              onChange={() => handleAddonChange(addon.key)}
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                  <h3>Toppings</h3>
+
+                  <Table
+                    striped
+                    bordered
+                    hover
+                    style={{ marginBottom: "10rem" }}
+                  >
+                    <tbody>
+                      {addonsList.map((addon) => (
+                        <tr key={addon.key}>
+                          <td>{addon.name}</td>
+                          <td>₹{AddonsPrice}</td>
+                          <td>
+                            <Form.Check
+                              type="checkbox"
+                              checked={addons[addon.key]}
+                              onChange={() => handleAddonChange(addon.key)}
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </Modal.Body>
+                <Modal.Footer className="modalfooter">
+                  <div className="quantity-update">
+                    <Button
+                      variant="contained"
+                      style={{ color: "var(--bg)" }}
+                      onClick={handleDecrement}
+                    >
+                      <FaMinus />
+                    </Button>
+                    <span style={{ margin: "0 0.5rem", color: "black" }}>
+                      {quantity}
+                    </span>
+                    <Button
+                      variant="contained"
+                      style={{ color: "var(--bg)", border: "none" }}
+                      onClick={handleIncrement}
+                    >
+                      <FaPlus />
+                    </Button>
+                  </div>
+                  <Button className="addtocart" onClick={handleAddToCart}>
+                    Add to Cart
+                    <span style={{ paddingLeft: ".3rem", fontWeight: "800" }}>
+                      ₹{getTotalPrice()}
+                    </span>
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            )}
+            {!hasPriceOptions && (
+              <Modal
+                className="modeldialog"
+                show={show}
+                onHide={handleClose}
+                style={{
+                  position: "fixed",
+                  bottom: "2px",
+                  background: "white",
+                }}
+              >
+                <Modal.Header closeButton className="modalheader">
+                  <Modal.Title>
+                    <div
+                      style={{
+                        textAlign: "center",
+                        fontWeight: "700",
+                      }}
+                    >
+                      Foodies Hub
+                    </div>
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body
+                  style={{
+                    height: "75vh",
+                    overflowY: "auto",
+                    scrollbarWidth: "thin",
+                    scrollbarColor: "transparent transparent",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginBottom: "1rem", // Add some margin at the bottom for spacing
+                    }}
+                  >
+                    <img
+                      src={image}
+                      alt={name}
+                      style={{
+                        maxWidth: "18rem",
+                        borderRadius: "1rem",
+                      }}
+                    />
+                  </div>
+
+                  <h5 style={{ fontSize: "1.7rem" }}>{name}</h5>
+                  <p
+                    style={{
+                      fontWeight: "700",
+                      marginBottom: ".5rem",
+                      fontSize: "1.3rem",
+                    }}
+                  >
+                    ₹{price}
+                    <span
+                      style={{
+                        textDecoration: "line-through",
+                        marginLeft: ".5rem",
+                        color: "grey",
+                      }}
+                    >
+                      {mrp}
+                    </span>
+                    <span
+                      style={{
+                        marginLeft: ".5rem",
+                        color: "var(--bg)",
+                      }}
+                    >
+                      {(((mrp - price) / mrp) * 100).toFixed(0)}% off
+                    </span>
+                  </p>
+
+                  <p>{description}</p>
+                </Modal.Body>
+                <Modal.Footer className="modalfooter">
+                  <div className="quantity-update">
+                    <Button
+                      variant="contained"
+                      style={{ color: "var(--bg)" }}
+                      onClick={handleDecrement}
+                    >
+                      <FaMinus />
+                    </Button>
+                    <span style={{ margin: "0 0.5rem", color: "black" }}>
+                      {quantity}
+                    </span>
+                    <Button
+                      variant="contained"
+                      style={{ color: "var(--bg)" }}
+                      onClick={handleIncrement}
+                    >
+                      <FaPlus />
+                    </Button>
+                  </div>
+                  <Button className="addtocart" onClick={handleAddToCart}>
+                    Add to Cart
+                    <span style={{ paddingLeft: ".3rem", fontWeight: "800" }}>
+                      ₹{getTotalPrice()}
+                    </span>
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            )}
+          </div>
+          {hasPriceOptions && <div className="cust">customisable</div>}
+        </div>
+      </div>
+    </>
   );
 };
 
