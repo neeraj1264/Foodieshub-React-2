@@ -205,6 +205,7 @@ const CustomCard = ({ id, name, description, price, image, mrp, size }) => {
                   border: "none",
                   background: "#d32e2e",
                   borderRadius: ".5rem",
+                  boxShadow: "white 1px 0px 3px 3px",
                 }}
                 onClick={handleRemoveToCart}
               >
