@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import Header from '../header/Header';
 import AboutUs from '../about/AboutUs';
 import ContactForm from '../ContactUs/Contact';
+import { FaWhatsapp } from "react-icons/fa";
+
 const items = [
   { id: 1,  imageUrl: '/img/burger.jpg',      title: 'Delicious Burger',   target: 'Burger'   , description: 'Hot Pattie, fresh veggies, and savory sauces in a perfect bun.' },
   { id: 2,  imageUrl: '/img/pizza.jpg',       title: 'Hot Pizzas',         target: 'Pizza'    , description: 'Crispy crusts and gooey cheese meet a medley of mouth-watering toppings in every slice.' },
@@ -40,6 +42,22 @@ const MyCarousel = () => {
     };
   }, []); // Empty dependency array ensures this effect runs once when the component mounts
 
+  const handleChatMsg = () => {
+    const whatsappNumber = "+917015823645";
+    const message = `Hello! I'm interested in placing an order. Could you please provide me with more information about your menu options and delivery timings? Thanks!`;
+
+    const whatsappLink =
+      "https://api.whatsapp.com/send?phone=" +
+      encodeURIComponent(whatsappNumber) +
+      "&text=" +
+      encodeURIComponent(message);
+
+    console.log("WhatsApp link:", whatsappLink);
+
+    // Open WhatsApp chat in a new window
+    window.open(whatsappLink, "_blank");
+  };
+
   return (
     <>
     <Carousel activeIndex={index} onSelect={handleSelect} controls={false}>
@@ -49,7 +67,7 @@ const MyCarousel = () => {
 
       <Link
        to={`/menu#${encodeURIComponent(item.target)}`}>
-          <img className="d-block w-100" src={item.imageUrl} alt={item.title} />
+          <img className="d-block" src={item.imageUrl} alt={item.title} />
           {/* <Carousel.Caption>
             <h3>{item.title}</h3>
             <p>{item.description}</p>
@@ -60,6 +78,7 @@ const MyCarousel = () => {
       ))}
     </Carousel>
     <Header/>
+    <FaWhatsapp className='whatsapp-button' onClick={() => handleChatMsg()}/>
 <AboutUs/>
 <ContactForm/>
     </>

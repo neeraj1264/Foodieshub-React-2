@@ -1,22 +1,8 @@
 import React from "react";
 import { BiMessageDetail } from "react-icons/bi";
+import { NavLink } from "react-router-dom";
 
 function Header() {
-  const handlePlaceOrder = () => {
-    const whatsappNumber = "+917015823645";
-    const message = `Hello! I'm interested in placing an order. Could you please provide me with more information about your menu options and delivery timings? Thanks!`;
-
-    const whatsappLink =
-      "https://api.whatsapp.com/send?phone=" +
-      encodeURIComponent(whatsappNumber) +
-      "&text=" +
-      encodeURIComponent(message);
-
-    console.log("WhatsApp link:", whatsappLink);
-
-    // Open WhatsApp chat in a new window
-    window.open(whatsappLink, "_blank");
-  };
 
   return (
     <>
@@ -25,6 +11,7 @@ function Header() {
           <img src="./img/logo.png" />
         </div>
         <div
+        className="headername"
           style={{
             textAlign: "center",
             fontWeight: "700",
@@ -32,9 +19,11 @@ function Header() {
         >
           Foodies Hub
         </div>
-        <div className="chat" onClick={() => handlePlaceOrder()}>
-          <BiMessageDetail /> chat
+        <NavLink to="/menu" >
+          <div className="chat">
+         Menu
         </div>
+        </NavLink>
       </nav>
     </>
   );
